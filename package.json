@@ -1,12 +1,10 @@
 {
-  "name": "ionic",
-  "version": "1.3.11",
+  "name": "ionic-cli-lib",
+  "version": "0.0.1",
   "preferGlobal": true,
-  "description": "A tool for creating and developing Ionic Framework mobile apps.",
+  "description": "A library for creating and developing Ionic Framework mobile apps.",
   "homepage": "http://ionicframework.com/",
-  "bin": {
-    "ionic": "bin/ionic"
-  },
+  "main": "index.js",
   "keywords": [
     "ionic",
     "ionic framework",

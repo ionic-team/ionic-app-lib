@@ -758,37 +758,37 @@ var argv = require('optimist').argv,
 //   /**
 //    * Download a zip file, unzip it to a specific folder.
 //    */
-//   fetchArchive: function(targetPath, archiveUrl) {
-//     var os = require('os');
-//     var fs = require('fs');
-//     var path = require('path');
-//     var unzip = require('unzip');
-//     var q = Q.defer();
+  // fetchArchive: function(targetPath, archiveUrl) {
+  //   var os = require('os');
+  //   var fs = require('fs');
+  //   var path = require('path');
+  //   var unzip = require('unzip');
+  //   var q = Q.defer();
 
-//     // The folder name the project will be downloaded and extracted to
-//     console.log('\nDownloading:'.bold, archiveUrl);
+  //   // The folder name the project will be downloaded and extracted to
+  //   console.log('\nDownloading:'.bold, archiveUrl);
 
-//     var tmpFolder = os.tmpdir();
-//     var tempZipFilePath = path.join(tmpFolder, 'ionic-starter-' + new Date().getTime() + '.zip');
+  //   var tmpFolder = os.tmpdir();
+  //   var tempZipFilePath = path.join(tmpFolder, 'ionic-starter-' + new Date().getTime() + '.zip');
 
 
-//     var unzipRepo = function(fileName) {
-//       var readStream = fs.createReadStream(fileName);
-//       readStream.on('error', function(err) {
-//         console.log( ('unzipRepo readStream: ' + err).error );
-//         q.reject(err);
-//       });
+  //   var unzipRepo = function(fileName) {
+  //     var readStream = fs.createReadStream(fileName);
+  //     readStream.on('error', function(err) {
+  //       console.log( ('unzipRepo readStream: ' + err).error );
+  //       q.reject(err);
+  //     });
 
-//       var writeStream = unzip.Extract({ path: targetPath });
-//       writeStream.on('close', function() {
-//         q.resolve();
-//       });
-//       writeStream.on('error', function(err) {
-//         console.log( ('unzipRepo writeStream: ' + err).error );
-//         q.reject(err);
-//       });
-//       readStream.pipe(writeStream);
-//     };
+  //     var writeStream = unzip.Extract({ path: targetPath });
+  //     writeStream.on('close', function() {
+  //       q.resolve();
+  //     });
+  //     writeStream.on('error', function(err) {
+  //       console.log( ('unzipRepo writeStream: ' + err).error );
+  //       q.reject(err);
+  //     });
+  //     readStream.pipe(writeStream);
+  //   };
 
 //     var proxy = process.env.PROXY || process.env.http_proxy || null;
 //     var request = require('request');
