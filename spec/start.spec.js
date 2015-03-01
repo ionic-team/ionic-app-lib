@@ -86,19 +86,18 @@ describe('Start', function() {
       }).toThrow('Invalid target path, you may not specify \'.\' as an app name')
     })
 
-    it('should call fetchWrapper with proper variables', function(done) {
+    it('should call fetchWrapper', function(done) {
       start.startApp(dummyOptions)
       expect(start.fetchWrapper).toHaveBeenCalledWith(dummyOptions);
       done()
     })
 
-    it('should call fetchSeed after calling fetchWrapper', function(done) {
+    it('should call fetchSeed', function(done) {
       Q()
       .then(function(data) {
         return start.startApp(dummyOptions)
       })
       .then(function(data) {
-        dummyOptions.appSetup = appSetup;
         expect(start.fetchSeed).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(data) {
@@ -107,19 +106,68 @@ describe('Start', function() {
       .fin(done);
     })
 
-    it('should call initCordova with appSetup returned', function(done) {
+    it('should call loadAppSetup', function(done) {
       Q()
-      .then(function() {
-        return start.startApp(dummyOptions);
+      .then(function(data) {
+        return start.startApp(dummyOptions)
       })
-      .then(function(data){
-
+      .then(function(data) {
+        expect(start.loadAppSetup).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(data) {
         expect('this').toBe('not this');
       })
       .fin(done);
     })
+
+    it('should call initCordova', function(done) {
+      Q()
+      .then(function() {
+        return start.startApp(dummyOptions);
+      })
+      .then(function(data){
+        // dummyOptions.appSetup = data;
+        expect(start.initCordova).toHaveBeenCalledWith(dummyOptions, appSetup);
+      })
+      .catch(function(data) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    })
+
+    it('should call setupSass', function(done) {
+      Q()
+      .then(function() {
+        return start.startApp(dummyOptions);
+      })
+      .then(function(data){
+        // dummyOptions.appSetup = data;
+        expect(start.setupSass).toHaveBeenCalledWith(dummyOptions);
+      })
+      .catch(function(data) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    })
+
+    it('should call finalize', function(done) {
+      Q()
+      .then(function() {
+        return start.startApp(dummyOptions);
+      })
+      .then(function(data){
+        // dummyOptions.appSetup = data;
+        expect(start.finalize).toHaveBeenCalledWith(dummyOptions);
+      })
+      .catch(function(data) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    })
+  })
+
+  describe('#fetchWrapper', function(done) {
+    
   })
 
   describe('#fetchSeed', function() {
@@ -212,6 +260,8 @@ describe('Start', function() {
     })
 
   })
+
+  
 
   // describe('#initCordova', function() {
   //   it('')
