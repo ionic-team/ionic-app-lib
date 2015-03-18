@@ -1,9 +1,10 @@
 var start = require('../lib/start'),
     Q = require('q'),
-    events = require('../lib/events');
+    events = require('../lib/events'),
+    helpers = require('./helpers');
 
 // events.on('log', console.log)
-
+var tmpDir = helpers.tmpDir('create_test');
 
 // Things to test 
 // Does it allow invalid vars? 
@@ -167,7 +168,7 @@ describe('Start', function() {
   })
 
   describe('#fetchWrapper', function(done) {
-    
+
   })
 
   describe('#fetchSeed', function() {
@@ -259,6 +260,24 @@ describe('Start', function() {
       .fin(done)
     })
 
+    it('should call fetchPlnkr when a plnkr url is passed', function(done) {
+      var plnkrUrl = 'http://embed.plnkr.co/dFvL8n/preview';
+      spyOn(start, 'fetchPlnkr').andReturn();
+      dummyOptions.template = plnkrUrl;
+
+      Q()
+      .then(function(){
+        return start.fetchSeed(dummyOptions);
+      })
+      .then(function() {
+        expect(start.fetchPlnkr).toHaveBeenCalledWith(dummyOptions)
+      })
+      .catch(function(err) {
+        expect('this').toBe('not this'+ err);
+      })
+      .fin(done)
+    })
+
   })
 
   
@@ -266,5 +285,17 @@ describe('Start', function() {
   // describe('#initCordova', function() {
   //   it('')
   // })
+
+  describe('start end-to-end', function() {
+    beforeEach(function() {
+        shell.rm('-rf', project);
+        shell.mkdir('-p', tmpDir);
+    });
+    afterEach(function() {
+        process.chdir(path.join(__dirname, '..'));  // Needed to rm the dir on Windows.
+        shell.rm('-rf', tmpDir);
+    });
+    
+  })
 
 })
