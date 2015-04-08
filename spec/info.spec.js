@@ -3,7 +3,7 @@ var Info = require('../lib/info'),
     events = require('../lib/events'),
     helpers = require('./helpers');
 
-ddescribe('Info', function() {
+describe('Info', function() {
 
   it('should have info defined', function() {
     expect(Info).toBeDefined();
