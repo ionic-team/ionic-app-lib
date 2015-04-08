@@ -3,7 +3,7 @@ var Cordova = require('../lib/cordova'),
     events = require('../lib/events'),
     helpers = require('./helpers');
 
-describe('Info', function() {
+describe('Cordova', function() {
 
   it('should have Cordova defined', function() {
     expect(Cordova).toBeDefined();
