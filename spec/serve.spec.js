@@ -51,7 +51,7 @@ function compareOptions(options) {
   expect(options.watchSass).toBe(defaultServeOptions.watchSass);
 }
 
-ddescribe('Serve', function() {
+describe('Serve', function() {
 
   beforeEach(function() {
     serveArgs = { _: [ 'serve' ], '$0': '/usr/local/bin/ionic' };
