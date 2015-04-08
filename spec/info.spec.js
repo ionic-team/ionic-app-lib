@@ -14,14 +14,14 @@ ddescribe('Info', function() {
   });
 
   it('should have gatherInfo call other helper methods', function() {
-    spyOn(Info, 'getIonicVersions');
+    spyOn(Info, 'getIonicLibVersion');
     spyOn(Info, 'getNodeVersion');
     spyOn(Info, 'getOsEnvironment');
     spyOn(Info, 'getCordovaInfo');
 
     Info.gatherInfo();
 
-    expect(Info.getIonicVersions).toHaveBeenCalled();
+    expect(Info.getIonicLibVersion).toHaveBeenCalled();
     expect(Info.getNodeVersion).toHaveBeenCalled()
     expect(Info.getOsEnvironment).toHaveBeenCalled();
     expect(Info.getCordovaInfo).toHaveBeenCalled();    
