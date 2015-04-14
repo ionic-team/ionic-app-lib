@@ -1,4 +1,5 @@
-var cordova = require('./lib/cordova'),
+var browser = require('./lib/browser'),
+    cordova = require('./lib/cordova'),
     events = require('./lib/events'),
     info = require('./lib/info'),
     serve = require('./lib/serve'),
@@ -8,6 +9,7 @@ var cordova = require('./lib/cordova'),
     utils = require('./lib/utils');
 
 module.exports = {
+  browser: browser,
   cordova: cordova,
   events: events,
   info: info,
