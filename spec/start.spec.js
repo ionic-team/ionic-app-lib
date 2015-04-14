@@ -69,7 +69,7 @@ describe('Start', function() {
 
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup))
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       })
