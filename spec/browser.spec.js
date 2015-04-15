@@ -1,5 +1,6 @@
 var Browser = require('../lib/browser'),
     events = require('../lib/events'),
+    fs = require('fs'),
     helpers = require('./helpers'),
     shelljs = require('shelljs'),
     Q = require('q');
@@ -96,5 +97,46 @@ describe('Browser', function() {
       .fin(done);
     });
   });
+
+  describe('#downloadFiles', function() {
+    it('should call methods correctly to download required crosswalk files', function(done) {
+      spyOn(Browser, 'getCordovaCrosswalkEngine').andReturn(Q());
+      spyOn(Browser, 'downloadCordova40x').andReturn(Q());
+      spyOn(Browser, 'getCrosswalkWebviews').andReturn(Q());
+
+      Q()
+      .then(function() {
+        return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion);
+      })
+      .then(function() {
+        expect(Browser.getCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
+        expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
+        expect(Browser.getCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+      })
+      .catch(function(error) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
+  });
+
+  // describe('#getCordovaCrosswalkEngine', function() {
+  //   iit('should call Ionic.fetchArchive', function(done) {
+  //     spyOn(fs, 'existsSync').andReturn(true);
+  //     Q()
+  //     .then(function() {
+  //       return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion);
+  //     })
+  //     .then(function() {
+  //       expect(Browser.getCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
+  //       expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
+  //       expect(Browser.getCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+  //     })
+  //     .catch(function(error) {
+  //       expect('this').toBe('not this');
+  //     })
+  //     .fin(done);
+  //   });
+  // });
 
 });
