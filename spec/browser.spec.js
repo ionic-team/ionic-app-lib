@@ -30,7 +30,7 @@ describe('Browser', function() {
     });
 
     it('should call installCrosswalk when passed the crosswalk browser', function(done) {
-      spyOn(Browser, 'installCrosswalk');
+      spyOn(Browser, 'installCrosswalk').andReturn(Q());
       Q()
       .then(function() {
         return Browser.addBrowser(testDirectory, 'crosswalk');
@@ -39,6 +39,8 @@ describe('Browser', function() {
         expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
       })
       .catch(function(ex){
+        console.log(ex)
+        console.log(ex.stack);
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -71,8 +73,9 @@ describe('Browser', function() {
         'removeCrosswalkEngines',
         'addCordova40xProject',
         'addCrosswalkPlugin',
-        'addGradleProperties',
+        'addWhitelistPlugin',
         'addSplashScreenPlugin'
+        // 'addGradleProperties',
       ];
       
       methods.forEach(function(method) {
@@ -100,20 +103,21 @@ describe('Browser', function() {
 
   describe('#downloadFiles', function() {
     it('should call methods correctly to download required crosswalk files', function(done) {
-      spyOn(Browser, 'getCordovaCrosswalkEngine').andReturn(Q());
+      spyOn(Browser, 'downloadCordovaCrosswalkEngine').andReturn(Q());
       spyOn(Browser, 'downloadCordova40x').andReturn(Q());
-      spyOn(Browser, 'getCrosswalkWebviews').andReturn(Q());
+      spyOn(Browser, 'downloadCrosswalkWebviews').andReturn(Q());
 
       Q()
       .then(function() {
         return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion);
       })
       .then(function() {
-        expect(Browser.getCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
-        expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
-        expect(Browser.getCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+        expect(Browser.downloadCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
+        // expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
+        expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
       })
       .catch(function(error) {
+        console.log('error', error, error.stack)
         expect('this').toBe('not this');
       })
       .fin(done);
