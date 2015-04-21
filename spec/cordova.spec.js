@@ -8,7 +8,7 @@ var Cordova = require('../lib/cordova'),
 var testDirectory = '/test/directory',
     testPluginId = 'org.apache.cordova.device';
 
-ddescribe('Cordova', function() {
+describe('Cordova', function() {
 
   it('should have Cordova defined', function() {
     expect(Cordova).toBeDefined();
@@ -30,7 +30,7 @@ ddescribe('Cordova', function() {
       .fin(done);
     });
 
-    it('should call state.savePlatform when removePlatform is called to save platform', function(done) {
+    it('should call state.removePlatform when removePlatform is called to save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'removePlatform').andReturn(Q());
       Q()    
@@ -124,34 +124,9 @@ ddescribe('Cordova', function() {
       })
       .fin(done);
     });
-
-    // it('should call serve when livereload is passed', function(done) {
-
-    //   Q()    
-    //   .then(function() {
-    //     return Cordova.runPlatform(testDirectory, 'ios');
-    //   })
-    //   .then(function() {
-    //     expect(cordova.run).toHaveBeenCalledWith(options);
-    //   })
-    //   .catch(function(data) {
-    //     console.log(data);
-    //     expect('this').toBe('not this');
-    //   })
-    //   .fin(done);
-    // }); 
   });
 
   describe('#addPlatform', function() {
-    it('should set environment variable for cordova pwd', function(done) {
-      spyOn(cordova, 'platform').andReturn(Q());
-      Q()
-      .then(function() {
-
-      })
-      .fin(done);
-    });
-
     it('should call cordova.platform when addPlatform is called', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       Q()    
