@@ -6,6 +6,7 @@ var cordova = require('../lib/cordova'),
     helpers = require('./helpers');
 
 // events.on('log', console.log)
+// events.on('verbose', console.log);
 var tmpDir = helpers.tmpDir('create_test');
 
 // Things to test 
@@ -296,7 +297,7 @@ describe('Start', function() {
 
     it('should add plugins in appSetup.plugins passed', function() {
       start.initCordova(dummyOptions, appSetup);
-      expect(cordova.addPlugin).toHaveBeenCalledWith(dummyOptions.targetPath, 'com.ionic.keyboard', true);
+      expect(cordova.addPlugin).toHaveBeenCalledWith(dummyOptions.targetPath, 'com.ionic.keyboard', null, true);
     });
 
     it('should add ios when ios option passed', function() {
