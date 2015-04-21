@@ -3,6 +3,7 @@ var State = require('../lib/state'),
     helpers = require('./helpers');
 
 var tempDirectory = '/test/dev/ionic',
+    testPluginId = 'com.ionic.keyboard',
     defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
 
 describe('State', function() {
@@ -126,6 +127,93 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       State.removePlatform(tempDirectory, 'android');
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: ['ios']});
+    });
+  });
+
+  describe('#savePlugin', function() {
+    beforeEach(function() {
+      spyOn(State, 'savePackageJson');
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
+    });
+    //Expects - either simple ID for plugin registry
+    //or a local path, with or without variables
+    //ionic plugin add org.apache.cordova.splashscreen
+    //ionic plugin add ../phonegap-facebook-plugin --variable APP_ID="123456789" --variable APP_NAME="myApplication"
+    it('should call getPackageJson with the correct directory', function() {
+      spyOn(State, 'addOrUpdatePluginToPackageJson');
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      State.savePlugin(tempDirectory, testPluginId);
+      expect(State.getPackageJson).toHaveBeenCalledWith(tempDirectory);
+    });
+
+    it('should save the plugin ID to the packageJson for a simple ID', function() {
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
+        packageJson.cordovaPlugins = [testPluginId];
+      })
+      State.savePlugin(tempDirectory, testPluginId);
+      expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, testPluginId);
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+    });
+
+    it('should save the plugin ID to the packageJson for a local ID', function() {
+      var testLocalPluginId = './engine/cordova-crosswalk-plugin';
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      spyOn(State, 'getPluginFromFetchJsonByLocator').andReturn('cordova-crosswalk-engine');
+      spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
+        packageJson.cordovaPlugins = [{locator: testLocalPluginId, id: 'cordova-crosswalk-engine'}];
+      })
+      State.savePlugin(tempDirectory, testLocalPluginId);
+      expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-crosswalk-engine', {locator: testLocalPluginId, id: 'cordova-crosswalk-engine'});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+    });
+
+    it('should save the plugin ID to the packageJson for a local ID', function() {
+      var testLocalPluginId = './engine/cordova-facebook-plugin';
+      var testVariables = [ 'APP_ID=123456789', 'APP_NAME=myApplication' ];
+      var variablesHash = {APP_ID: '123456789', APP_NAME: 'myApplication'};
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      var modifiedPackageJson = { cordovaPlatforms: [], cordovaPlugins: [{locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash}]};
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      spyOn(State, 'getPluginFromFetchJsonByLocator').andReturn('cordova-facebook-plugin');
+      spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
+        packageJson.cordovaPlugins = [{locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash}];
+      });
+
+      State.savePlugin(tempDirectory, testLocalPluginId, testVariables);
+
+      expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-facebook-plugin', {locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, modifiedPackageJson);
+    });
+  });
+
+  describe('#removePlugin', function() {
+    beforeEach(function() {
+      spyOn(State, 'savePackageJson');
+    });
+
+    it('should call getPackageJson with the correct directory', function() {
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      State.removePlugin(tempDirectory, testPluginId);
+      expect(State.getPackageJson).toHaveBeenCalledWith(tempDirectory);
+    });
+
+    it('should remove the pluginId from the packageJson from simple plugin IDs in cordovaPlugins', function() {
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      State.removePlugin(tempDirectory, testPluginId);
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: [], cordovaPlugins: [] });
+    });
+
+    it('should remove the pluginId from the packageJson when its an object', function() {
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [{ id: 'cordova-crosswalk-engine', locator: './engine/cordova-crosswalk-engine'}] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      State.removePlugin(tempDirectory, 'cordova-crosswalk-engine');
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: [], cordovaPlugins: [] });
     });
   });
 
