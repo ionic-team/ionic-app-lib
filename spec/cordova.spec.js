@@ -79,6 +79,38 @@ describe('Cordova', function() {
       })
       .fin(done);
     });
+
+    it('should not call state.savePlugin when addPlugin is not called to save plugin', function(done) {
+      spyOn(cordova, 'plugin').andReturn(Q());
+      spyOn(state, 'savePlugin').andReturn(Q());
+      Q()    
+      .then(function() {
+        return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device');
+      })
+      .then(function() {
+        expect(state.savePlugin).not.toHaveBeenCalled();
+      })
+      .catch(function(error) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
+
+    it('should call state.savePlugin when addPlugin is called to save plugin', function(done) {
+      spyOn(cordova, 'plugin').andReturn(Q());
+      spyOn(state, 'savePlugin').andReturn(Q());
+      Q()    
+      .then(function() {
+        return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device', null, true);
+      })
+      .then(function() {
+        expect(state.savePlugin).toHaveBeenCalled();
+      })
+      .catch(function(error) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
   });
 
   describe('#removePlugin', function() {
@@ -97,6 +129,7 @@ describe('Cordova', function() {
       })
       .fin(done);
     });
+
   });
 
   describe('#runPlatform', function() {
