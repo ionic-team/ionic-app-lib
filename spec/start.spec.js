@@ -1,4 +1,6 @@
-var start = require('../lib/start'),
+var cordova = require('../lib/cordova'),
+    hooks = require('../lib/hooks'),
+    start = require('../lib/start'),
     Q = require('q'),
     events = require('../lib/events'),
     helpers = require('./helpers');
@@ -275,16 +277,42 @@ describe('Start', function() {
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
+  });
 
+  describe('#initCordova', function() {
+    beforeEach(function() {
+      spyOn(hooks, 'setHooksPermission').andReturn();
+      spyOn(start, 'updateConfigXml');
+      spyOn(cordova, 'addPlugin');
+      spyOn(cordova, 'addPlatform');
+      appSetup = {
+        "plugins": [
+          "com.ionic.keyboard"
+        ]
+      };
+    });
+
+    it('should add plugins in appSetup.plugins passed', function() {
+      start.initCordova(dummyOptions, appSetup);
+      expect(cordova.addPlugin).toHaveBeenCalledWith(dummyOptions.targetPath, 'com.ionic.keyboard', true);
+    });
+
+    it('should add ios when ios option passed', function() {
+      dummyOptions.ios = true;
+      dummyOptions.android = false;
+      start.initCordova(dummyOptions, appSetup);
+      expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'ios', true);
+    });
+
+    it('should add android when android option passed', function() {
+      dummyOptions.android = true;
+      dummyOptions.ios = false;
+      start.initCordova(dummyOptions, appSetup);
+      expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'android', true);
+    });
   })
-
-  
-
-  // describe('#initCordova', function() {
-  //   it('')
-  // })
 
   describe('start end-to-end', function() {
     beforeEach(function() {
