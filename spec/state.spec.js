@@ -85,6 +85,18 @@ describe('State', function() {
     });
   });
 
+  describe('#addOrUpdatePlatformToPackageJson', function() {
+    it('should overwrite default android when local android is added', function() {
+      var fileLocator = './engine/cordova-android';
+      defaultPackageJson = { cordovaPlatforms: ['android'], cordovaPlugins: [] };
+      var afterPackageJson = { cordovaPlatforms: [{platform: 'android', locator: fileLocator}], cordovaPlugins: [] };
+      var platformInfo = { platform: 'android', locator: fileLocator };
+
+      State.addOrUpdatePlatformToPackageJson(defaultPackageJson, 'android', platformInfo);
+      expect(defaultPackageJson).toBe(defaultPackageJson);
+    });
+  });
+
   describe('#removePlatform', function() {
     beforeEach(function() {
       //Start with ios in package.json
