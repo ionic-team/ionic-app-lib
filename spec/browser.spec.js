@@ -7,9 +7,13 @@ var Browser = require('../lib/browser'),
 
 // spyOn(shelljs)
 
-describe('Browser', function() {
+ddescribe('Browser', function() {
 
   var testDirectory = '/some/fake/directory';
+
+  beforeEach(function() {
+    spyOn(Browser, 'saveBrowserInstallation');
+  })
 
   it('should have Browser defined', function() {
     expect(Browser).toBeDefined();
