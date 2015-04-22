@@ -33,10 +33,28 @@ describe('Browser', function() {
       spyOn(Browser, 'installCrosswalk').andReturn(Q());
       Q()
       .then(function() {
-        return Browser.addBrowser(testDirectory, 'crosswalk');
+        return Browser.addBrowser(testDirectory, 'crosswalk', true);
       })
       .then(function(){
-        expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+        expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, true);
+      })
+      .catch(function(ex){
+        console.log(ex)
+        console.log(ex.stack);
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
+
+    it('should pass the saveToPackageJson flag to installCrosswalk', function(done) {
+      spyOn(Browser, 'installCrosswalk').andReturn(Q());
+      var saveToPackageJson = true;
+      Q()
+      .then(function() {
+        return Browser.addBrowser(testDirectory, 'crosswalk', saveToPackageJson);
+      })
+      .then(function(){
+        expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
       })
       .catch(function(ex){
         console.log(ex)
@@ -77,6 +95,7 @@ describe('Browser', function() {
         'addSplashScreenPlugin'
         // 'addGradleProperties',
       ];
+      var saveToPackageJson = true;
       
       methods.forEach(function(method) {
         spyOn(Browser, method);
@@ -84,12 +103,12 @@ describe('Browser', function() {
 
       Q()
       .then(function() {
-        return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion);
+        return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
       })
       .then(function(){
         // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
         methods.forEach(function(method) {
-          expect(Browser[method]).toHaveBeenCalledWith(testDirectory);
+          expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
         })
       })
       .catch(function(ex){
