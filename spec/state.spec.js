@@ -229,4 +229,33 @@ describe('State', function() {
     });
   });
 
+  describe('#addOrUpdatePluginToPackageJson', function() {
+    it('should add the plugin ID with http url', function() {
+      defaultPackageJson = {
+        "cordovaPlugins": [
+            "org.apache.cordova.device",
+            "org.apache.cordova.console",
+            "com.ionic.keyboard",
+            {
+              "locator": "engine/cordova-crosswalk-engine-c0.7.1",
+              "id": "cordova-plugin-crosswalk-webview"
+            },
+            "org.apache.cordova.splashscreen"
+          ],
+          "cordovaPlatforms": [
+            "ios",
+            {
+              "platform": "android",
+              "locator": "./engine/cordova-android-c0.6.1/"
+            }
+          ]
+        };
+
+      expect(defaultPackageJson.cordovaPlugins.length).toBe(5);
+      State.addOrUpdatePluginToPackageJson(defaultPackageJson, {id:'cordova-plugin-whitelist', locator: 'https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0'});
+      //we had 5 plugins, we should have 6 now.
+      expect(defaultPackageJson.cordovaPlugins.length).toBe(6);
+    });
+  });
+
 });
