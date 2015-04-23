@@ -2,7 +2,7 @@ var Opbeat = require('../lib/opbeat'),
     events = require('../lib/events'),
     helpers = require('./helpers');
 
-ddescribe('Opbeat', function() {
+describe('Opbeat', function() {
   it('should have state defined', function() {
     expect(Opbeat).toBeDefined();
   });
