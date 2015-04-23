@@ -7,7 +7,7 @@ var Browser = require('../lib/browser'),
 
 // spyOn(shelljs)
 
-ddescribe('Browser', function() {
+describe('Browser', function() {
 
   var testDirectory = '/some/fake/directory';
 
