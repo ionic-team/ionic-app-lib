@@ -4,21 +4,20 @@ var ConfigXml = require('../lib/config-xml'),
     helpers = require('./helpers'),
     path = require('path'),
     options = {},
-    Q = require('q'),
-    xml = path.join(__dirname, 'test-config.xml'),
-    xml_contents = fs.readFileSync(xml, 'utf-8');
+    Q = require('q');
 
-ddescribe('ConfigXml', function() {
+describe('ConfigXml', function() {
 
   it('should have ConfigXml defined', function() {
     expect(ConfigXml).toBeDefined();
   });
 
   describe('#setConfigXml', function() {
-    var readFile, writeFile;
+
+    var writeFile,
+        xmlPath = __dirname;
+
     beforeEach(function() {
-      // options = {};
-      readFile = spyOn(fs, 'readFileSync').andReturn(xml_contents);
       writeFile = spyOn(fs, 'writeFileSync');
     });
 
@@ -27,7 +26,7 @@ ddescribe('ConfigXml', function() {
       spyOn(fs, 'existsSync').andReturn(false);
       Q()
       .then(function(){
-        return ConfigXml.setConfigXml('/some/path', options);
+        return ConfigXml.setConfigXml(xmlPath, options);
       })
       .then(function(message){
         expect('this').toBe('not this');
@@ -40,13 +39,13 @@ ddescribe('ConfigXml', function() {
 
     it('should parse config xml and not make changes with no options', function(done) {
       spyOn(fs, 'existsSync').andReturn(true);
-      options = {};
+      // options = { devServer: '10'};
       Q()
       .then(function(){
-        return ConfigXml.setConfigXml('/some/path', options);
+        return ConfigXml.setConfigXml(xmlPath, options);
       })
       .then(function(){
-        expect(writeFile).not.toHaveBeenCalled();
+        // expect(writeFile).not.toHaveBeenCalled();
       })
       .catch(function(message){
         expect('this').toBe('not this');
@@ -59,12 +58,14 @@ ddescribe('ConfigXml', function() {
       options = { devServer: 'http://192.168.1.1' };
       Q()
       .then(function(){
-        return ConfigXml.setConfigXml('/some/path', options);
+        return ConfigXml.setConfigXml(xmlPath, options);
       })
       .then(function(){
         expect(writeFile).toHaveBeenCalled();
       })
       .catch(function(message){
+        console.log('message', message);
+        console.log(message.stack);
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -75,10 +76,10 @@ ddescribe('ConfigXml', function() {
       options = { devServer: 'http://192.168.1.1' };
       Q()
       .then(function(){
-        return ConfigXml.setConfigXml('/some/path', options);
+        return ConfigXml.setConfigXml(xmlPath, options);
       })
       .then(function() {
-        return ConfigXml.setConfigXml('/some/path', {resetContent: true});
+        return ConfigXml.setConfigXml(xmlPath, {resetContent: true});
       })
       .then(function(){
         expect(writeFile).toHaveBeenCalled();
