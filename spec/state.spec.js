@@ -1,7 +1,8 @@
 var State = require('../lib/state'),
     events = require('../lib/events'),
     helpers = require('./helpers'),
-    Q = require('q');
+    Q = require('q'),
+    shelljs = require('shelljs');
 
 var tempDirectory = '/test/dev/ionic',
     testPluginId = 'com.ionic.keyboard',
@@ -369,6 +370,27 @@ describe('State', function() {
       })
       .fin(done);
     });
+  });
+
+  describe('#clearState', function (){
+    it('should clear our the packageJson entries and remove platforms and plugins', function(done) {
+      spyOn(State, 'getPackageJson').andReturn({cordovaPlatforms: ['ios'], cordovaPlugins: ['org.apache.cordova.device']});
+      spyOn(shelljs, 'rm');
+      spyOn(State, 'savePackageJson');
+      Q()
+      .then(function(){
+        return State.clearState(tempDirectory);
+      })
+      .then(function() {
+        expect(shelljs.rm).toHaveBeenCalledWith('-rf', ['platforms', 'plugins']);
+        expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {cordovaPlatforms: [], cordovaPlugins: []});
+      })
+      .catch(function(ex) {
+        console.log(ex.stack);
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    })
   });
 
 });
