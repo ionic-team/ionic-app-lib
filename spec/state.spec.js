@@ -393,4 +393,29 @@ describe('State', function() {
     })
   });
 
+  describe('#saveState', function (){
+    it('should save the state of our application', function(done) {
+      var packageJson = {cordovaPlatforms: [], cordovaPlugins: []};
+      spyOn(State, 'getPackageJson').andReturn(packageJson);
+      spyOn(State, 'saveExistingPlatforms');
+      spyOn(State, 'saveExistingPlugins');
+      spyOn(State, 'savePackageJson');
+
+      Q()
+      .then(function(){
+        return State.saveState(tempDirectory);
+      })
+      .then(function() {
+        expect(State.saveExistingPlugins).toHaveBeenCalledWith(tempDirectory, packageJson);
+        expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, packageJson);
+        expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, packageJson);
+      })
+      .catch(function(ex) {
+        console.log(ex.stack);
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    })
+  });
+
 });
