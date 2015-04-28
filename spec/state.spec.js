@@ -1,6 +1,7 @@
 var State = require('../lib/state'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    Q = require('q');
 
 var tempDirectory = '/test/dev/ionic',
     testPluginId = 'com.ionic.keyboard',
@@ -255,6 +256,118 @@ describe('State', function() {
       State.addOrUpdatePluginToPackageJson(defaultPackageJson, {id:'cordova-plugin-whitelist', locator: 'https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0'});
       //we had 5 plugins, we should have 6 now.
       expect(defaultPackageJson.cordovaPlugins.length).toBe(6);
+    });
+  });
+
+  describe('#restoreState', function(){
+    it('should only restore plugins when plugin option passed', function(done) {
+      var options = { plugins: true, platforms: false };
+      spyOn(State, 'restorePlatforms');
+      spyOn(State, 'restorePlugins');
+
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+
+      Q()
+      .then(function(){
+        return State.restoreState(tempDirectory, options);
+      })
+      .then(function(){
+        expect(State.restorePlugins).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+        expect(State.restorePlatforms).not.toHaveBeenCalledWith(tempDirectory);
+      })
+      .catch(function(ex) {
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
+
+    it('should only restore platforms when platform option passed', function(done) {
+      var options = { plugins: false, platforms: true };
+      spyOn(State, 'restorePlatforms').andReturn(Q());
+      spyOn(State, 'restorePlugins').andReturn(Q());
+
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+
+      Q()
+      .then(function(){
+        return State.restoreState(tempDirectory, options);
+      })
+      .then(function(){
+        expect(State.restorePlugins).not.toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+        expect(State.restorePlatforms).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+      })
+      .catch(function(ex) {
+        expect('this').toBe('not this');
+        console.log(ex.stack)
+      })
+      .fin(done);
+    });
+
+    it('should restore platforms and plugins when both options passed', function(done) {
+      var options = { plugins: true, platforms: true };
+      spyOn(State, 'restorePlatforms').andReturn(Q());
+      spyOn(State, 'restorePlugins').andReturn(Q());
+
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+
+      Q()
+      .then(function(){
+        return State.restoreState(tempDirectory, options);
+      })
+      .then(function(){
+        expect(State.restorePlugins).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+        expect(State.restorePlatforms).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
+      })
+      .catch(function(ex) {
+        expect('this').toBe('not this');
+        console.log(ex.stack)
+      })
+      .fin(done);
+    });
+  });
+
+  describe('#restorePlugins', function(){
+    it('should call processPlugin with the correct app directory, index, and a promise', function(done){
+      var promise = Q.defer();
+      spyOn(Q, 'defer').andReturn(promise);
+      spyOn(State, 'processPlugin');
+      Q()
+      .then(function(){
+        promise.resolve();
+        return State.restorePlugins(tempDirectory, defaultPackageJson);
+      })
+      .then(function() {
+        expect(State.processPlugin).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+      })
+      .catch(function(ex) {
+        console.log(ex.stack);
+        expect('this').toBe('not this');
+      })
+      .fin(done);
+    });
+  });
+
+  describe('#restorePlatforms', function(){
+    it('should call processPlatform with the correct app directory, index, and a promise', function(done){
+      var promise = Q.defer();
+      spyOn(Q, 'defer').andReturn(promise);
+      spyOn(State, 'processPlatform');
+      Q()
+      .then(function(){
+        promise.resolve();
+        return State.restorePlatforms(tempDirectory, defaultPackageJson);
+      })
+      .then(function() {
+        expect(State.processPlatform).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+      })
+      .catch(function(ex) {
+        console.log(ex.stack);
+        expect('this').toBe('not this');
+      })
+      .fin(done);
     });
   });
 
