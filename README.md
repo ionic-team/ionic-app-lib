@@ -48,7 +48,7 @@ Commands to convert:
   * [X] remove platform
   * [X] add plugin
   * [X] remove plugin
-* [ ] utils
+* [X] utils
 * [ ] login
 * [ ] upload
 * [ ] hooks
