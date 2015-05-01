@@ -202,7 +202,26 @@ describe('State', function() {
       expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-facebook-plugin', {locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash});
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, modifiedPackageJson);
     });
+
+    it('should call getPluginFromFetchJsonByLocator with correct parameters', function() {
+      var testRemoteUrl = 'https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0';
+      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+      spyOn(State, 'getPluginFromFetchJsonByLocator');
+      spyOn(State, 'addOrUpdatePluginToPackageJson');
+      spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
+      try {
+        State.savePlugin(tempDirectory, testRemoteUrl, null);
+      } catch (ex) {
+        console.log(ex);
+      }
+      expect(State.getPluginFromFetchJsonByLocator).toHaveBeenCalledWith(tempDirectory, testRemoteUrl);
+      expect(State.savePackageJson).toHaveBeenCalled();
+    });
   });
+
+  // describe('getPluginFromFetchJsonByLocator', function() {
+
+  // });
 
   describe('#removePlugin', function() {
     beforeEach(function() {
