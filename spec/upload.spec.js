@@ -1,11 +1,19 @@
-var Upload = require('../lib/upload'),
+var archiver = require('archiver'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    fs = require('fs'),
+    helpers = require('./helpers'),
+    Upload = require('../lib/upload');
 
-describe('Upload', function() {
+ddescribe('Upload', function() {
 
   it('should have Upload defined', function() {
     expect(Upload).toBeDefined();
+    expect(Upload.ZipContents).toBeDefined();
+    expect(Upload.UploadZipContents).toBeDefined();
+  });
+
+  it('should create a zip file', function(){
+    spyOn()
   });
 
 });
