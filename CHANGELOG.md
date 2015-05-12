@@ -1,3 +1,7 @@
+# 0.0.13
+
+* Ionic sass setup now checks that gulp is installed globally - and if not - tells the user how to set it up.
+
 # 0.0.12
 
 * Browser checks for Cordova CLI 5.0 installed - thereby using default cordova commands instead of downloading and installing the cordova android and crosswalk engine plugins.

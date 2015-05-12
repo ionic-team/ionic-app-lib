@@ -51,11 +51,11 @@ Commands to convert:
 * [X] utils
 * [ ] login
 * [ ] upload
-* [ ] hooks
-* [ ] browser
+* [X] hooks
+* [X] browser
 * [ ] resources
 * [ ] docs
-* [ ] state
+* [X] state
 
 cordova (using cordova-lib - run/emulate/compile/build)
 upload
