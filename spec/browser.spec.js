@@ -2,6 +2,7 @@ var Browser = require('../lib/browser'),
     events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
+    info = require('../lib/info'),
     shelljs = require('shelljs'),
     Q = require('q');
 
@@ -87,8 +88,16 @@ describe('Browser', function() {
 
   });
 
-  describe('#installCrosswalk', function() {
+  describe('#installCrosswalk pre Cordova CLI 5.0', function() {
+    beforeEach(function() {
+      var fakeInfo = {
+        cordova: '4.3.0'
+      };
+      spyOn(info, 'gatherInfo').andReturn(fakeInfo);
+    });
+
     it('should call the appropriate methods to install crosswalk', function(done) {
+      
       spyOn(Browser, 'downloadFiles').andReturn(Q());
       var methods = [
         'removeAndroidProject', 
@@ -132,12 +141,12 @@ describe('Browser', function() {
 
       Q()
       .then(function() {
-        return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion);
+        return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion, false);
       })
       .then(function() {
         expect(Browser.downloadCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
         // expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
-        expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+        expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, false);
       })
       .catch(function(error) {
         console.log('error', error, error.stack)
