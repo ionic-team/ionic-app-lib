@@ -1,3 +1,12 @@
+# 0.0.12
+
+* Browser checks for Cordova CLI 5.0 installed - thereby using default cordova commands instead of downloading and installing the cordova android and crosswalk engine plugins.
+* Serve now opens the browser correctly when the `--all` or `0.0.0.0` address is used - specifying `localhost` instead to open correctly on windows environments.
+
+# 0.0.11
+
+* Remove unused modules - mocha, chai, chai as promised.
+
 # 0.0.10
 
 * Adding in the ability for ionic-labs preview page to serve local assets
