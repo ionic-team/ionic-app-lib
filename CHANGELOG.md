@@ -1,3 +1,11 @@
+# 0.0.16
+
+* Ionic info now checks for gulp and ios-deploy (if mac)
+
+# 0.0.14 - 0.0.15
+
+* Fix for Windows and the 0.0.0.0 host problem with serve
+
 # 0.0.13
 
 * Ionic sass setup now checks that gulp is installed globally - and if not - tells the user how to set it up.
