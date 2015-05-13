@@ -1,6 +1,7 @@
 # 0.0.16
 
 * Ionic info now checks for gulp and ios-deploy (if mac)
+* Ionic browser command now shows information about deprecation and using the cordova CLI directly, as well as directions on how to specify Crosswalk version.
 
 # 0.0.14 - 0.0.15
 
