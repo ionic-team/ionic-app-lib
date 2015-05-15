@@ -1,3 +1,17 @@
+# 0.0.19
+
+* Fixing a bug with serve that will duplicate console logging from the browser.
+* Fix for a bug when serve wont start console logs with `--consolelogs` argument.
+* Added flag `--platform` for serve command that opens the browser with those platform specific styles (android/ios).
+
+# 0.0.18
+
+* Fix for Ionic state restore - fixes an issue with reset that does not pass the correct app directory path for the restore command.
+
+# 0.0.17
+
+* Add option for no gulp - only run tasks if this is not specified
+
 # 0.0.16
 
 * Ionic info now checks for gulp and ios-deploy (if mac)
