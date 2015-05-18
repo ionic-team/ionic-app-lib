@@ -1,3 +1,10 @@
+# 0.0.20
+
+* Use cordova CLI to install plugins/platforms for start command.
+* Update cordova-lib to 5.0.0.
+* Use cordova 5.0 plugin ID's for npm format.
+* Correct the option for platform on serve command.
+
 # 0.0.19
 
 * Fixing a bug with serve that will duplicate console logging from the browser.
