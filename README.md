@@ -49,6 +49,7 @@ Commands to convert:
   * [X] add plugin
   * [X] remove plugin
 * [X] utils
+* [ ] setup
 * [ ] login
 * [ ] upload
 * [X] hooks
