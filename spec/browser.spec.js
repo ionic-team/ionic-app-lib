@@ -8,6 +8,15 @@ var Browser = require('../lib/browser'),
 
 // spyOn(shelljs)
 
+var setCordovaVersion = function setCordovaVersion(version) {
+  return function() {
+      var fakeInfo = {
+      cordova: version
+    };
+    spyOn(info, 'gatherInfo').andReturn(fakeInfo);
+  }
+};
+
 describe('Browser', function() {
 
   var testDirectory = '/some/fake/directory';
@@ -20,7 +29,7 @@ describe('Browser', function() {
     expect(Browser).toBeDefined();
   });
 
-  describe('#addBrowser', function() {
+  describe('#addBrowser pre 5.0', function() {
 
     it('should fail with no parameters passed', function() {
       expect(function() {
@@ -88,48 +97,55 @@ describe('Browser', function() {
 
   });
 
-  describe('#installCrosswalk pre Cordova CLI 5.0', function() {
-    beforeEach(function() {
-      var fakeInfo = {
-        cordova: '4.3.0'
-      };
-      spyOn(info, 'gatherInfo').andReturn(fakeInfo);
+  describe('#installCrosswalk', function() {
+    describe('pre Cordova CLI 5.0', function() {
+      beforeEach(setCordovaVersion('4.3.0'));
+
+      it('should call the appropriate methods to install crosswalk', function(done) {
+        
+        spyOn(Browser, 'downloadFiles').andReturn(Q());
+        var methods = [
+          'removeAndroidProject', 
+          'removeCrosswalkEngines',
+          'addCordova40xProject',
+          'addCrosswalkPlugin',
+          'addWhitelistPlugin',
+          'addSplashScreenPlugin'
+          // 'addGradleProperties',
+        ];
+        var saveToPackageJson = true;
+        
+        methods.forEach(function(method) {
+          spyOn(Browser, method);
+        });
+
+        Q()
+        .then(function() {
+          return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
+        })
+        .then(function(){
+          // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+          methods.forEach(function(method) {
+            expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
+          })
+        })
+        .catch(function(ex){
+          console.log(ex);
+          console.log(ex.stack)
+          expect('this').toBe('not this');
+        })
+        .fin(done);
+      });
     });
 
-    it('should call the appropriate methods to install crosswalk', function(done) {
-      
-      spyOn(Browser, 'downloadFiles').andReturn(Q());
-      var methods = [
-        'removeAndroidProject', 
-        'removeCrosswalkEngines',
-        'addCordova40xProject',
-        'addCrosswalkPlugin',
-        'addWhitelistPlugin',
-        'addSplashScreenPlugin'
-        // 'addGradleProperties',
-      ];
-      var saveToPackageJson = true;
-      
-      methods.forEach(function(method) {
-        spyOn(Browser, method);
-      });
+    describe('post Cordova CLI 5.0', function() {
+      beforeEach(setCordovaVersion('5.0.0'));
 
-      Q()
-      .then(function() {
-        return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
-      })
-      .then(function(){
-        // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
-        methods.forEach(function(method) {
-          expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
-        })
-      })
-      .catch(function(ex){
-        console.log(ex);
-        console.log(ex.stack)
-        expect('this').toBe('not this');
-      })
-      .fin(done);
+      it('should call raw cordova commands', function() {
+        spyOn(Browser, 'installCordovaCrosswalk');
+        Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, true, false);
+        expect(Browser.installCordovaCrosswalk).toHaveBeenCalledWith(testDirectory);
+      });
     });
   });
 
@@ -153,6 +169,18 @@ describe('Browser', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
+    });
+  });
+
+  describe('#upgradeCrosswalk', function(){
+    it('should call clean before upgrading', function() {
+      spyOn(Browser, 'clean');
+      spyOn(Browser, 'installCrosswalk');
+
+      Browser.upgradeCrosswalk(testDirectory);
+
+      expect(Browser.clean).toHaveBeenCalledWith(testDirectory);
+      expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
     });
   });
 
