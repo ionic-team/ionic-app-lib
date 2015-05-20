@@ -1,3 +1,9 @@
+# 0.0.21
+
+* Fix for `ionic browser remove crosswalk` - fix for passing arguments and app directory.
+* Fix for `ionic browser upgrade crosswalk` - passes app directory correctly.
+* Update to unit tests for browser pre and post Cordova CLI 5.0.0
+
 # 0.0.20
 
 * Use cordova CLI to install plugins/platforms for start command.
