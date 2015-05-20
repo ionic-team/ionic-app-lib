@@ -206,8 +206,10 @@ describe('Browser', function() {
   describe('#removeBrowser', function() {
     it('should call removeCrosswalk with directory', function() {
       spyOn(Browser, 'removeCrosswalk');
+      spyOn(Browser, 'removeBrowserInstallation');
       Browser.removeBrowser(testDirectory, 'crosswalk');
       expect(Browser.removeCrosswalk).toHaveBeenCalledWith(testDirectory);
+      expect(Browser.removeBrowserInstallation).toHaveBeenCalledWith(testDirectory, 'crosswalk');
     });
 
     it('should log a message to specify browser if none specified', function() {
