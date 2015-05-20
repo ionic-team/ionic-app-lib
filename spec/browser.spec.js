@@ -203,4 +203,20 @@ describe('Browser', function() {
   //   });
   // });
 
+  describe('#removeBrowser', function() {
+    it('should call removeCrosswalk with directory', function() {
+      spyOn(Browser, 'removeCrosswalk');
+      Browser.removeBrowser(testDirectory, 'crosswalk');
+      expect(Browser.removeCrosswalk).toHaveBeenCalledWith(testDirectory);
+    });
+
+    it('should log a message to specify browser if none specified', function() {
+      spyOn(events, 'emit');
+      spyOn(Browser, 'removeCrosswalk');
+      Browser.removeBrowser(testDirectory);
+      expect(events.emit).toHaveBeenCalledWith('log', 'Please specify a browser to be removed');
+      expect(Browser.removeCrosswalk).not.toHaveBeenCalled();
+    });
+  });
+
 });
