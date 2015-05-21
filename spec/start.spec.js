@@ -295,24 +295,24 @@ describe('Start', function() {
       };
     });
 
-    it('should add plugins in appSetup.plugins passed', function() {
-      start.initCordova(dummyOptions, appSetup);
-      expect(cordova.addPlugin).toHaveBeenCalledWith(dummyOptions.targetPath, 'com.ionic.keyboard', null, true);
-    });
+    // it('should add plugins in appSetup.plugins passed', function() {
+    //   start.initCordova(dummyOptions, appSetup);
+    //   expect(cordova.addPlugin).toHaveBeenCalledWith(dummyOptions.targetPath, 'com.ionic.keyboard', null, true);
+    // });
 
-    it('should add ios when ios option passed', function() {
-      dummyOptions.ios = true;
-      dummyOptions.android = false;
-      start.initCordova(dummyOptions, appSetup);
-      expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'ios', true);
-    });
+    // it('should add ios when ios option passed', function() {
+    //   dummyOptions.ios = true;
+    //   dummyOptions.android = false;
+    //   start.initCordova(dummyOptions, appSetup);
+    //   expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'ios', true);
+    // });
 
-    it('should add android when android option passed', function() {
-      dummyOptions.android = true;
-      dummyOptions.ios = false;
-      start.initCordova(dummyOptions, appSetup);
-      expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'android', true);
-    });
+    // it('should add android when android option passed', function() {
+    //   dummyOptions.android = true;
+    //   dummyOptions.ios = false;
+    //   start.initCordova(dummyOptions, appSetup);
+    //   expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'android', true);
+    // });
   })
 
   describe('start end-to-end', function() {

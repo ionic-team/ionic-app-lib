@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/driftyco/ionic-app-lib.svg?style=svg)](https://circleci.com/gh/driftyco/ionic-app-lib)
+
 ## Getting started
 
 `npm install ionic-app-lib --save`
@@ -49,6 +51,7 @@ Commands to convert:
   * [X] add plugin
   * [X] remove plugin
 * [X] utils
+* [ ] setup
 * [ ] login
 * [ ] upload
 * [X] hooks
