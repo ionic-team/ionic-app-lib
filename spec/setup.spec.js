@@ -15,7 +15,7 @@ describe('Setup', function() {
     
     Q()
     .then(function(){
-      setup.sassSetup(testDir);
+      return setup.sassSetup(testDir);
     })
     .then(function(){
       expect(setup.npmInstall).toHaveBeenCalledWith(testDir);
