@@ -2,10 +2,20 @@ var Browser = require('../lib/browser'),
     events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
+    info = require('../lib/info'),
     shelljs = require('shelljs'),
     Q = require('q');
 
 // spyOn(shelljs)
+
+var setCordovaVersion = function setCordovaVersion(version) {
+  return function() {
+      var fakeInfo = {
+      cordova: version
+    };
+    spyOn(info, 'gatherInfo').andReturn(fakeInfo);
+  }
+};
 
 describe('Browser', function() {
 
@@ -19,7 +29,7 @@ describe('Browser', function() {
     expect(Browser).toBeDefined();
   });
 
-  describe('#addBrowser', function() {
+  describe('#addBrowser pre 5.0', function() {
 
     it('should fail with no parameters passed', function() {
       expect(function() {
@@ -88,39 +98,54 @@ describe('Browser', function() {
   });
 
   describe('#installCrosswalk', function() {
-    it('should call the appropriate methods to install crosswalk', function(done) {
-      spyOn(Browser, 'downloadFiles').andReturn(Q());
-      var methods = [
-        'removeAndroidProject', 
-        'removeCrosswalkEngines',
-        'addCordova40xProject',
-        'addCrosswalkPlugin',
-        'addWhitelistPlugin',
-        'addSplashScreenPlugin'
-        // 'addGradleProperties',
-      ];
-      var saveToPackageJson = true;
-      
-      methods.forEach(function(method) {
-        spyOn(Browser, method);
-      });
+    describe('pre Cordova CLI 5.0', function() {
+      beforeEach(setCordovaVersion('4.3.0'));
 
-      Q()
-      .then(function() {
-        return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
-      })
-      .then(function(){
-        // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+      it('should call the appropriate methods to install crosswalk', function(done) {
+        
+        spyOn(Browser, 'downloadFiles').andReturn(Q());
+        var methods = [
+          'removeAndroidProject', 
+          'removeCrosswalkEngines',
+          'addCordova40xProject',
+          'addCrosswalkPlugin',
+          'addWhitelistPlugin',
+          'addSplashScreenPlugin'
+          // 'addGradleProperties',
+        ];
+        var saveToPackageJson = true;
+        
         methods.forEach(function(method) {
-          expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
+          spyOn(Browser, method);
+        });
+
+        Q()
+        .then(function() {
+          return Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
         })
-      })
-      .catch(function(ex){
-        console.log(ex);
-        console.log(ex.stack)
-        expect('this').toBe('not this');
-      })
-      .fin(done);
+        .then(function(){
+          // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+          methods.forEach(function(method) {
+            expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
+          })
+        })
+        .catch(function(ex){
+          console.log(ex);
+          console.log(ex.stack)
+          expect('this').toBe('not this');
+        })
+        .fin(done);
+      });
+    });
+
+    describe('post Cordova CLI 5.0', function() {
+      beforeEach(setCordovaVersion('5.0.0'));
+
+      it('should call raw cordova commands', function() {
+        spyOn(Browser, 'installCordovaCrosswalk');
+        Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, true, false);
+        expect(Browser.installCordovaCrosswalk).toHaveBeenCalledWith(testDirectory);
+      });
     });
   });
 
@@ -132,18 +157,30 @@ describe('Browser', function() {
 
       Q()
       .then(function() {
-        return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion);
+        return Browser.downloadFiles(testDirectory, Browser.defaultCrosswalkVersion, false);
       })
       .then(function() {
         expect(Browser.downloadCordovaCrosswalkEngine).toHaveBeenCalledWith(testDirectory);
         // expect(Browser.downloadCordova40x).toHaveBeenCalledWith(testDirectory);
-        expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
+        expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, false);
       })
       .catch(function(error) {
         console.log('error', error, error.stack)
         expect('this').toBe('not this');
       })
       .fin(done);
+    });
+  });
+
+  describe('#upgradeCrosswalk', function(){
+    it('should call clean before upgrading', function() {
+      spyOn(Browser, 'clean');
+      spyOn(Browser, 'installCrosswalk');
+
+      Browser.upgradeCrosswalk(testDirectory);
+
+      expect(Browser.clean).toHaveBeenCalledWith(testDirectory);
+      expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
     });
   });
 
@@ -165,5 +202,23 @@ describe('Browser', function() {
   //     .fin(done);
   //   });
   // });
+
+  describe('#removeBrowser', function() {
+    it('should call removeCrosswalk with directory', function() {
+      spyOn(Browser, 'removeCrosswalk');
+      spyOn(Browser, 'removeBrowserInstallation');
+      Browser.removeBrowser(testDirectory, 'crosswalk');
+      expect(Browser.removeCrosswalk).toHaveBeenCalledWith(testDirectory);
+      expect(Browser.removeBrowserInstallation).toHaveBeenCalledWith(testDirectory, 'crosswalk');
+    });
+
+    it('should log a message to specify browser if none specified', function() {
+      spyOn(events, 'emit');
+      spyOn(Browser, 'removeCrosswalk');
+      Browser.removeBrowser(testDirectory);
+      expect(events.emit).toHaveBeenCalledWith('log', 'Please specify a browser to be removed');
+      expect(Browser.removeCrosswalk).not.toHaveBeenCalled();
+    });
+  });
 
 });

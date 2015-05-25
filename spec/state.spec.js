@@ -1,6 +1,7 @@
 var State = require('../lib/state'),
     events = require('../lib/events'),
     helpers = require('./helpers'),
+    path = require('path'),
     Q = require('q'),
     shelljs = require('shelljs');
 
@@ -347,6 +348,23 @@ describe('State', function() {
       })
       .fin(done);
     });
+
+    it('should check for undefined options', function() {
+      expect(State.restoreState).toThrow('You must pass an application directory and options to restore state.');
+    });
+  });
+
+  describe('#resetState', function() {
+    it('should call call rm on the platforms path', function() {
+      spyOn(shelljs, 'rm');
+      spyOn(State, 'restoreState').andReturn(Q());
+      State.resetState(tempDirectory, {});
+
+      var platformPath = path.join(tempDirectory, 'platforms');
+      var pluginPath = path.join(tempDirectory, 'plugins');
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [platformPath, pluginPath]);
+      expect(State.restoreState).toHaveBeenCalledWith(tempDirectory, {});
+    });
   });
 
   describe('#restorePlugins', function(){
@@ -401,7 +419,7 @@ describe('State', function() {
         return State.clearState(tempDirectory);
       })
       .then(function() {
-        expect(shelljs.rm).toHaveBeenCalledWith('-rf', ['platforms', 'plugins']);
+        expect(shelljs.rm).toHaveBeenCalledWith('-rf', [path.join(tempDirectory, 'platforms'), path.join(tempDirectory, 'plugins')]);
         expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {cordovaPlatforms: [], cordovaPlugins: []});
       })
       .catch(function(ex) {
