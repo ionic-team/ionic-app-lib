@@ -1,7 +1,8 @@
 var Serve = require('../lib/serve'),
     Q = require('q'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    helpers = require('./helpers')
+    Project = require('../lib/project');
 
 var defaultServeOptions = {
   browser: undefined,
@@ -74,14 +75,23 @@ describe('Serve', function() {
   });
 
   describe('loadSettings', function (){
+    var project;
+    beforeEach(function() {
+      project = Project.wrap('/ionic/project', Project.PROJECT_DEFAULT);
+    });
+
     it('should parse out options from arg hash', function() {
-      var options = Serve.loadSettings(serveArgs);
-      compareOptions(options);
+      try {
+        var options = Serve.loadSettings(serveArgs, project);
+        compareOptions(options);
+      } catch(ex) {
+        console.log(ex);
+      }
     });
 
     it('should have runLivereload to be set to false when flag passed', function() {
       serveArgs.nolivereload = true;
-      var options = Serve.loadSettings(serveArgs);
+      var options = Serve.loadSettings(serveArgs, project);
       expect(options.runLivereload).toBe(false);
     });
   });
