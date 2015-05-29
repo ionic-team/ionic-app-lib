@@ -1,5 +1,7 @@
 [![Circle CI](https://circleci.com/gh/driftyco/ionic-app-lib.svg?style=svg)](https://circleci.com/gh/driftyco/ionic-app-lib)
 
+[![NPM](https://nodei.co/npm/ionic-app-lib.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ionic-app-lib/)
+
 ## Getting started
 
 `npm install ionic-app-lib --save`
