@@ -53,9 +53,9 @@ Commands to convert:
   * [X] add plugin
   * [X] remove plugin
 * [X] utils
-* [ ] setup
-* [ ] login
-* [ ] upload
+* [X] setup
+* [X] login
+* [X] upload
 * [X] hooks
 * [X] browser
 * [ ] resources
