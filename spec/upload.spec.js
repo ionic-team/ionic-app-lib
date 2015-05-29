@@ -8,11 +8,18 @@ var archiver = require('archiver'),
     rewire = require('rewire'),
     settings = require('../lib/settings');
 
-var Upload = rewire('../lib/upload');
-
 var testDir = '/ionic/app';
 
 describe('Upload', function() {
+
+  var Upload;
+
+  beforeEach(function() {
+    //Need to reset the Upload instance everytime incase
+    //we dont want to rewire something for another test.
+    Upload = rewire('../lib/upload');
+
+  });
 
   it('should have Upload defined', function() {
     expect(Upload).toBeDefined();
@@ -121,6 +128,22 @@ describe('Upload', function() {
       })
       .fin(done);
     });
+  });
+
+  describe('#getDirectUploadKey', function() {
+    it('should do a PUT request to the server', function(done) {
+      Q()
+      .then(function(){
+        //do function call
+      })
+      .then(function() {
+        //do expectations
+      })
+      .catch(function(ex){
+        expect('this').toBe(ex.stack);
+      })
+      .fin(done);
+    })
   });
 
   xdescribe('#doUpload', function() {
