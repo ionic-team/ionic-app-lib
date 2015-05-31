@@ -25,11 +25,12 @@ describe('Upload', function() {
     expect(Upload).toBeDefined();
 
     expect(Upload.zipContents).toBeDefined();
-    expect(Upload.uploadZipContents).toBeDefined();
     expect(Upload.doUpload).toBeDefined();
     expect(Upload.addCacheBusters).toBeDefined();
     expect(Upload.removeCacheBusters).toBeDefined();
-
+    expect(Upload.getDirectUploadKey).toBeDefined();
+    expect(Upload.signalDashUpload).toBeDefined();
+    expect(Upload.uploadToS3).toBeDefined();
   });
 
   describe('#addCacheBusters', function() {
@@ -146,29 +147,48 @@ describe('Upload', function() {
     })
   });
 
-  xdescribe('#doUpload', function() {
+  describe('#doUpload', function() {
+    var project,
+        key;
     beforeEach(function() {
-      spyOn(Project, 'load').andReturn(Project.wrap(Project.PROJECT_DEFAULT));
+      project = Project.wrap(Project.PROJECT_DEFAULT);
+      key = {
+        app_id: Project.PROJECT_DEFAULT.app_id
+      };
+      spyOn(Project, 'load').andReturn(project);
     });
 
     it('should call appropriate methods for upload process', function(done) {
+      var jar = {};
+      spyOn(Upload, 'addCacheBusters').andReturn(Q());
+      spyOn(Upload, 'zipContents').andReturn(Q());
+      spyOn(Upload, 'removeCacheBusters').andReturn(Q());
+      spyOn(Upload, 'getDirectUploadKey').andReturn(Q(key));
+      spyOn(Project, 'set');
+      spyOn(Project, 'save');
+      spyOn(Upload, 'uploadToS3').andReturn(Q());
+      spyOn(Upload, 'signalDashUpload').andReturn(Q());
+
+      var note = 'Note';
+
       Q()
       .then(function(){
-        return Upload.doUpload(testDir);
+        return Upload.doUpload(testDir, jar, note);
       })
       .then(function(){
         var indexPath = path.join(testDir, 'www', 'index.html');
-        expect(Upload.zipContents).toHaveBeenCalledWith(testDir);
         expect(Upload.addCacheBusters).toHaveBeenCalledWith(indexPath);
-        expect(Upload.getDirectUploadKey).toHaveBeenCalledWith();
-        expect(Upload.uploadToS3).toHaveBeenCalledWith();
-        expect(Upload.signalDashUpload).toHaveBeenCalledWith();
+        expect(Upload.zipContents).toHaveBeenCalledWith(testDir, 'www');
         expect(Upload.removeCacheBusters).toHaveBeenCalledWith(indexPath);
+        expect(Upload.getDirectUploadKey).toHaveBeenCalledWith(project, jar, note);
+        expect(Upload.uploadToS3).toHaveBeenCalledWith(testDir, key);
+        expect(Upload.signalDashUpload).toHaveBeenCalledWith(project, jar);
       })
       .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
+
     });
   });
 
