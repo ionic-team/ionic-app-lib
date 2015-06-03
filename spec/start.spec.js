@@ -1,8 +1,10 @@
 var cordova = require('../lib/cordova'),
     hooks = require('../lib/hooks'),
+    Project = require('../lib/project'),
     start = require('../lib/start'),
     Q = require('q'),
     events = require('../lib/events'),
+    fs = require('fs'),
     helpers = require('./helpers');
 
 // events.on('log', console.log)
@@ -172,7 +174,34 @@ describe('Start', function() {
 
   describe('#fetchWrapper', function(done) {
 
-  })
+  });
+
+  ddescribe('#finalize', function() {
+    it('should save a project file', function() {
+      var project = Project.wrap(Project.PROJECT_DEFAULT);
+      // spyOn(fs, 'writeFileSync');
+      spyOn(Project, 'create').andReturn(project);
+      spyOn(project, 'set');
+      spyOn(project, 'save');
+      start.finalize(dummyOptions);
+      expect(Project.create).toHaveBeenCalledWith(dummyOptions.targetPath, dummyOptions.appName);
+      expect(project.set).toHaveBeenCalledWith('name', dummyOptions.appName);
+      expect(project.save).toHaveBeenCalledWith(dummyOptions.targetPath);
+    });
+
+    it('should save app_id when passed in options', function() { 
+      var project = Project.wrap(Project.PROJECT_DEFAULT);
+      dummyOptions.ionicAppId = 'app-id'
+      spyOn(Project, 'create').andReturn(project);
+      spyOn(project, 'set');
+      spyOn(project, 'save');
+      start.finalize(dummyOptions);
+      expect(Project.create).toHaveBeenCalledWith(dummyOptions.targetPath, dummyOptions.appName);
+      expect(project.set).toHaveBeenCalledWith('name', dummyOptions.appName);
+      expect(project.set).toHaveBeenCalledWith('app_id', dummyOptions.ionicAppId);
+      expect(project.save).toHaveBeenCalledWith(dummyOptions.targetPath);
+    });
+  });
 
   describe('#fetchSeed', function() {
     it('should call fetchIonicStart for an Ionic template type', function(done) {

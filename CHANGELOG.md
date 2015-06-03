@@ -1,3 +1,13 @@
+# 0.1.0
+
+* Fix for Project - now can work from any directory, not just a directory that contains a project.
+* Login command now exists in ionic-app-lib.
+* Upload command now exists in ionic-app-lib.
+* Setup command now exists in ionic-app-lib.
+* Add tests for login and update.
+* Add 10.39.236.1 for crosswalk lite
+* Add in settings file to have settings across applications.
+
 # 0.0.21
 
 * Fix for `ionic browser remove crosswalk` - fix for passing arguments and app directory.
