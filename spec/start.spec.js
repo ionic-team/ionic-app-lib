@@ -176,7 +176,7 @@ describe('Start', function() {
 
   });
 
-  ddescribe('#finalize', function() {
+  describe('#finalize', function() {
     it('should save a project file', function() {
       var project = Project.wrap(Project.PROJECT_DEFAULT);
       // spyOn(fs, 'writeFileSync');
