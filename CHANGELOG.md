@@ -5,8 +5,9 @@
 * Upload command now exists in ionic-app-lib.
 * Setup command now exists in ionic-app-lib.
 * Add tests for login and update.
-* Add 10.39.236.1 for crosswalk lite
+* Add 10.39.236.1 for crosswalk lite.
 * Add in settings file to have settings across applications.
+* Fix for `ionic start --io-app-id <app_id>` to properly add the app ID to the project file.
 
 # 0.0.21
 
