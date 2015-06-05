@@ -57,6 +57,10 @@ describe('Upload', function() {
         //Fix for https://github.com/driftyco/ionic-cli/issues/435
         var indexOfHashUrl = indexHtml.indexOf('asset.js?ionicCachebuster=5555#hash');
         expect(indexOfHashUrl).not.toBe(-1);
+
+        //Fix for https://github.com/driftyco/ionic-cli/issues/452
+        var bomIndex = indexHtml.indexOf('&#xFEFF;');
+        expect(bomIndex).toBe(-1);
       })
       .catch(function(ex){
         expect('this').toBe(ex.stack);
