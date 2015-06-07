@@ -66,6 +66,31 @@ describe('Upload', function() {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
+    });
+
+    it('should add ionic cache buster attributes with bom', function(done) {
+      //Fix for https://github.com/driftyco/ionic-cli/issues/452
+      var indexPath = path.join(__dirname, 'bomindex.html');
+      spyOn(Math, 'floor').andReturn(5555);
+
+      Q()
+      .then(function(){
+        return Upload.addCacheBusters(indexPath);
+      })
+      .then(function() {
+        var argsPassed = fs.writeFileSync.argsForCall[0];
+        // console.log('args:', argsPassed);
+        //Here we check if the html to be saved has the cachebuster flags.
+        var indexHtml = argsPassed[1];
+
+        //Fix for https://github.com/driftyco/ionic-cli/issues/452
+        var bomIndex = indexHtml.indexOf('&#xFEFF;');
+        expect(bomIndex).toBe(-1);
+      })
+      .catch(function(ex){
+        expect('this').toBe(ex.stack);
+      })
+      .fin(done);
     })
   });
 
