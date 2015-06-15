@@ -1,5 +1,5 @@
 var Cordova = require('../lib/cordova'),
-    cordova = require('cordova-lib').cordova.raw,
+    cordova = require('ionic-cordova-lib').cordova.raw,
     Q = require('q'),
     events = require('../lib/events'),
     helpers = require('./helpers'),
@@ -141,7 +141,8 @@ describe('Cordova', function() {
         options: [],
         verbose: false,
         silent: false,
-        browserify: false
+        browserify: false,
+        stdio: 'pipe'
       };
 
       Q()    
