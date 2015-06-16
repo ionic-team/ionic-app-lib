@@ -139,12 +139,23 @@ describe('Browser', function() {
     });
 
     describe('post Cordova CLI 5.0', function() {
-      beforeEach(setCordovaVersion('5.0.0'));
+      describe('CLI 5.0.0', function() {
+        beforeEach(setCordovaVersion('5.0.0'));
 
-      it('should call raw cordova commands', function() {
-        spyOn(Browser, 'installCordovaCrosswalk');
-        Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, true, false);
-        expect(Browser.installCordovaCrosswalk).toHaveBeenCalledWith(testDirectory);
+        it('should call raw cordova commands', function() {
+          spyOn(Browser, 'installCordovaCrosswalk');
+          Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, true, false);
+          expect(Browser.installCordovaCrosswalk).toHaveBeenCalledWith(testDirectory);
+        });
+      });
+      describe('CLI 5.1+', function() {
+        beforeEach(setCordovaVersion('5.1.1'));
+
+        it('should call raw cordova commands', function() {
+          spyOn(Browser, 'installCordovaCrosswalk');
+          Browser.installCrosswalk(testDirectory, Browser.defaultCrosswalkVersion, true, false);
+          expect(Browser.installCordovaCrosswalk).toHaveBeenCalledWith(testDirectory);
+        });
       });
     });
   });

@@ -1,3 +1,22 @@
+# 0.2.1
+
+* Fix for `browser` command doing manual install for  Cordova CLI 5.1+, fixed to use cordova commands.
+
+# 0.2.0
+
+* Forked `cordova-lib` to use `ionic-cordova-lib` - this was done to correct some issues the cordova command had with passing stdio streams for the script calls.
+* Fix(cordova): Update stdio option to pipe. Update tests to reflect ionic-cordova-lib.
+
+# 0.1.1
+
+* Fix(upload): Remove BOM for index.html file. Add bomindex.html file to have BOM (byte order mark) at beginning of file, remove the BOM, and have test to verify
+* Fix(upload): Fix for CLI issue #452 and #440 - remove BOM character are beginning of index.html
+* Fix(serve): Add in live reload port by environment variable. Add in test for serve with proper live reload port number
+* Fix(utils): Look at the argv['no-cordova'] boolean option
+* Fix(serve): Fix for ionic refernence to change to Utils, for CLI #451 issue
+* Fix(upload): Update archive to 0.14.4 - update for certain users behind malware detection. Remove cordova-lib. Inclide ionic-cordova-lib
+
+
 # 0.1.0
 
 * Fix for Project - now can work from any directory, not just a directory that contains a project.
