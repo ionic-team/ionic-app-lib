@@ -1,3 +1,7 @@
+# 0.2.2
+
+* Fix(start): Fetch codepen was trying to fetch invalid html/css/js files because of a leading '/'. The trailing slash has been removed.
+
 # 0.2.1
 
 * Fix for `browser` command doing manual install for  Cordova CLI 5.1+, fixed to use cordova commands.
