@@ -1,3 +1,12 @@
+# 0.2.4
+
+* Fix for serve - directory root is using path.join instead of path.resolve
+
+# 0.2.3
+
+* Add build platform to the cordova command. 
+* Bump version of ionic-cordova-lib.
+
 # 0.2.2
 
 * Fix(start): Fetch codepen was trying to fetch invalid html/css/js files because of a leading '/'. The trailing slash has been removed.
