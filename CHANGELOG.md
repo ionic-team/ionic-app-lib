@@ -1,3 +1,7 @@
+# 0.2.6
+
+* Update serve method `start` to check for document root and reject promise if it does not exist instead of exiting process with Util.fail.
+
 # 0.2.5
 
 * Update ionic-cordova-lib to 5.1.4 for fix with cordova lib run propagating errors to callers.
