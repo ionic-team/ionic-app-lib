@@ -115,6 +115,10 @@ describe('Upload', function() {
 
         var indexOfHashUrl = indexHtml.indexOf('asset.js?ionicCachebuster=5555#hash');
         expect(indexOfHashUrl).toBe(-1);
+
+        //Fix for https://github.com/driftyco/ionic-cli/issues/504
+        var queryStringIndex = indexHtml.indexOf('http://jsconsole.com/remote.js?some-id-here=');
+        expect(queryStringIndex).toBe(-1);
       })
       .catch(function(ex){
         expect('this').toBe(ex.stack);
