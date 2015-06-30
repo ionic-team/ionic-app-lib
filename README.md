@@ -56,7 +56,7 @@ Commands to convert:
 * [X] setup
 * [X] login
 * [X] upload
-* [ ] share
+* [X] share
 * [ ] push
 * [X] hooks
 * [X] browser
