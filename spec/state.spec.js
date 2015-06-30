@@ -96,7 +96,16 @@ describe('State', function() {
       var platformInfo = { platform: 'android', locator: fileLocator };
 
       State.addOrUpdatePlatformToPackageJson(defaultPackageJson, 'android', platformInfo);
-      expect(defaultPackageJson).toBe(defaultPackageJson);
+      expect(defaultPackageJson).toEqual(afterPackageJson);
+    });
+
+    it('should overwrite ios version when ios and version are added', function() {
+      defaultPackageJson = { cordovaPlatforms: [{platform: 'ios', locator: 'ios@3.7.0', version: '3.7.0'}], cordovaPlugins: [] };
+      var afterPackageJson = { cordovaPlatforms: [{platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0'}], cordovaPlugins: [] };
+      var platformInfo = { platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0' };
+
+      State.addOrUpdatePlatformToPackageJson(defaultPackageJson, 'ios', platformInfo);
+      expect(defaultPackageJson).toEqual(afterPackageJson);
     });
   });
 
