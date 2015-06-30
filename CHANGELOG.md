@@ -2,6 +2,7 @@
 
 * Update serve method `start` to check for document root and reject promise if it does not exist instead of exiting process with Util.fail.
 * Fix for upload - if you have a script with a query string, it will not get mangled from the removeCacheBusters call. Fixes issue https://github.com/driftyco/ionic-cli/issues/504.
+* Fix(browser): Fix for remove crosswalk, pass in the app directory for the project file, then use that instance object to save. Fixes CLI bug https://github.com/driftyco/ionic-cli/issues/500
 
 # 0.2.5
 
