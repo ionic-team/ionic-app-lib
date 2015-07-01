@@ -1,3 +1,7 @@
+# 0.3.1
+
+* Fix(upload): Bumped archiver back to 0.5.1 - it was causing an issue related to unzipped compressed files on Android devices - see: https://github.com/driftyco/ionic-cli/issues/494 and https://github.com/archiverjs/node-archiver/issues/113.
+
 # 0.3.0
 
 * Refactor(share): Share is now available in ionic-app-lib.
