@@ -168,7 +168,7 @@ describe('Cordova', function() {
         return Cordova.addPlatform(testDirectory, 'ios');
       })
       .then(function() {
-        expect(cordova.platform).toHaveBeenCalledWith('add', ['ios'], {});
+        expect(cordova.platform).toHaveBeenCalledWith('add', ['ios'], {stdio: 'pipe'});
       })
       .catch(function(data) {
         expect('this').toBe('not this');
