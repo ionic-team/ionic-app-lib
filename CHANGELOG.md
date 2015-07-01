@@ -7,7 +7,14 @@
 * Fix(state): cordovaPlatforms in package.json no longer gets duplicate entry.
 * Feature(start): add the ability to add bower packages to a starter project.
 * Fix(start): Ensure appSetup.bower is set so that the appSetup.bower.length call doesnt cause a run time exception. Handle the exception thrown from initCordova in the chain by rethrowing the exception if the app setup process fails.
-* Fix(platform): Remove console.log command from ionic-cordova-lib, bump to 5.1.5 to have that change
+* Fix(platform): Remove console.log command from ionic-cordova-lib, bump to 5.1.5 to have that change.
+* Fix(lab): Update preview.html to have utf-8 charset meta tag.
+* Style(share): Show the finished message as green
+* Fix(login): Remove lowercase of email.
+* Feature(project): Expose project to module.
+* Fix(upload): Remove entity parsing to fix https://github.com/driftyco/ionic-cli/issues/452#issuecomment-117376542
+* Fix(info): Add check runtime call to show upgrade messages for dependencies that are not fulfilled.
+* Fix(start): Ensure appSetup.bower is set so that the appSetup.bower.length call doesnt cause a run time exception. Handle the exception thrown from initCordova in the chain by rethrowing the exception if the app setup process fails.
 
 # 0.2.5
 
