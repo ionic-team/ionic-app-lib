@@ -1,3 +1,7 @@
+# 0.3.3
+
+* Fix(start): show message for user if invalid starter URL is passed or an invalid starter template name is provided. Show the user a message to view starter templates.
+
 # 0.3.2
 
 * Fix(cordova platform): Pass stdio for pipe for the create commands.
