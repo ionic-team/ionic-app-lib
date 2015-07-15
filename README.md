@@ -43,11 +43,11 @@ Commands to convert:
 
 * [X] start
 * [X] serve
-* [ ] cordova (using cordova-lib)
-  * [ ] run
-  * [ ] emulate
-  * [ ] compile
-  * [ ] build
+* [X] cordova (using cordova-lib)
+  * [X] run
+  * [X] emulate
+  * [X] compile
+  * [X] build
   * [X] add platform
   * [X] remove platform
   * [X] add plugin
@@ -56,6 +56,8 @@ Commands to convert:
 * [X] setup
 * [X] login
 * [X] upload
+* [X] share
+* [ ] push
 * [X] hooks
 * [X] browser
 * [ ] resources
