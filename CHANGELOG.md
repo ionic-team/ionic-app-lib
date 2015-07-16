@@ -1,3 +1,7 @@
+# 0.3.4
+
+* Fix(start): Check for bower packages to avoid having exception when they are not provided in app.json file for starters.
+
 # 0.3.3
 
 * Fix(start): show message for user if invalid starter URL is passed or an invalid starter template name is provided. Show the user a message to view starter templates.
