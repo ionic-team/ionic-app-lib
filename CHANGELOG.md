@@ -1,3 +1,15 @@
+# 0.3.6
+
+* Fix(cordova): Ensure cordova plugin commands are passed options for stdio to be pipe'.
+* Fix(package): Update ionic-cordova-lib to 5.1.7.
+* Added io init command.
+* Added io init skeleton.
+* Added list of ionic services and ngCordova to initialize.
+
+# 0.3.5
+
+* Fix(cordova): Expose cordova-lib so users of the lib can attach the cordova-lib events.
+
 # 0.3.4
 
 * Fix(start): Check for bower packages to avoid having exception when they are not provided in app.json file for starters.
