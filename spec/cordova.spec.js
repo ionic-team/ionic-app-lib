@@ -71,7 +71,7 @@ describe('Cordova', function() {
         return Cordova.addPlugin(testDirectory, testPluginId);
       })
       .then(function() {
-        expect(cordova.plugin).toHaveBeenCalledWith('add', testPluginId);
+        expect(cordova.plugin).toHaveBeenCalledWith('add', testPluginId, {stdio:'pipe'});
       })
       .catch(function(data) {
         console.log(data);
@@ -121,7 +121,7 @@ describe('Cordova', function() {
         return Cordova.removePlugin(testDirectory, testPluginId);
       })
       .then(function() {
-        expect(cordova.plugin).toHaveBeenCalledWith('remove', testPluginId);
+        expect(cordova.plugin).toHaveBeenCalledWith('remove', testPluginId, {stdio:'pipe'});
       })
       .catch(function(data) {
         console.log(data);
