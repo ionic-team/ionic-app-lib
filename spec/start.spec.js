@@ -31,10 +31,6 @@ var dummyOptions = {
 
 describe('Start', function() {
 
-  it('should have start app defined', function() {
-    expect(start.startApp).toBeDefined();
-  })
-
   it('should have methods defined', function(){
     var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp', 
       'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter', 
