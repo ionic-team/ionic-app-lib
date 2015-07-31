@@ -2,6 +2,7 @@ var archiver = require('archiver'),
     events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
+    IoLib = require('../lib/io-config'),
     path = require('path'),
     Project = require('../lib/project'),
     Q = require('q'),
@@ -193,6 +194,7 @@ describe('Upload', function() {
         app_id: Project.PROJECT_DEFAULT.app_id
       };
       spyOn(Project, 'load').andReturn(project);
+      spyOn(IoLib, 'writeIoConfig').andReturn(Q(key));
     });
 
     it('should call appropriate methods for upload process', function(done) {
@@ -218,6 +220,7 @@ describe('Upload', function() {
         expect(Upload.zipContents).toHaveBeenCalledWith(testDir, 'www');
         expect(Upload.removeCacheBusters).toHaveBeenCalledWith(indexPath);
         expect(Upload.getDirectUploadKey).toHaveBeenCalledWith(project, jar, note);
+        expect(IoLib.writeIoConfig).toHaveBeenCalledWith('app_id', key.app_id, true);
         expect(Upload.uploadToS3).toHaveBeenCalledWith(testDir, key);
         expect(Upload.signalDashUpload).toHaveBeenCalledWith(project, jar);
       })
