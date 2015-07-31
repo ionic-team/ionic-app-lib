@@ -20,6 +20,7 @@
 var path = require('path'),
     fs = require('fs'),
     shell = require('shelljs'),
+    logging = require('../lib/logging'),
     os = require('os');
 
 module.exports.tmpDir = function(subdir) {
@@ -62,3 +63,14 @@ beforeEach(function() {
     });
 });
 
+// By default we don't log anything during tests
+// Uncomment the logger with a console transport below to enable output
+module.exports.testingLogger = new logging.Logger();
+// module.exports.testingLogger = new logging.Logger({
+//   level: 'debug',
+//   transports: [
+//     new (logging.transports.Console)({
+//       showLevel: false
+//     }),
+//   ]
+// });

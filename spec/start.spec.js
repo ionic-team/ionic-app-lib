@@ -7,9 +7,8 @@ var cordova = require('../lib/cordova'),
     fs = require('fs'),
     helpers = require('./helpers');
 
-// events.on('log', console.log)
-// events.on('verbose', console.log);
 var tmpDir = helpers.tmpDir('create_test');
+start.logger = helpers.testingLogger;
 
 // Things to test 
 // Does it allow invalid vars? 
@@ -70,7 +69,7 @@ describe('Start', function() {
 
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup))
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'addDefaultPlatforms', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       })
