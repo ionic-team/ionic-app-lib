@@ -1,3 +1,7 @@
+# 0.3.9
+
+* Refactor: Use winston logging library for log messages
+
 # 0.3.8
 
 * Fix(config): Forcing string values for string types in io-config
@@ -57,6 +61,7 @@
 # 0.2.5
 
 * Update ionic-cordova-lib to 5.1.4 for fix with cordova lib run propagating errors to callers.
+
 # 0.2.4
 
 * Fix for serve - directory root is using path.join instead of path.resolve
