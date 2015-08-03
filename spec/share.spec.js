@@ -3,7 +3,10 @@ var Project = require('../lib/project'),
     Q = require('q'),
     events = require('../lib/events'),
     fs = require('fs'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    l = require('../lib/logging');
+
+l.logger = helpers.testingLogger;
 
 describe('Share', function() {
 

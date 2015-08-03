@@ -1,7 +1,10 @@
 var Q = require('q'),
     rewire = require('rewire'),
-    settings = require('../lib/settings');
+    settings = require('../lib/settings'),
+    helpers = require('./helpers'),
+    l = require('../lib/logging');
 
+l.logger = helpers.testingLogger;
 
 var cookieJar = [ 
   { 

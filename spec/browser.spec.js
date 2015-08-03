@@ -81,14 +81,14 @@ describe('Browser', function() {
 
     it('should log to the user no accepted browser was passed', function(done) {
       // spyOn(Browser, 'installDefaultBrowser');
-      spyOn(Browser.logger, 'info');
+      spyOn(l.logger, 'info');
       Q()
       .then(function() {
         return Browser.addBrowser(testDirectory, 'default');
       })
       .then(function(){
         // expect(Browser.installDefaultBrowser).toHaveBeenCalledWith(testDirectory);
-        expect(Browser.logger.info).toHaveBeenCalledWith('No accepted browser was specified.'.red.bold);
+        expect(l.logger.info).toHaveBeenCalledWith('No accepted browser was specified.'.red.bold);
       })
       .catch(function(ex){
         expect('this').toBe('not this');
@@ -225,10 +225,10 @@ describe('Browser', function() {
     });
 
     it('should log a message to specify browser if none specified', function() {
-      spyOn(Browser.logger, 'warn');
+      spyOn(l.logger, 'warn');
       spyOn(Browser, 'removeCrosswalk');
       Browser.removeBrowser(testDirectory);
-      expect(Browser.logger.warn).toHaveBeenCalledWith('Please specify a browser to be removed');
+      expect(l.logger.warn).toHaveBeenCalledWith('Please specify a browser to be removed');
       expect(Browser.removeCrosswalk).not.toHaveBeenCalled();
     });
   });

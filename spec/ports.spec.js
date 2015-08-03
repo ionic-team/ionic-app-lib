@@ -1,6 +1,9 @@
 var Ports = require('../lib/ports'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    l = require('../lib/logging');
+
+l.logger = helpers.testingLogger;
 
 describe('Ports', function() {
 
