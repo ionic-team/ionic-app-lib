@@ -5,10 +5,12 @@ var cordova = require('../lib/cordova'),
     Q = require('q'),
     events = require('../lib/events'),
     fs = require('fs'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    l = require('../lib/logging');
+
+l.logger = helpers.testingLogger;
 
 var tmpDir = helpers.tmpDir('create_test');
-start.logger = helpers.testingLogger;
 
 // Things to test 
 // Does it allow invalid vars? 

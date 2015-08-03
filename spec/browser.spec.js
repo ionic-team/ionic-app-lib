@@ -3,10 +3,11 @@ var Browser = require('../lib/browser'),
     helpers = require('./helpers'),
     info = require('../lib/info'),
     shelljs = require('shelljs'),
-    Q = require('q');
+    Q = require('q'),
+    l = require('../lib/logging');
 
 // spyOn(shelljs)
-Browser.logger = helpers.testingLogger;
+l.logger = helpers.testingLogger;
 
 var setCordovaVersion = function setCordovaVersion(version) {
   return function() {
