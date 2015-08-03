@@ -1,3 +1,12 @@
+# 0.3.8
+
+* Fix(config): Forcing string values for string types in io-config
+
+# 0.3.7
+
+* Fix(tests): Update test to pass options for stdio: pipe
+* Fix: Writes to io-config happen even if ionic-service-core is missing
+
 # 0.3.6
 
 * Fix(cordova): Ensure cordova plugin commands are passed options for stdio to be pipe'.
