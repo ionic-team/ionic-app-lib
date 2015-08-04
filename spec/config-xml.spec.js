@@ -4,9 +4,9 @@ var ConfigXml = require('../lib/config-xml'),
     path = require('path'),
     options = {},
     Q = require('q'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('ConfigXml', function() {
 

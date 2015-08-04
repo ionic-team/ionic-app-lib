@@ -1,9 +1,9 @@
 var MultiBar = require('../lib/multibar'),
     events = require('../lib/events'),
     helpers = require('./helpers'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('MultiBar', function() {
 

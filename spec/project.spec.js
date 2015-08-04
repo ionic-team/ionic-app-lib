@@ -3,9 +3,9 @@ var events = require('../lib/events'),
     helpers = require('./helpers'),
     path = require('path'),
     Project = require('../lib/project'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 var testDir = '/ionic/project';
 

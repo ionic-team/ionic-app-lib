@@ -4,9 +4,9 @@ var Project = require('../lib/project'),
     events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('Share', function() {
 

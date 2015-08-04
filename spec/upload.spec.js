@@ -8,9 +8,9 @@ var archiver = require('archiver'),
     Q = require('q'),
     rewire = require('rewire'),
     settings = require('../lib/settings'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 var testDir = '/ionic/app';
 

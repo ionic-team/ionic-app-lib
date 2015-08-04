@@ -4,9 +4,9 @@ var State = require('../lib/state'),
     path = require('path'),
     Q = require('q'),
     shelljs = require('shelljs'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 var tempDirectory = '/test/dev/ionic',
     testPluginId = 'com.ionic.keyboard',

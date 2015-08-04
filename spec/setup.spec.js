@@ -2,9 +2,9 @@ var Q = require('q'),
     setup = require('../lib/setup'),
     testDir = '/some/ionic/app',
     helpers = require('./helpers'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('Setup', function() {
 

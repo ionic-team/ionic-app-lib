@@ -1,8 +1,8 @@
 var utils = require('../lib/utils'),
     helpers = require('./helpers'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('Utils', function() {
 

@@ -1,9 +1,9 @@
 var Hooks = require('../lib/hooks'),
     path = require('path'),
     helpers = require('./helpers'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 describe('Hooks', function() {
 

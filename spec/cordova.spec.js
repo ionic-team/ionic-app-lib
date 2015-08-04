@@ -3,9 +3,9 @@ var Cordova = require('../lib/cordova'),
     Q = require('q'),
     helpers = require('./helpers'),
     state = require('../lib/state'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 var testDirectory = '/test/directory',
     testPluginId = 'org.apache.cordova.device';

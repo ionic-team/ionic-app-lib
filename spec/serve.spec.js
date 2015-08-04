@@ -3,9 +3,9 @@ var Q = require('q'),
     helpers = require('./helpers')
     Project = require('../lib/project'),
     rewire = require('rewire'),
-    l = require('../lib/logging');
+    logging = require('../lib/logging');
 
-l.logger = helpers.testingLogger;
+logging.logger = helpers.testingLogger;
 
 var defaultServeOptions = {
   address: '0.0.0.0',
