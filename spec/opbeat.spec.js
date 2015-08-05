@@ -1,6 +1,9 @@
 var Opbeat = require('../lib/opbeat'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 describe('Opbeat', function() {
   it('should have state defined', function() {

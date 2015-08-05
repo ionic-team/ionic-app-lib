@@ -1,10 +1,12 @@
 var ConfigXml = require('../lib/config-xml'),
-    events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
     path = require('path'),
     options = {},
-    Q = require('q');
+    Q = require('q'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 describe('ConfigXml', function() {
 

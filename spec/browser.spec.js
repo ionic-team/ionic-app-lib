@@ -1,12 +1,13 @@
 var Browser = require('../lib/browser'),
-    events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
     info = require('../lib/info'),
     shelljs = require('shelljs'),
-    Q = require('q');
+    Q = require('q'),
+    logging = require('../lib/logging');
 
 // spyOn(shelljs)
+logging.logger = helpers.testingLogger;
 
 var setCordovaVersion = function setCordovaVersion(version) {
   return function() {
@@ -80,14 +81,14 @@ describe('Browser', function() {
 
     it('should log to the user no accepted browser was passed', function(done) {
       // spyOn(Browser, 'installDefaultBrowser');
-      spyOn(events, 'emit');
+      spyOn(logging.logger, 'info');
       Q()
       .then(function() {
         return Browser.addBrowser(testDirectory, 'default');
       })
       .then(function(){
         // expect(Browser.installDefaultBrowser).toHaveBeenCalledWith(testDirectory);
-        expect(events.emit).toHaveBeenCalledWith('log', 'No accepted browser was specified.'.red.bold);
+        expect(logging.logger.info).toHaveBeenCalledWith('No accepted browser was specified.'.red.bold);
       })
       .catch(function(ex){
         expect('this').toBe('not this');
@@ -224,10 +225,10 @@ describe('Browser', function() {
     });
 
     it('should log a message to specify browser if none specified', function() {
-      spyOn(events, 'emit');
+      spyOn(logging.logger, 'warn');
       spyOn(Browser, 'removeCrosswalk');
       Browser.removeBrowser(testDirectory);
-      expect(events.emit).toHaveBeenCalledWith('log', 'Please specify a browser to be removed');
+      expect(logging.logger.warn).toHaveBeenCalledWith('Please specify a browser to be removed');
       expect(Browser.removeCrosswalk).not.toHaveBeenCalled();
     });
   });

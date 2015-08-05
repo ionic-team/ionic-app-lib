@@ -2,7 +2,10 @@ var Q = require('q'),
     events = require('../lib/events'),
     helpers = require('./helpers')
     Project = require('../lib/project'),
-    rewire = require('rewire');
+    rewire = require('rewire'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 var defaultServeOptions = {
   address: '0.0.0.0',

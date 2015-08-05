@@ -1,6 +1,9 @@
 var Store = require('../lib/store'),
     events = require('../lib/events'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 describe('Store', function() {
 

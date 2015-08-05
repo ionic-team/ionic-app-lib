@@ -7,7 +7,10 @@ var archiver = require('archiver'),
     Project = require('../lib/project'),
     Q = require('q'),
     rewire = require('rewire'),
-    settings = require('../lib/settings');
+    settings = require('../lib/settings'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 var testDir = '/ionic/app';
 

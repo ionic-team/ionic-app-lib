@@ -3,7 +3,10 @@ var State = require('../lib/state'),
     helpers = require('./helpers'),
     path = require('path'),
     Q = require('q'),
-    shelljs = require('shelljs');
+    shelljs = require('shelljs'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 var tempDirectory = '/test/dev/ionic',
     testPluginId = 'com.ionic.keyboard',

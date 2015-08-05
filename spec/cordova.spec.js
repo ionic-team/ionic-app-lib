@@ -1,9 +1,11 @@
 var Cordova = require('../lib/cordova'),
     cordova = require('ionic-cordova-lib').cordova.raw,
     Q = require('q'),
-    events = require('../lib/events'),
     helpers = require('./helpers'),
-    state = require('../lib/state');
+    state = require('../lib/state'),
+    logging = require('../lib/logging');
+
+logging.logger = helpers.testingLogger;
 
 var testDirectory = '/test/directory',
     testPluginId = 'org.apache.cordova.device';

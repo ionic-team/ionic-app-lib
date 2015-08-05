@@ -5,10 +5,11 @@ var cordova = require('../lib/cordova'),
     Q = require('q'),
     events = require('../lib/events'),
     fs = require('fs'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    logging = require('../lib/logging');
 
-// events.on('log', console.log)
-// events.on('verbose', console.log);
+logging.logger = helpers.testingLogger;
+
 var tmpDir = helpers.tmpDir('create_test');
 
 // Things to test 
@@ -30,10 +31,6 @@ var dummyOptions = {
 }
 
 describe('Start', function() {
-
-  it('should have start app defined', function() {
-    expect(start.startApp).toBeDefined();
-  })
 
   it('should have methods defined', function(){
     var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp', 
@@ -74,7 +71,7 @@ describe('Start', function() {
 
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup))
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'addDefaultPlatforms', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       })
