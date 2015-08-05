@@ -1,7 +1,7 @@
 var index = require('../index'),
     logging = require('../lib/logging');
 
-ddescribe('index', function() {
+describe('index', function() {
 
   it('should have index defined', function() {
     expect(index).toBeDefined();
