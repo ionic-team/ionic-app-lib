@@ -1,7 +1,9 @@
 var Q = require('q'),
     rewire = require('rewire'),
+    ConfigXml = require('../lib/config-xml'),
     helpers = require('./helpers'),
-    logging = require('../lib/logging');
+    logging = require('../lib/logging'),
+    State = require('../lib/state');
 
 logging.logger = helpers.testingLogger;
 
@@ -57,7 +59,10 @@ describe('Package', function() {
     Package.__set__('IonicProject', IonicProjectSpy);
     Package.__set__('request', requestSpy);
 
-    Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    spyOn(ConfigXml, 'loadToStream');
+    spyOn(State, 'getPackageJsonReadStream');
+
+      Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
       .then(function(buildId) {
         console.log('1');
         expect(buildId).toBe("123456");
