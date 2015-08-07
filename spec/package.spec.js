@@ -62,17 +62,14 @@ describe('Package', function() {
     spyOn(ConfigXml, 'loadToStream');
     spyOn(State, 'getPackageJsonReadStream');
 
-      Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
       .then(function(buildId) {
-        console.log('1');
         expect(buildId).toBe("123456");
-        console.log('2');
-        done();
-        console.log('3');
       })
       .catch(function(ex) {
         console.log(ex);
-      });
+      }).
+      fin(done);
   });
 
 });
