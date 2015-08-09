@@ -6,7 +6,7 @@ var events = require('../lib/events'),
 
 logging.logger = helpers.testingLogger;
 
-ddescribe('Stats', function() {
+describe('Stats', function() {
   var Stats = rewire('../lib/stats');
 
   beforeEach(function() {
