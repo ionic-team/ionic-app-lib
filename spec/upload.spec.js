@@ -176,7 +176,7 @@ describe('Upload', function() {
     it('should do a PUT request to the server', function(done) {
       Q()
       .then(function(){
-        //do function call
+        Upload.getDirectUploadKey
       })
       .then(function() {
         //do expectations
@@ -232,6 +232,33 @@ describe('Upload', function() {
       })
       .fin(done);
 
+    });
+  });
+
+  ddescribe('#uploadToS3', function() {
+    it('should call request to signal upload to s3', function(done) {
+      var requestSpy = createSpy();
+      var fs = require('fs');
+      var q = require('q');
+      var deferred = q.defer();
+
+      spyOn(q, 'defer').andReturn(deferred);
+      spyOn(fs, 'readFileSync');
+      Upload.__set__('request', requestSpy);
+      Q()
+      .then(function(){
+        Upload.uploadToS3(testDir, {});
+        return deferred.resolve(true);
+      })
+      .then(function() {
+        expect(requestSpy).toHaveBeenCalled();
+        expect(fs.readFileSync).toHaveBeenCalled();
+      })
+      .catch(function(ex){
+        console.log(ex);
+        expect('this').toBe(ex.stack);
+      })
+      .fin(done);
     });
   });
 
