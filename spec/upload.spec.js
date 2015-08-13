@@ -235,7 +235,7 @@ describe('Upload', function() {
     });
   });
 
-  ddescribe('#uploadToS3', function() {
+  describe('#uploadToS3', function() {
     it('should call request to signal upload to s3', function(done) {
       var requestSpy = createSpy();
       var fs = require('fs');
