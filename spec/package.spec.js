@@ -1,4 +1,6 @@
-var Q = require('q'),
+var fs = require('fs'),
+    path = require('path'),
+    Q = require('q'),
     rewire = require('rewire'),
     ConfigXml = require('../lib/config-xml'),
     helpers = require('./helpers'),
@@ -31,9 +33,12 @@ describe('Package', function() {
   });
 
   it('should get 202 and message from package service', function(done) {
+    spyOn(fs, 'unlinkSync');
     var fakeAppId = 'abcdef',
         fakeAppDir = '/Users/Test/myApp',
-        fakeJar = {};
+        fakeJar = {
+          map: createSpy('map').andReturn([])
+        };
 
     var UploadSpy = {
       doUpload: createSpy('doUpload').andCallFake(function(appDirectory, jar, name) {
@@ -41,6 +46,15 @@ describe('Package', function() {
         q.resolve({ url: 'http://test' });
         return q.promise;
       })
+    };
+
+    var UtilsSpy = {
+      createArchive: createSpy('createArchive').andCallFake(function(appDirectory, documentRoot) {
+        var q = Q.defer();
+        q.resolve(path.join(appDirectory, documentRoot) + '.zip');
+        return q.promise;
+      }),
+      retrieveCsrfToken: createSpy('retrieveCsrfToken').andReturn('asdf')
     };
 
     var IonicProjectSpy = {
@@ -51,25 +65,29 @@ describe('Package', function() {
 
     var requestSpy = {
       post: createSpy('request').andCallFake(function(settings, callback) {
-        callback(null, { statusCode: 202 }, '{"data":{"build_id":"123456"}}');
+        callback(null, { statusCode: 202 }, '{"data":{"id":"123456"}}');
       })
     };
 
     Package.__set__('Upload', UploadSpy);
     Package.__set__('IonicProject', IonicProjectSpy);
     Package.__set__('request', requestSpy);
+    Package.__set__('Utils', UtilsSpy);
 
     spyOn(ConfigXml, 'loadToStream');
     spyOn(State, 'getPackageJsonReadStream');
 
-    Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    return Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
       .then(function(buildId) {
         expect(buildId).toBe("123456");
       })
       .catch(function(ex) {
-        console.log(ex);
-      }).
-      fin(done);
+        expect('this').toBe(ex.stack);
+      })
+      .fin(function() {
+        console.log('finished');
+        return done();
+      });
   });
 
 });
