@@ -34,13 +34,11 @@ describe('Utils', function() {
   })
 
   describe('#createArchive', function() {
-    beforeEach(function() {
+    it('should zip the contents and resolve', function(done) {
       spyOn(fs, 'existsSync').andReturn(true);
       var emitter = new (require('events').EventEmitter)();
       spyOn(fs, 'createWriteStream').andReturn(emitter);
-    });
 
-    it('should zip the contents and resolve', function(done) {
       var archiveSpy = createSpyObj('archive', ['pipe', 'bulk', 'finalize']);
 
       var archiverFake = function() {

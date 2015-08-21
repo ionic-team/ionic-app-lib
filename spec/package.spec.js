@@ -34,6 +34,8 @@ describe('Package', function() {
 
   it('should get 202 and message from package service', function(done) {
     spyOn(fs, 'unlinkSync');
+    spyOn(fs, 'createReadStream');
+
     var fakeAppId = 'abcdef',
         fakeAppDir = '/Users/Test/myApp',
         fakeJar = {
@@ -77,17 +79,15 @@ describe('Package', function() {
     spyOn(ConfigXml, 'loadToStream');
     spyOn(State, 'getPackageJsonReadStream');
 
-    return Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
       .then(function(buildId) {
         expect(buildId).toBe("123456");
       })
       .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
-      .fin(function() {
-        console.log('finished');
-        return done();
-      });
+      .fin(done);
+
   });
 
 });
