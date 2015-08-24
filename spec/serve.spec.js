@@ -14,6 +14,7 @@ var defaultServeOptions = {
   defaultBrowser: undefined,
   documentRoot: 'www',
   gulpStartupTasks: undefined,
+  gulpDependantTasks: undefined,
   isAddressCmd: false,
   launchBrowser: true,
   launchLab: undefined,
@@ -40,6 +41,7 @@ function compareOptions(options) {
   expect(options.defaultBrowser).toBe(defaultServeOptions.defaultBrowser);
   expect(options.documentRoot).toBe(defaultServeOptions.documentRoot);
   expect(options.gulpStartupTasks).toBe(defaultServeOptions.gulpStartupTasks);
+  expect(options.gulpDependantTasks).toBe(defaultServeOptions.gulpDependantTasks);
   expect(options.isAddressCmd).toBe(defaultServeOptions.isAddressCmd);
   expect(options.launchBrowser).toBe(defaultServeOptions.launchBrowser);
   expect(options.launchLab).toBe(defaultServeOptions.launchLab);
