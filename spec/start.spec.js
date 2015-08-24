@@ -1,5 +1,6 @@
 var cordova = require('../lib/cordova'),
     hooks = require('../lib/hooks'),
+    ioLib = require('../lib/io-config'),
     Project = require('../lib/project'),
     start = require('../lib/start'),
     Q = require('q'),
@@ -39,15 +40,15 @@ describe('Start', function() {
     methods.forEach(function(method) {
       expect(start[method]).toBeDefined();
     })
-  })
+  });
 
   it('should have fetchWrapper defined', function() {
     expect(start.fetchWrapper).toBeDefined();
-  })
+  });
 
   it('should have startApp defined', function() {
     expect(start.startApp).toBeDefined();
-  })
+  });
 
   describe('#startApp', function(done) {
     beforeEach(function() {
@@ -58,7 +59,7 @@ describe('Start', function() {
         appName: dummyAppName,
         isCordovaProject: true,
         setupSass: true
-      }
+      };
 
       appSetup = {
         "plugins": [
@@ -67,14 +68,15 @@ describe('Start', function() {
           "com.ionic.keyboard"
         ],
         "sass": false
-      }
+      };
 
-      spyOn(start, 'loadAppSetup').andReturn(Q(appSetup))
+      spyOn(start, 'loadAppSetup').andReturn(Q(appSetup));
+      spyOn(ioLib, 'warnMissingData');
 
       var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
-      })
+      });
     })
 
     it('should fail if no options are passed', function() {
