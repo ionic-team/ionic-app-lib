@@ -2,6 +2,7 @@ var archiver = require('archiver'),
     events = require('../lib/events'),
     fs = require('fs'),
     helpers = require('./helpers'),
+    ioLib = require('../lib/io-config'),
     path = require('path'),
     Project = require('../lib/project'),
     Q = require('q'),
@@ -205,6 +206,8 @@ describe('Upload', function() {
       spyOn(Project, 'save');
       spyOn(Upload, 'uploadToS3').andReturn(Q());
       spyOn(Upload, 'signalDashUpload').andReturn(Q());
+
+      spyOn(ioLib, 'writeIoConfig').andReturn(Q());
 
       var note = 'Note';
 
