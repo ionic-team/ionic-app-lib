@@ -1,3 +1,15 @@
+# 0.4.0
+
+* Logging now done with `logging` module - using the node js winston logger.
+* Lazy load all modules in ionic-app-lib - gives 8x performance gain.
+* Added `package` command to build applications on ionic servers.
+* Fix - remove globals that were set by accident - correct files to not rely on the globals.
+* Upload command now properly checks 522 status code from CloudFlare.
+* Stats command added to ionic-app-lib.
+* Added gulp dependent start up tasks to run before `ionic serve` - specify them in your `ionic.project` file as attribute `gulpStartupTasks`.
+* On starting apps - now calls `ionic add` instead of `bower install`.
+* State command now saves package.json with newline character at end of file. 
+
 # 0.3.9
 
 * Refactor: Use winston logging library for log messages
