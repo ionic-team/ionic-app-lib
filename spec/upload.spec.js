@@ -135,43 +135,6 @@ describe('Upload', function() {
     });
   });
 
-  describe('#zipContents', function() {
-    it('should zip the contents and resolve', function(done) {
-      var archiveSpy = createSpyObj('archive', ['pipe', 'bulk', 'finalize']);
-
-      var archiverFake = function() {
-        return archiveSpy;
-      };
-
-      Upload.__set__('archiver', archiverFake);
-
-      spyOn(fs, 'existsSync').andReturn(true);
-      var emitter = new (require('events').EventEmitter)();
-      spyOn(fs, 'createWriteStream').andReturn(emitter);
-
-      Q()
-      .then(function(){
-        //Trigger this so it will finish.      
-        setTimeout(function(){
-          emitter.emit('close', '');
-        }, 50);
-
-        return Upload.zipContents(testDir, 'www');
-      })
-      .then(function() {
-        // expect()
-        expect(archiveSpy.pipe).toHaveBeenCalledWith(emitter);
-        var bulkProps = [{ expand: true, cwd: path.join(testDir, 'www'), src: ['**'] }];
-        expect(archiveSpy.bulk).toHaveBeenCalledWith(bulkProps);
-        expect(archiveSpy.finalize).toHaveBeenCalled();
-      })
-      .catch(function(ex){
-        expect('this').toBe(ex.stack);
-      })
-      .fin(done);
-    });
-  });
-
   describe('#getDirectUploadKey', function() {
     it('should do a PUT request to the server', function(done) {
       Q()

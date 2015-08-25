@@ -113,7 +113,7 @@ describe('Login', function() {
     })
     .then(function() {
       // console.log('jar', jar);
-      var url = [settings.IONIC_DASH, settings.IONIC_API, 'user/login'].join('');
+      var url = [settings.IONIC_DASH_API, 'user/login'].join('');
       var postParams = {
         method: 'POST',
         url: url,
@@ -160,7 +160,7 @@ describe('Login', function() {
     })
     .then(function() {
       // console.log('jar', jar);
-      var url = [settings.IONIC_DASH, settings.IONIC_API, 'user/login'].join('');
+      var url = [settings.IONIC_DASH_API, 'user/login'].join('');
       var postParams = {
         method: 'POST',
         url: url,
