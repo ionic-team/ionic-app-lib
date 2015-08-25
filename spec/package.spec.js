@@ -20,16 +20,24 @@ describe('Package', function() {
     expect(Package).toBeDefined();
   });
 
-  it('should have Package.packageAndroidDebug defined', function() {
-    expect(Package.packageAndroidDebug).toBeDefined();
+  it('should have Package.buildAndroidDebug defined', function() {
+    expect(Package.buildAndroidDebug).toBeDefined();
   });
 
-  it('should have Package.packageAndroidRelease defined', function() {
-    expect(Package.packageAndroidRelease).toBeDefined();
+  it('should have Package.buildAndroidRelease defined', function() {
+    expect(Package.buildAndroidRelease).toBeDefined();
   });
 
-  it('should have Package.packageIOS defined', function() {
-    expect(Package.packageIOS).toBeDefined();
+  it('should have Package.buildIOS defined', function() {
+    expect(Package.buildIOS).toBeDefined();
+  });
+
+  it('should have Package.listBuilds defined', function() {
+    expect(Package.listBuilds).toBeDefined();
+  });
+
+  it('should have Package.getBuild defined', function() {
+    expect(Package.getBuild).toBeDefined();
   });
 
   it('should get 202 and message from package service', function(done) {
@@ -79,7 +87,7 @@ describe('Package', function() {
     spyOn(ConfigXml, 'loadToStream');
     spyOn(State, 'getPackageJsonReadStream');
 
-    Package.packageAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    Package.buildAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
       .then(function(buildId) {
         expect(buildId).toBe("123456");
       })
