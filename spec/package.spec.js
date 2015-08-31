@@ -42,6 +42,7 @@ describe('Package', function() {
 
   it('should get 202 and message from package service', function(done) {
     spyOn(fs, 'unlinkSync');
+    spyOn(fs, 'existsSync').andReturn(true);
     spyOn(fs, 'createReadStream');
 
     var fakeAppId = 'abcdef',
