@@ -9,6 +9,8 @@
 * Added gulp dependent start up tasks to run before `ionic serve` - specify them in your `ionic.project` file as attribute `gulpStartupTasks`.
 * On starting apps - now calls `ionic add` instead of `bower install`.
 * State command now saves package.json with newline character at end of file. 
+* Resources have been extracted to the ionic-app-lib - now usable in the module.
+* Add release feature as alpha - will compress images and concat/minify CSS/JS via usemin specified in index.html.
 
 # 0.3.9
 
