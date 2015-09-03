@@ -66,10 +66,10 @@ beforeEach(function() {
 // By default we don't log anything during tests
 // Uncomment the logger with a console transport below to enable output
 module.exports.testingLogger = new logging.winston.Logger();
-// module.exports.testingLogger = new logging.Logger({
+// module.exports.testingLogger = new logging.winston.Logger({
 //   level: 'debug',
 //   transports: [
-//     new (logging.transports.Console)({
+//     new (logging.winston.transports.Console)({
 //       showLevel: false
 //     }),
 //   ]

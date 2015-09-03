@@ -27,6 +27,7 @@ describe('Setup', function() {
       expect(setup.buildSass).toHaveBeenCalledWith(testDir);
     })
     .catch(function(ex){
+      console.log(ex);
       expect('this').toBe('not this');
     })
     .fin(done);
