@@ -65,7 +65,7 @@ describe('Start', function() {
         "plugins": [
           "org.apache.cordova.device",
           "org.apache.cordova.console",
-          "com.ionic.keyboard"
+          "ionic-plugin-keyboard"
         ],
         "sass": false
       };
@@ -318,7 +318,7 @@ describe('Start', function() {
       spyOn(cordova, 'addPlatform');
       appSetup = {
         "plugins": [
-          "com.ionic.keyboard"
+          "ionic-plugin-keyboard"
         ]
       };
     });

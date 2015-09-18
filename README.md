@@ -19,7 +19,7 @@ var ionicAppLib = require('ionic-app-lib'),
 var options = { 
   appDirectory: 'IonicApp',
   appName: 'Test',
-  packageName: 'com.ionic.test,
+  packageName: 'com.ionic.test',
   isCordovaProject: true,
   template: 'tabs',
   targetPath: '/User/Path/Development/' 
