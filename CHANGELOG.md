@@ -1,4 +1,4 @@
-# 0.4.0
+# 0.4.1
 
 * Logging now done with `logging` module - using the node js winston logger.
 * Lazy load all modules in ionic-app-lib - gives 8x performance gain.
@@ -11,6 +11,10 @@
 * State command now saves package.json with newline character at end of file. 
 * Resources have been extracted to the ionic-app-lib - now usable in the module.
 * Add release feature as alpha - will compress images and concat/minify CSS/JS via usemin specified in index.html.
+
+# 0.4.0
+
+* Erronous publish on NPM - invalid version.
 
 # 0.3.9
 

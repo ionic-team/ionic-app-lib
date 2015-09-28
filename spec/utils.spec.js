@@ -4,6 +4,7 @@ var fs = require('fs'),
     archiver = require('archiver'),
     rewire = require('rewire'),
     helpers = require('./helpers'),
+    Info = require('../lib/info'),
     logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
@@ -67,6 +68,28 @@ describe('Utils', function() {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
+    });
+  });
+
+  describe('#isIonicV2', function() {
+    it('should return false for a v1 project', function() {
+      spyOn(Info, 'getIonicVersion').andCallFake(function(info, appDirectory) {
+        info.ionic = '1.1.0';
+      });
+
+      var isIonicV2 = Utils.isIonicV2('/fake/ionic/appDirectory');
+      expect(isIonicV2).toBe(false);
+
+    });
+
+    it('should return false for a v1 project', function() {
+      spyOn(Info, 'getIonicVersion').andCallFake(function(info, appDirectory) {
+        info.ionic = '2.0.0-alpha.15';
+      });
+
+      var isIonicV2 = Utils.isIonicV2('/fake/ionic/appDirectory');
+      expect(isIonicV2).toBe(true);
+
     });
   });
 

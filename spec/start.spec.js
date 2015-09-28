@@ -36,7 +36,7 @@ describe('Start', function() {
   it('should have methods defined', function(){
     var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp', 
       'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter', 
-      'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'setupSass', 'updateLibFiles', 'finalize'];
+      'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'setupSass', 'updateLibFiles', 'finalize', 'startV2App'];
     methods.forEach(function(method) {
       expect(start[method]).toBeDefined();
     })
