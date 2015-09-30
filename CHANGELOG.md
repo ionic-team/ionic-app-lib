@@ -1,3 +1,8 @@
+# 0.3.9
+
+* Adding ionic-platform-web-client to the `ionic add` injection list
+* Updated config writes to handle both minified and non-minified versions of ionic-platform-web-client
+
 # 0.3.8
 
 * Fix(config): Forcing string values for string types in io-config
