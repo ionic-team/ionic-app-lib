@@ -1,3 +1,8 @@
+# 0.5.1
+
+* Add security command for managing Security Profiles.
+* Add package command for Ionic Package.
+
 # 0.4.1
 
 * Logging now done with `logging` module - using the node js winston logger.
