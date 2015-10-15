@@ -1,3 +1,7 @@
+# 0.5.2
+
+* Various fixes to catch problems with package
+
 # 0.5.1
 
 * Add security command for managing Security Profiles.
