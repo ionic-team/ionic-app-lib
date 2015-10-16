@@ -1,3 +1,7 @@
+# 0.6.0
+
+* Add `creator:[id]` template option to `ionic start` command
+
 # 0.5.3
 
 * Fix localhost that got into npm version
