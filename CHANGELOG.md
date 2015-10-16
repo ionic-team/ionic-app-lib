@@ -1,3 +1,7 @@
+# 0.6.1
+
+* Fix missing cookies error in creator start command
+
 # 0.6.0
 
 * Add `creator:[id]` template option to `ionic start` command
