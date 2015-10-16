@@ -1,3 +1,7 @@
+# 0.5.3
+
+* Fix localhost that got into npm version
+
 # 0.5.2
 
 * Various fixes to catch problems with package
