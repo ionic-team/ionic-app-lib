@@ -1,3 +1,7 @@
+# 0.6.2
+
+* Fix login issue with creator start command
+
 # 0.6.1
 
 * Fix missing cookies error in creator start command
