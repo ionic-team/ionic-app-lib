@@ -1,3 +1,7 @@
+# 0.6.3
+
+* Fix [#36](https://github.com/driftyco/ionic-app-lib/pull/36), thanks [@kentongray](https://github.com/kentongray)!
+
 # 0.6.2
 
 * Fix login issue with creator start command
