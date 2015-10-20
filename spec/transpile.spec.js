@@ -1,6 +1,6 @@
 var transpile = require('../lib/transpile');
 
-ddescribe('transpile', function() {
+describe('transpile', function() {
 
   it('should have transpile defined', function() {
     expect(transpile).toBeDefined();
