@@ -12,7 +12,7 @@ describe('transpile', function() {
     expect(webpackConfig).toBeDefined();
     expect(webpackConfig.entry).toBeDefined();
     expect(webpackConfig.output).toBeDefined();
-    expect(webpackConfig.output.path).toBe('/ionic/app/path/www/app/build/js');
+    expect(webpackConfig.output.path).toBe('/ionic/app/path/www/build/js');
     expect(webpackConfig.output.filename).toBe('app.bundle.js');
     expect(webpackConfig.module.loaders[0].include).toBe('/ionic/app/path/www/app');
     expect(webpackConfig.module.loaders[1].include).toBe('/ionic/app/path/www/app');
