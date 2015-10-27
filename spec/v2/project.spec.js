@@ -7,30 +7,48 @@ var fs = require('fs'),
 
 logging.logger = helpers.testingLogger;
 
-var tmpDir = helpers.tmpDir('create_test');
-var appName = 'TestIonic';
-var appDirectory = path.join(tmpDir, appName);
-
-var spyOnFileSystem = function(data) {
-  data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
-  spyOn(fs, 'existsSync').andReturn(true);
-  spyOn(fs, 'readFileSync').andReturn(data);
-};
+// var spyOnFileSystem = function(data) {
+//   data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
+//   spyOn(fs, 'existsSync').andReturn(true);
+//   spyOn(fs, 'readFileSync').andReturn(data);
+// };
 
 describe('Project', function() {
+  var appName = 'TestIonic';
+  var tmpDir, appDirectory;
   var data = Project.PROJECT_DEFAULT;
+
+  beforeEach(function(){
+    // reset for each test
+    tmpDir = helpers.tmpDir('create_test');
+    appDirectory = path.join(tmpDir, appName);
+  })
 
   it('should have Project defined', function() {
     expect(Project).toBeDefined();
   });
 
   ddescribe('#load', function(){
+
     it('should call Project.save if the load path does not exist', function(){
        spyOn(Project, 'save');
        Project.load(tmpDir + 'fakePath');
        expect(Project.save).toHaveBeenCalled();
-    })
-  })
+    });
+
+    it('should save the provided data if the load path does not exist', function(){
+       var fakeData = { test: 'test' };
+       var loadData = Project.load(tmpDir + 'fakePath2', fakeData);
+       expect(loadData.get('test')).toBe(fakeData.test);
+    });
+
+    it('should require the path if it exists', function(){
+       var fakeFilePath = tmpDir + 'fakeFile.js';
+       fs.writeFileSync(fakeFilePath, 'module.exports = { test: "test" }');
+       var fileData = Project.load(fakeFilePath);
+       expect(fileData.get('test')).toBe('test');
+    });
+  });
 
   // ddescribe('#save', function() {
   //   iit('should create the specified file if it doesn\'t exist', function() {
