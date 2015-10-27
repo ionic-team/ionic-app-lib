@@ -25,13 +25,13 @@ ddescribe('Project', function() {
 
   // beforeEach(function() {
   //   spyOnFileSystem(data);
-  // });  
+  // });
 
   it('should have Project defined', function() {
     expect(Project).toBeDefined();
   });
 
-  xdescribe('#create', function() {
+  describe('#create', function() {
     it('should create a default project file', function() {
       // spyOn(Project, 'set').andCallThrough();
       // spyOn(Project, 'wrap').andCallThrough();
@@ -48,21 +48,16 @@ ddescribe('Project', function() {
     });
   });
 
-  xdescribe('#load', function() {
-    var project = Project.load(testDir);
-    expect(project).toBeDefined();
-  });
-
   describe('#save', function() {
     it('should save the configuration', function() {
       spyOn(fs, 'mkdirSync'); //mock out the creation of mkdirSync for project folder
       spyOn(fs, 'writeFileSync'); // mock out writing file
       Project.save(testDir, Project.PROJECT_DEFAULT);
-      
+
       var projectFileDir = path.join(testDir, Project.PROJECT_FILE_DIR);
       var projectFilePath = path.join(testDir, Project.PROJECT_FILE_DIR, Project.PROJECT_FILE);
       var projectContents = 'module.exports = ' + JSON.stringify(Project.PROJECT_DEFAULT);
-      
+
       expect(fs.mkdirSync).toHaveBeenCalledWith(projectFileDir);
       expect(fs.writeFileSync).toHaveBeenCalledWith(projectFilePath, projectContents)
     });
