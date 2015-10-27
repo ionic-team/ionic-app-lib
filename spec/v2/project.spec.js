@@ -28,7 +28,7 @@ describe('Project', function() {
     expect(Project).toBeDefined();
   });
 
-  ddescribe('#load', function(){
+  describe('#load', function(){
 
     it('should call Project.save if the load path does not exist', function(){
        spyOn(Project, 'save');

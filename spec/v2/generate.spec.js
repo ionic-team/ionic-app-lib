@@ -3,30 +3,38 @@ var fs = require('fs'),
     path = require('path'),
     Generate = require('../../lib/v2/generate'),
     _ = require('lodash'),
+    shell = require('shelljs'),
     logging = require('../../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
-describe('Generate', function() {
+ddescribe('Generate', function() {
   it('should have generate exported', function() {
     expect(Generate).toBeDefined();
     expect(Generate.page).toBeDefined();
   });
 
-  xit('should generate a page at a directory', function() {
+  it('should generate a page at a directory', function() {
     //ionic g page about
     //what should happen:
-    // create directories if not existing: /www, /www/app, /www/about
+    // create directories if not existing: /www, /www/app, /www/app/about
     // create files in dir: /www/app/about/
     // about.html, about.scss, about.js
     var appDir = '/ionic/app';
-    spyOn(Generate, 'createScaffoldDirectory');
+    spyOn(Generate, 'createScaffoldDirectories');
+    spyOn(fs, 'writeFileSync');
+    spyOn(Generate, 'generateHtmlTemplate');
+    spyOn(Generate, 'generateScssTemplate');
+    spyOn(Generate, 'generateJsTemplate');
+
     Generate.page(appDir, 'about');
 
-    expect(Generate.createScaffoldDirectory).toHaveBeenCalledWith(appDir, 'about');
-    expect(Generate.generateHtmlTemplate).toHaveBeenCalledWith(appDir, 'about');
-    expect(Generate.generateSassTemplate).toHaveBeenCalledWith(appDir, 'about');
-    expect(Generate.generateJsTemplate).toHaveBeenCalledWith(appDir, 'about');
+    expect(Generate.createScaffoldDirectories).toHaveBeenCalledWith(appDir, 'about');
+    expect(Generate.generateJsTemplate).toHaveBeenCalledWith('about');
+    expect(Generate.generateHtmlTemplate).toHaveBeenCalledWith('about');
+    expect(Generate.generateScssTemplate).toHaveBeenCalledWith('about');
+
+    expect(fs.writeFileSync).toHaveBeenCalled();
 
   });
 
@@ -53,6 +61,12 @@ describe('Generate', function() {
 
   });
 
+  it('should generate a page sass template', function() {
+    var scaffold = 'sessions';
+    var compiledTemplate = Generate.generateScssTemplate(scaffold);
+    expect(compiledTemplate).toContain('#sessions {');
+  });
+
   it('should render template from file', function() {
     spyOn(fs, 'readFileSync').andReturn('faketemplate');
     var templateSpy = createSpy();
@@ -63,5 +77,14 @@ describe('Generate', function() {
     expect(fs.readFileSync).toHaveBeenCalledWith(options.templatePath, 'utf8');
     expect(_.template).toHaveBeenCalledWith('faketemplate');
     expect(templateSpy).toHaveBeenCalledWith({name: 'test', nameUppercased: 'Test'});
+  });
+
+  it('should create directories for scaffolding', function() {
+    // pwd = /ionic/app
+    // ionic g page about
+    // create folders in /ionic/app/www/app/about
+    spyOn(shell, 'mkdir');
+    Generate.createScaffoldDirectories('/ionic/app', 'about');
+    expect(shell.mkdir).toHaveBeenCalledWith('-p', '/ionic/app/www/app/about');
   });
 });
