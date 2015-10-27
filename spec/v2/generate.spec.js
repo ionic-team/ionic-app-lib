@@ -7,7 +7,7 @@ var fs = require('fs'),
 
 logging.logger = helpers.testingLogger;
 
-ddescribe('Generate', function() {
+describe('Generate', function() {
   it('should have generate exported', function() {
     expect(Generate).toBeDefined();
     expect(Generate.page).toBeDefined();
@@ -30,10 +30,38 @@ ddescribe('Generate', function() {
 
   });
 
-  it('should generate a page template with lodash', function() {
-    var scaffold = { name: 'about', appDirectory: '/ionic/app' };
+  it('should generate a page code template', function() {
+    var scaffold = 'about';
     var compiledTemplate = Generate.generateJsTemplate(scaffold);
     expect(compiledTemplate).toContain('templateUrl: \'app/about/about.html\'');
     expect(compiledTemplate).toContain('export class About');
+  });
+
+  it('should generate a properly cased page template', function() {
+    var scaffold = 'schedule';
+    var compiledTemplate = Generate.generateJsTemplate(scaffold);
+    expect(compiledTemplate).toContain('templateUrl: \'app/schedule/schedule.html\'');
+    expect(compiledTemplate).not.toContain('export class schedule');
+    expect(compiledTemplate).toContain('export class Schedule');
+  });
+
+  it('should generate a page html template', function() {
+    var scaffold = 'sessions';
+    var compiledTemplate = Generate.generateHtmlTemplate(scaffold);
+    expect(compiledTemplate).toContain('<ion-content padding id="sessions">');
+    expect(compiledTemplate).toContain('<ion-title>Sessions</ion-title>');
+
+  });
+
+  it('should render template from file', function() {
+    spyOn(fs, 'readFileSync').andReturn('faketemplate');
+    var templateSpy = createSpy();
+
+    spyOn(_, 'template').andReturn(templateSpy);
+    var options = { name: 'test', templatePath: '/path/to/template.tmpl.html'};
+    var generatedContents = Generate.renderTemplateFromFile(options);
+    expect(fs.readFileSync).toHaveBeenCalledWith(options.templatePath, 'utf8');
+    expect(_.template).toHaveBeenCalledWith('faketemplate');
+    expect(templateSpy).toHaveBeenCalledWith({name: 'test', nameUppercased: 'Test'});
   });
 });

@@ -17,7 +17,7 @@ var spyOnFileSystem = function(data) {
   spyOn(fs, 'readFileSync').andReturn(data);
 };
 
-ddescribe('Project', function() {
+describe('Project', function() {
   var data = Project.PROJECT_DEFAULT;
 
   it('should have Project defined', function() {
