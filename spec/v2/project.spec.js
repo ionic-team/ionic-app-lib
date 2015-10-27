@@ -7,12 +7,9 @@ var fs = require('fs'),
 
 logging.logger = helpers.testingLogger;
 
-var testDir = '/ionic/v2/project';
-
 var tmpDir = helpers.tmpDir('create_test');
 var appName = 'TestIonic';
-var projectDir = path.join(tmpDir, appName);
-
+var appDirectory = path.join(tmpDir, appName);
 
 var spyOnFileSystem = function(data) {
   data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
@@ -23,64 +20,63 @@ var spyOnFileSystem = function(data) {
 ddescribe('Project', function() {
   var data = Project.PROJECT_DEFAULT;
 
-  // beforeEach(function() {
-  //   spyOnFileSystem(data);
-  // });
-
   it('should have Project defined', function() {
     expect(Project).toBeDefined();
   });
 
-  describe('#create', function() {
-    it('should create a default project file', function() {
-      // spyOn(Project, 'set').andCallThrough();
-      // spyOn(Project, 'wrap').andCallThrough();
-      spyOn(fs, 'statSync');
-      var project = Project.create(testDir, 'test');
-      expect(project.get('name')).toBe('test');
-      expect(project.get('defaultBrowser'), 'chrome');
-      expect(project.get('defaultBrowser'), 'chrome');
-      expect(project.get('proxies'), null);
-      expect(project.get('sassEntryPath'), '/www/app/scss');
-      expect(project.get('sassOutputPath'), '/www/build/css');
-      expect(project.get('sassWatchPattern'), ['www/**/*.scss']);
-      expect(project.get('htmlWatchPattern'), ['www/**/*.html']);
-    });
-  });
-
-  describe('#save', function() {
-    it('should save the configuration', function() {
-      spyOn(fs, 'mkdirSync'); //mock out the creation of mkdirSync for project folder
-      spyOn(fs, 'writeFileSync'); // mock out writing file
-      Project.save(testDir, Project.PROJECT_DEFAULT);
-
-      var projectFileDir = path.join(testDir, Project.PROJECT_FILE_DIR);
-      var projectFilePath = path.join(testDir, Project.PROJECT_FILE_DIR, Project.PROJECT_FILE);
-      var projectContents = 'module.exports = ' + JSON.stringify(Project.PROJECT_DEFAULT);
-
-      expect(fs.mkdirSync).toHaveBeenCalledWith(projectFileDir);
-      expect(fs.writeFileSync).toHaveBeenCalledWith(projectFilePath, projectContents)
-    });
-  });
-
-  describe('#load', function() {
-    var projectFile;
-
-    beforeEach(function() {
-      //Create the test project file
-      shell.rm('-rf', projectDir);
-      shell.mkdir('-p', tmpDir);
-      shell.mkdir('-p', projectDir);
-      projectFile = Project.create(projectDir, 'test');
-      projectFile.save();
-    });
-
-    it('should load a saved file', function() {
-      var project = Project.load(projectDir);
-      expect(projectFile.get('name')).toBe(project.get('name'));
-      expect(projectFile.get('sassEntryPath')).toBe(project.get('sassEntryPath'));
-    });
+  ddescribe('#load', function(){
+    it('should call Project.save if the load path does not exist', function(){
+       spyOn(Project, 'save');
+       Project.load(tmpDir + 'fakePath');
+       expect(Project.save).toHaveBeenCalled();
+    })
   })
+
+  // ddescribe('#save', function() {
+  //   iit('should create the specified file if it doesn\'t exist', function() {
+  //     var project = Project.save(, 'test');
+  //     expect(project.get('name')).toBe('test');
+  //     expect(project.get('defaultBrowser'), 'chrome');
+  //     expect(project.get('defaultBrowser'), 'chrome');
+  //     expect(project.get('proxies'), null);
+  //     expect(project.get('sassEntryPath'), '/www/app/scss');
+  //     expect(project.get('sassOutputPath'), '/www/build/css');
+  //     expect(project.get('sassWatchPattern'), ['www/**/*.scss']);
+  //     expect(project.get('htmlWatchPattern'), ['www/**/*.html']);
+  //   });
+  //
+  //   it('should save the configuration', function() {
+  //     spyOn(fs, 'mkdirSync'); //mock out the creation of mkdirSync for project folder
+  //     spyOn(fs, 'writeFileSync'); // mock out writing file
+  //     Project.save(testDir, Project.PROJECT_DEFAULT);
+  //
+  //     var projectFileDir = path.join(testDir, Project.PROJECT_FILE_DIR);
+  //     var projectFilePath = path.join(testDir, Project.PROJECT_FILE_DIR, Project.PROJECT_FILE);
+  //     var projectContents = 'module.exports = ' + JSON.stringify(Project.PROJECT_DEFAULT);
+  //
+  //     expect(fs.mkdirSync).toHaveBeenCalledWith(projectFileDir);
+  //     expect(fs.writeFileSync).toHaveBeenCalledWith(projectFilePath, projectContents)
+  //   });
+  // });
+  //
+  // describe('#load', function() {
+  //   var projectFile;
+  //
+  //   beforeEach(function() {
+  //     //Create the test project file
+  //     shell.rm('-rf', projectDir);
+  //     shell.mkdir('-p', tmpDir);
+  //     shell.mkdir('-p', projectDir);
+  //     projectFile = Project.create(projectDir, 'test');
+  //     projectFile.save();
+  //   });
+  //
+  //   it('should load a saved file', function() {
+  //     var project = Project.load(projectDir);
+  //     expect(projectFile.get('name')).toBe(project.get('name'));
+  //     expect(projectFile.get('sassEntryPath')).toBe(project.get('sassEntryPath'));
+  //   });
+  // })
 
   // describe('#wrap', function() {
   //   var project = null;
