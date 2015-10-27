@@ -7,21 +7,14 @@ var fs = require('fs'),
 
 logging.logger = helpers.testingLogger;
 
-// var spyOnFileSystem = function(data) {
-//   data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
-//   spyOn(fs, 'existsSync').andReturn(true);
-//   spyOn(fs, 'readFileSync').andReturn(data);
-// };
+ddescribe('Project', function() {
+  var tmpDir = helpers.tmpDir('v2_project_test/TestIonic/');
+  var data = { test: 'test' };
 
-describe('Project', function() {
-  var appName = 'TestIonic';
-  var tmpDir, appDirectory;
-  var data = Project.PROJECT_DEFAULT;
-
-  beforeEach(function(){
-    // reset for each test
-    tmpDir = helpers.tmpDir('create_test');
-    appDirectory = path.join(tmpDir, appName);
+  afterEach(function(){
+    // cleanup for each test
+    shell.rm('-rf', tmpDir);
+    tmpDir = helpers.tmpDir('v2_project_test/TestIonic/');
   })
 
   it('should have Project defined', function() {
@@ -29,17 +22,15 @@ describe('Project', function() {
   });
 
   describe('#load', function(){
-
     it('should call Project.save if the load path does not exist', function(){
        spyOn(Project, 'save');
-       Project.load(tmpDir + 'fakePath');
+       Project.load(tmpDir + 'fake/path.js');
        expect(Project.save).toHaveBeenCalled();
     });
 
     it('should save the provided data if the load path does not exist', function(){
-       var fakeData = { test: 'test' };
-       var loadData = Project.load(tmpDir + 'fakePath2', fakeData);
-       expect(loadData.get('test')).toBe(fakeData.test);
+       var loadData = Project.load(tmpDir + 'fakePath2', data);
+       expect(loadData.get('test')).toBe(data.test);
     });
 
     it('should require the path if it exists', function(){
@@ -49,6 +40,21 @@ describe('Project', function() {
        expect(fileData.get('test')).toBe('test');
     });
   });
+
+  describe('#save', function(){
+    it('should write the specified data to the specified path', function(){
+      spyOn(fs, 'writeFileSync').andCallThrough();
+      var fakePath = tmpDir + 'fake/path/config.js';
+
+      saveData = Project.save(fakePath, data);
+
+      expect(fs.writeFileSync).toHaveBeenCalled();
+
+      requireData = require(fakePath);
+      expect(requireData.test).toBe(data.test)
+      expect(saveData.get('test')).toBe(data.test)
+    })
+  })
 
   // ddescribe('#save', function() {
   //   iit('should create the specified file if it doesn\'t exist', function() {
