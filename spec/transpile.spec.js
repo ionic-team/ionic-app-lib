@@ -1,4 +1,4 @@
-var transpile = require('../lib/transpile');
+var transpile = require('../lib/v2/transpile');
 
 describe('transpile', function() {
 
