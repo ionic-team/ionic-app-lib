@@ -13,10 +13,10 @@ describe('index', function() {
     });
   }
 
-  var objs = ['browser', 'configXml', 'cordova', 'generate', 'events', 'hooks', 'info', 
+  var objs = ['browser', 'configXml', 'cordova', 'events', 'hooks', 'info', 
               'ioConfig', 'login', 'logging', 'multibar', 'project', 
               'share', 'semver', 'serve', 'settings', 'setup', 'start', 'state', 
-              'stats', 'transpile', 'upload', 'utils'];
+              'stats', 'upload', 'utils'];
   // Doing it this way to give better failure messages. 
   // Ensures all commands are available currently from
   objs.forEach(function(obj) {
