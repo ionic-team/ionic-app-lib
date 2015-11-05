@@ -1,3 +1,7 @@
+# 0.6.4
+
+* Fix(serve): stop setting address to null when checking for address/port conflicts with localhost.
+
 # 0.6.3
 
 * Fix [#36](https://github.com/driftyco/ionic-app-lib/pull/36), thanks [@kentongray](https://github.com/kentongray)!
