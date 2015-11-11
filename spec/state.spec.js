@@ -467,4 +467,12 @@ describe('State', function() {
     })
   });
 
+  describe('#getPluginFromFetchJsonByLocator', function() {
+    it('should get the correct plugin by ID from fetch.json', function() {
+      var plugin = State.getPluginFromFetchJsonByLocator(__dirname, 'cordova-plugin-googleplus');
+      // console.log('plugin yo', plugin);
+      expect(plugin).toBe('cordova-plugin-googleplus');
+    });
+  });
+
 });
