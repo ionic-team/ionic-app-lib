@@ -14,7 +14,7 @@ describe('index', function() {
   }
 
   var objs = ['browser', 'configXml', 'cordova', 'events', 'hooks', 'info', 
-              'ioConfig', 'login', 'logging', 'multibar', 'opbeat', 'project', 
+              'ioConfig', 'login', 'logging', 'multibar', 'project', 
               'share', 'semver', 'serve', 'settings', 'setup', 'start', 'state', 
               'stats', 'upload', 'utils'];
   // Doing it this way to give better failure messages. 

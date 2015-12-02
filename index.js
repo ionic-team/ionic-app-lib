@@ -16,6 +16,8 @@ var camelCase = function camelCase(input) {
 // Setup all modules as lazy-loaded getters.
 //
 fs.readdirSync(path.join(__dirname, 'lib')).forEach(function (file) {
+  if (file === 'v2') return;
+
   file = file.replace('.js', '');
   var command;
 
@@ -27,6 +29,23 @@ fs.readdirSync(path.join(__dirname, 'lib')).forEach(function (file) {
 
   IonicAppLib.__defineGetter__(command, function () {
     return require('./lib/' + file);
+  });
+});
+
+IonicAppLib.v2 = {};
+fs.readdirSync(path.join(__dirname, 'lib/v2')).forEach(function (file) {
+  file = file.replace('.js', '');
+  var command;
+
+  if (file.indexOf('-') > 0) {
+    // console.log('file', file);
+    command = camelCase(file);
+  } else {
+    command = file;
+  }
+
+  IonicAppLib.v2.__defineGetter__(command, function () {
+    return require('./lib/v2/' + file);
   });
 });
 
