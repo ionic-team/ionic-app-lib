@@ -1,3 +1,7 @@
+# 0.7.0
+
+* Add --noresources flag to package builds to optionally do nothing with resources.
+
 # 0.6.4
 
 * Fix(serve): stop setting address to null when checking for address/port conflicts with localhost.
