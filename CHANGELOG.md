@@ -1,6 +1,7 @@
 # 0.7.0
 
 * Add --noresources flag to package builds to optionally do nothing with resources.
+* Fix(package): If a security profile is not found, stop the build.
 
 # 0.6.4
 
