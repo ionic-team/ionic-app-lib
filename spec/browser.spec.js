@@ -15,7 +15,7 @@ var setCordovaVersion = function setCordovaVersion(version) {
       cordova: version
     };
     spyOn(info, 'gatherInfo').andReturn(fakeInfo);
-  }
+  };
 };
 
 describe('Browser', function() {
@@ -24,7 +24,7 @@ describe('Browser', function() {
 
   beforeEach(function() {
     spyOn(Browser, 'saveBrowserInstallation');
-  })
+  });
 
   it('should have Browser defined', function() {
     expect(Browser).toBeDefined();
@@ -35,7 +35,7 @@ describe('Browser', function() {
     it('should fail with no parameters passed', function() {
       expect(function() {
         Browser.addBrowser();
-      }).toThrow('You must pass a directory to run this command')
+      }).toThrow('You must pass a directory to run this command');
     });
 
     it('should fail with no browser passed', function() {
@@ -54,7 +54,7 @@ describe('Browser', function() {
         expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, true);
       })
       .catch(function(ex){
-        console.log(ex)
+        console.log(ex);
         console.log(ex.stack);
         expect('this').toBe('not this');
       })
@@ -72,7 +72,7 @@ describe('Browser', function() {
         expect(Browser.installCrosswalk).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, saveToPackageJson);
       })
       .catch(function(ex){
-        console.log(ex)
+        console.log(ex);
         console.log(ex.stack);
         expect('this').toBe('not this');
       })
@@ -103,10 +103,10 @@ describe('Browser', function() {
       beforeEach(setCordovaVersion('4.3.0'));
 
       it('should call the appropriate methods to install crosswalk', function(done) {
-        
+
         spyOn(Browser, 'downloadFiles').andReturn(Q());
         var methods = [
-          'removeAndroidProject', 
+          'removeAndroidProject',
           'removeCrosswalkEngines',
           'addCordova40xProject',
           'addCrosswalkPlugin',
@@ -115,7 +115,7 @@ describe('Browser', function() {
           // 'addGradleProperties',
         ];
         var saveToPackageJson = true;
-        
+
         methods.forEach(function(method) {
           spyOn(Browser, method);
         });
@@ -128,11 +128,11 @@ describe('Browser', function() {
           // expect(Browser.downloadFiles).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion);
           methods.forEach(function(method) {
             expect(Browser[method]).toHaveBeenCalledWith(testDirectory, saveToPackageJson);
-          })
+          });
         })
         .catch(function(ex){
           console.log(ex);
-          console.log(ex.stack)
+          console.log(ex.stack);
           expect('this').toBe('not this');
         })
         .fin(done);
@@ -177,7 +177,7 @@ describe('Browser', function() {
         expect(Browser.downloadCrosswalkWebviews).toHaveBeenCalledWith(testDirectory, Browser.defaultCrosswalkVersion, false);
       })
       .catch(function(error) {
-        console.log('error', error, error.stack)
+        console.log('error', error, error.stack);
         expect('this').toBe('not this');
       })
       .fin(done);

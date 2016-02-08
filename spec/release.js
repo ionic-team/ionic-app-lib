@@ -11,7 +11,7 @@ Release.start = function start(appDirectory) {
     dest: './www/dist/index.html',
     removeLivereload: true,
     _ : ['./www/index.html']
-  }
+  };
 
   var content = fs.readFileSync(filePath).toString();
   var blocks = useminLib.getBlocks(argv._[0], content, argv.removeLivereload);
@@ -21,4 +21,3 @@ Release.start = function start(appDirectory) {
   // console.log('output', output);
 
 };
-

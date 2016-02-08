@@ -22,16 +22,16 @@ describe('Utils', function() {
     var methods = ['transformCookies', 'retrieveCsrfToken', 'createArchive', 'fetchArchive', 'preprocessOptions', 'getContentSrc', 'fail'];
     methods.forEach(function(method) {
       expect(Utils[method]).toBeDefined();
-    })
-  })
+    });
+  });
 
   describe('#transformCookies', function() {
     it('should check for valid cookie jar', function() {
       expect(function() {
         Utils.transformCookies(null);
-      }).toThrow('You parse out cookies if they are null')
-    })
-  })
+      }).toThrow('You parse out cookies if they are null');
+    });
+  });
 
   describe('#createArchive', function() {
     it('should zip the contents and resolve', function(done) {

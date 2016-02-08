@@ -1,6 +1,6 @@
 var Q = require('q'),
     events = require('../lib/events'),
-    helpers = require('./helpers')
+    helpers = require('./helpers'),
     Project = require('../lib/project'),
     rewire = require('rewire'),
     logging = require('../lib/logging');
@@ -107,7 +107,7 @@ describe('Serve', function() {
 
   describe('#runLivereload', function() {
     it('should run environment live reload port over options livereload port', function(done) {
-      
+
       var vfsSpy = createSpyObj('vfs', ['watch']);
       Serve.__set__('vfs', vfsSpy);
 
@@ -115,9 +115,9 @@ describe('Serve', function() {
       lrServerSpy.listen = function(){}; //hack to add spy
       spyOn(lrServerSpy, 'listen').andCallFake(function(port, cb) {
         cb();
-      })
+      });
       var tinylrSpy = createSpy('tinylr').andReturn(lrServerSpy);
-      
+
       Serve.__set__('tinylr', tinylrSpy);
       var lrSpy = createSpy('lr').andReturn({});
       var th = Serve.__set__('lr', lrSpy);

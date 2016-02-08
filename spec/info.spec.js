@@ -22,9 +22,9 @@ describe('Info', function() {
     Info.gatherInfo();
 
     expect(Info.getIonicLibVersion).toHaveBeenCalled();
-    expect(Info.getNodeVersion).toHaveBeenCalled()
+    expect(Info.getNodeVersion).toHaveBeenCalled();
     expect(Info.getOsEnvironment).toHaveBeenCalled();
-    expect(Info.getCordovaInfo).toHaveBeenCalled();    
+    expect(Info.getCordovaInfo).toHaveBeenCalled();
   });
 
 });

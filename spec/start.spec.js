@@ -13,12 +13,12 @@ logging.logger = helpers.testingLogger;
 
 var tmpDir = helpers.tmpDir('create_test');
 
-// Things to test 
-// Does it allow invalid vars? 
+// Things to test
+// Does it allow invalid vars?
 // What if a path doesnt exist?
 // Invalid ID?
 var dummyPath = '/Users/Test/Development/Ionic',
-    dummyPackageName = 'com.ionic.app', 
+    dummyPackageName = 'com.ionic.app',
     dummyAppName = 'Ionic App',
     appSetup;
 
@@ -29,17 +29,17 @@ var dummyOptions = {
   appName: dummyAppName,
   isCordovaProject: true,
   setupSass: true
-}
+};
 
 describe('Start', function() {
 
   it('should have methods defined', function(){
-    var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp', 
-      'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter', 
+    var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp',
+      'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter',
       'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'setupSass', 'updateLibFiles', 'finalize'];
     methods.forEach(function(method) {
       expect(start[method]).toBeDefined();
-    })
+    });
   });
 
   it('should have fetchWrapper defined', function() {
@@ -77,30 +77,30 @@ describe('Start', function() {
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       });
-    })
+    });
 
     it('should fail if no options are passed', function() {
       expect(function() {
-        start.startApp()
-      }).toThrow('You cannot start an app without options')
-    })
+        start.startApp();
+      }).toThrow('You cannot start an app without options');
+    });
 
     it('should fail if an invalid path is passed', function() {
       expect(function() {
-        start.startApp({targetPath: '.'})
-      }).toThrow('Invalid target path, you may not specify \'.\' as an app name')
-    })
+        start.startApp({targetPath: '.'});
+      }).toThrow('Invalid target path, you may not specify \'.\' as an app name');
+    });
 
     it('should call fetchWrapper', function(done) {
-      start.startApp(dummyOptions)
+      start.startApp(dummyOptions);
       expect(start.fetchWrapper).toHaveBeenCalledWith(dummyOptions);
-      done()
-    })
+      done();
+    });
 
     it('should call fetchSeed', function(done) {
       Q()
       .then(function(data) {
-        return start.startApp(dummyOptions)
+        return start.startApp(dummyOptions);
       })
       .then(function(data) {
         expect(start.fetchSeed).toHaveBeenCalledWith(dummyOptions);
@@ -109,12 +109,12 @@ describe('Start', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call loadAppSetup', function(done) {
       Q()
       .then(function(data) {
-        return start.startApp(dummyOptions)
+        return start.startApp(dummyOptions);
       })
       .then(function(data) {
         expect(start.loadAppSetup).toHaveBeenCalledWith(dummyOptions);
@@ -123,7 +123,7 @@ describe('Start', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call initCordova', function(done) {
       Q()
@@ -138,7 +138,7 @@ describe('Start', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call setupSass', function(done) {
       Q()
@@ -153,7 +153,7 @@ describe('Start', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call finalize', function(done) {
       Q()
@@ -168,8 +168,8 @@ describe('Start', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
-  })
+    });
+  });
 
   describe('#fetchWrapper', function(done) {
 
@@ -188,9 +188,9 @@ describe('Start', function() {
       expect(project.save).toHaveBeenCalledWith(dummyOptions.targetPath);
     });
 
-    it('should save app_id when passed in options', function() { 
+    it('should save app_id when passed in options', function() {
       var project = Project.wrap(Project.PROJECT_DEFAULT);
-      dummyOptions.ionicAppId = 'app-id'
+      dummyOptions.ionicAppId = 'app-id';
       spyOn(Project, 'create').andReturn(project);
       spyOn(project, 'set');
       spyOn(project, 'save');
@@ -208,7 +208,7 @@ describe('Start', function() {
 
       Q()
       .then(function() {
-        return start.fetchSeed(dummyOptions)
+        return start.fetchSeed(dummyOptions);
       })
       .then(function() {
         expect(start.fetchIonicStarter).toHaveBeenCalledWith(dummyOptions);
@@ -216,8 +216,8 @@ describe('Start', function() {
       .catch(function(data) {
         expect('this').toBe('not this' + data);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchCodepen when codepen URL is passed', function(done) {
       var codepenUrl = 'http://codepen.io/mhartington/pen/eomzw';
@@ -229,13 +229,13 @@ describe('Start', function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchCodepen).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchCodepen).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchCreatorApp when a creator url is passed', function(done) {
       var creatorUrl = 'http://app.ionic.io/creator:5010';
@@ -247,13 +247,13 @@ describe('Start', function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchCreatorApp).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchCreatorApp).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchGithubStarter when a github url is passed', function(done) {
       var githubUrl = 'http://github.com/driftyco/ionic-unit-test-starter';
@@ -265,13 +265,13 @@ describe('Start', function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchGithubStarter).toHaveBeenCalledWith(dummyOptions, githubUrl)
+        expect(start.fetchGithubStarter).toHaveBeenCalledWith(dummyOptions, githubUrl);
       })
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchLocalStarter when a local path is passed', function(done) {
       var localPath = '/Users/Testing/Dev/local-starter';
@@ -283,13 +283,13 @@ describe('Start', function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchLocalStarter).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchLocalStarter).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchPlnkr when a plnkr url is passed', function(done) {
       var plnkrUrl = 'http://embed.plnkr.co/dFvL8n/preview';
@@ -301,7 +301,7 @@ describe('Start', function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchPlnkr).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchPlnkr).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
         expect('this').toBe('not this'+ err);
@@ -341,7 +341,7 @@ describe('Start', function() {
     //   start.initCordova(dummyOptions, appSetup);
     //   expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'android', true);
     // });
-  })
+  });
 
   describe('start end-to-end', function() {
     beforeEach(function() {
@@ -352,7 +352,7 @@ describe('Start', function() {
         process.chdir(path.join(__dirname, '..'));  // Needed to rm the dir on Windows.
         shell.rm('-rf', tmpDir);
     });
-    
-  })
 
-})
+  });
+
+});

@@ -62,7 +62,7 @@ describe('State', function() {
     });
 
     it('should save ios and version with both are passed', function() {
-      var packageJson = 
+      var packageJson =
       spyOn(State, 'addOrUpdatePlatformToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlatforms = [{ platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0' }];
       });
@@ -179,7 +179,7 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlugins = [testPluginId];
-      })
+      });
       State.savePlugin(tempDirectory, testPluginId);
       expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, testPluginId);
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
@@ -192,7 +192,7 @@ describe('State', function() {
       spyOn(State, 'getPluginFromFetchJsonByLocator').andReturn('cordova-crosswalk-engine');
       spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlugins = [{locator: testLocalPluginId, id: 'cordova-crosswalk-engine'}];
-      })
+      });
       State.savePlugin(tempDirectory, testLocalPluginId);
       expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-crosswalk-engine', {locator: testLocalPluginId, id: 'cordova-crosswalk-engine'});
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
@@ -333,7 +333,7 @@ describe('State', function() {
       })
       .catch(function(ex) {
         expect('this').toBe('not this');
-        console.log(ex.stack)
+        console.log(ex.stack);
       })
       .fin(done);
     });
@@ -356,7 +356,7 @@ describe('State', function() {
       })
       .catch(function(ex) {
         expect('this').toBe('not this');
-        console.log(ex.stack)
+        console.log(ex.stack);
       })
       .fin(done);
     });
@@ -390,7 +390,7 @@ describe('State', function() {
         return State.restorePlugins(tempDirectory, defaultPackageJson);
       })
       .then(function() {
-        expect(State.processPlugin).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+        expect(State.processPlugin).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);
       })
       .catch(function(ex) {
         console.log(ex.stack);
@@ -411,7 +411,7 @@ describe('State', function() {
         return State.restorePlatforms(tempDirectory, defaultPackageJson);
       })
       .then(function() {
-        expect(State.processPlatform).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+        expect(State.processPlatform).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);
       })
       .catch(function(ex) {
         console.log(ex.stack);
@@ -439,7 +439,7 @@ describe('State', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#saveState', function (){
@@ -464,7 +464,7 @@ describe('State', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#getPluginFromFetchJsonByLocator', function() {
