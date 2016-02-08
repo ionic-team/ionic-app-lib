@@ -91,6 +91,6 @@ describe('ConfigXml', function() {
       })
       .fin(done);
     });
-  })
+  });
 
 });

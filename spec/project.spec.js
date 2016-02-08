@@ -20,7 +20,7 @@ describe('Project', function() {
 
   beforeEach(function() {
     spyOnFileSystem(data);
-  });  
+  });
 
   it('should have Project defined', function() {
     expect(Project).toBeDefined();

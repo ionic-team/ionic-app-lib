@@ -26,6 +26,6 @@ describe('Hooks', function() {
 
   //   shelljs.rm('rf', appPath);
 
-  // });  
+  // });
 
 });

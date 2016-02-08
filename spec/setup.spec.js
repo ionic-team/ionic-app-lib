@@ -16,7 +16,7 @@ describe('Setup', function() {
     spyOn(setup, 'npmInstall').andReturn(Q());
     spyOn(setup, 'modifyIndexFile').andReturn(Q());
     spyOn(setup, 'buildSass').andReturn(Q());
-    
+
     Q()
     .then(function(){
       return setup.sassSetup(testDir);

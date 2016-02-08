@@ -99,7 +99,7 @@ describe('Upload', function() {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#removeCacheBusters', function() {
@@ -148,7 +148,7 @@ describe('Upload', function() {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#doUpload', function() {

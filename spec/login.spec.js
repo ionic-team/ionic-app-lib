@@ -6,8 +6,8 @@ var Q = require('q'),
 
 logging.logger = helpers.testingLogger;
 
-var cookieJar = [ 
-  { 
+var cookieJar = [
+  {
     key: '__cfduid',
     value: 'cfduid',
     expires: '2016-05-28T16:24:12.000Z',
@@ -18,9 +18,9 @@ var cookieJar = [
     _creationRuntimeIdx: 1,
     _initialCreationTime: 1432916656691,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   },
-  { 
+  {
     key: 'csrftoken',
     value: 'csrftoken',
     domain: 'ionic.io',
@@ -31,9 +31,9 @@ var cookieJar = [
     _creationRuntimeIdx: 2,
     _initialCreationTime: 1432916656692,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   },
-  { 
+  {
     key: 'sessionid',
     value: 'sesshionid',
     domain: 'ionic.io',
@@ -45,7 +45,7 @@ var cookieJar = [
     _creationRuntimeIdx: 3,
     _initialCreationTime: 1432916656692,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   }
 ];
 

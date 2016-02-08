@@ -11,7 +11,7 @@ describe('Stats', function() {
 
   beforeEach(function() {
     Stats = rewire('../lib/stats');
-  })
+  });
 
   it('should have Stats defined', function() {
     // console.log(Stats);
