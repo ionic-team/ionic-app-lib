@@ -71,11 +71,12 @@
   },
   "devDependencies": {
     "jasmine-node": "^1.14.5",
+    "jshint": "^2.9.1",
     "rewire": "^2.3.3"
   },
   "scripts": {
     "test": "npm run jasmine",
-    "jshint": "node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint spec",
+    "jshint": "node node_modules/jshint/bin/jshint ./lib/*.js ./lib/hooks/**/*.js ./spec/*.js",
     "jasmine": "jasmine-node --captureExceptions  ./spec",
     "cover": "node node_modules/istanbul/lib/cli.js cover --root src --print detail node_modules/jasmine-node/bin/jasmine-node -- spec-cordova spec-plugman"
   }
