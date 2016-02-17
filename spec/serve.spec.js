@@ -1,7 +1,8 @@
 var Q = require('q'),
     events = require('../lib/events'),
-    helpers = require('./helpers')
+    helpers = require('./helpers'),
     Project = require('../lib/project'),
+    path = require('path'),
     rewire = require('rewire'),
     logging = require('../lib/logging');
 
@@ -12,7 +13,7 @@ var defaultServeOptions = {
   appDirectory: '/ionic/app',
   browser: undefined,
   browserOption: '',
-  contentSrc: 'www/index.html',
+  contentSrc: path.normalize('www/index.html'),
   createDocumentRoot: null,
   defaultBrowser: undefined,
   documentRoot: 'www',
