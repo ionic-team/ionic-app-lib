@@ -367,15 +367,62 @@ describe('State', function() {
   });
 
   describe('#resetState', function() {
-    it('should call call rm on the platforms path', function() {
+    it('should call call rm on the platforms ands plugins paths by default', function() {
       spyOn(shelljs, 'rm');
       spyOn(State, 'restoreState').andReturn(Q());
       State.resetState(tempDirectory, {});
 
       var platformPath = path.join(tempDirectory, 'platforms');
       var pluginPath = path.join(tempDirectory, 'plugins');
-      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [platformPath, pluginPath]);
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [platformPath]);
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [pluginPath]);
       expect(State.restoreState).toHaveBeenCalledWith(tempDirectory, {});
+    });
+
+    it('should call call rm on the platforms ands plugins path if both passed', function() {
+      spyOn(shelljs, 'rm');
+      spyOn(State, 'restoreState').andReturn(Q());
+      State.resetState(tempDirectory, {
+        platforms: true,
+        plugins: true
+      });
+
+      var platformPath = path.join(tempDirectory, 'platforms');
+      var pluginPath = path.join(tempDirectory, 'plugins');
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [platformPath]);
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [pluginPath]);
+      expect(State.restoreState).toHaveBeenCalledWith(tempDirectory, {
+        platforms: true,
+        plugins: true
+      });
+    });
+
+    it('should call call rm only on the platforms path if passed explicitly', function() {
+      spyOn(shelljs, 'rm');
+      spyOn(State, 'restoreState').andReturn(Q());
+      State.resetState(tempDirectory, {
+        platforms: true
+      });
+
+      var platformPath = path.join(tempDirectory, 'platforms');
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [platformPath]);
+      expect(State.restoreState).toHaveBeenCalledWith(tempDirectory, {
+        platforms: true
+      });
+    });
+
+    it('should call call rm only on the plugins path if passed explicitly', function() {
+      spyOn(shelljs, 'rm');
+      spyOn(State, 'restoreState').andReturn(Q());
+      State.resetState(tempDirectory, {
+        plugins: true
+      });
+
+      var pluginPath = path.join(tempDirectory, 'plugins');
+      expect(shelljs.rm).toHaveBeenCalledWith('-rf', [pluginPath]);
+      expect(State.restoreState).toHaveBeenCalledWith(tempDirectory, {
+        plugins: true
+      });
     });
   });
 
