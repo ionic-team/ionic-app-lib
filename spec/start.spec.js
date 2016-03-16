@@ -13,12 +13,12 @@ logging.logger = helpers.testingLogger;
 
 var tmpDir = helpers.tmpDir('create_test');
 
-// Things to test 
-// Does it allow invalid vars? 
+// Things to test
+// Does it allow invalid vars?
 // What if a path doesnt exist?
 // Invalid ID?
 var dummyPath = '/Users/Test/Development/Ionic',
-    dummyPackageName = 'com.ionic.app', 
+    dummyPackageName = 'com.ionic.app',
     dummyAppName = 'Ionic App',
     appSetup;
 
@@ -27,16 +27,15 @@ var dummyOptions = {
   template: 'sidemenu',
   packageName: dummyPackageName,
   appName: dummyAppName,
-  isCordovaProject: true,
-  setupSass: true
+  isCordovaProject: true
 }
 
 describe('Start', function() {
 
   it('should have methods defined', function(){
-    var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp', 
-      'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter', 
-      'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'setupSass', 'updateLibFiles', 'finalize'];
+    var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp',
+      'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter',
+      'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'updateLibFiles', 'finalize'];
     methods.forEach(function(method) {
       expect(start[method]).toBeDefined();
     })
@@ -57,8 +56,7 @@ describe('Start', function() {
         template: 'sidemenu',
         packageName: dummyPackageName,
         appName: dummyAppName,
-        isCordovaProject: true,
-        setupSass: true
+        isCordovaProject: true
       };
 
       appSetup = {
@@ -73,7 +71,7 @@ describe('Start', function() {
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup));
       spyOn(ioLib, 'warnMissingData');
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'initCordova', 'setupSass', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'runExecCommand', 'initCordova', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       });
@@ -140,21 +138,6 @@ describe('Start', function() {
       .fin(done);
     })
 
-    it('should call setupSass', function(done) {
-      Q()
-      .then(function() {
-        return start.startApp(dummyOptions);
-      })
-      .then(function(data){
-        // dummyOptions.appSetup = data;
-        expect(start.setupSass).toHaveBeenCalledWith(dummyOptions);
-      })
-      .catch(function(data) {
-        expect('this').toBe('not this');
-      })
-      .fin(done);
-    })
-
     it('should call finalize', function(done) {
       Q()
       .then(function() {
@@ -188,7 +171,7 @@ describe('Start', function() {
       expect(project.save).toHaveBeenCalledWith(dummyOptions.targetPath);
     });
 
-    it('should save app_id when passed in options', function() { 
+    it('should save app_id when passed in options', function() {
       var project = Project.wrap(Project.PROJECT_DEFAULT);
       dummyOptions.ionicAppId = 'app-id'
       spyOn(Project, 'create').andReturn(project);
@@ -352,7 +335,7 @@ describe('Start', function() {
         process.chdir(path.join(__dirname, '..'));  // Needed to rm the dir on Windows.
         shell.rm('-rf', tmpDir);
     });
-    
+
   })
 
 })
