@@ -11,7 +11,6 @@ var testDir = '/ionic/project';
 
 var spyOnFileSystem = function(data) {
   data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
-  spyOn(fs, 'existsSync').andReturn(true);
   spyOn(fs, 'readFileSync').andReturn(data);
 };
 
@@ -20,7 +19,7 @@ describe('Project', function() {
 
   beforeEach(function() {
     spyOnFileSystem(data);
-  });  
+  });
 
   it('should have Project defined', function() {
     expect(Project).toBeDefined();
@@ -107,7 +106,6 @@ describe('Project', function() {
 
     it('should load a base ionic.project file that exists', function() {
       var project = Project.load(testDir);
-      expect(fs.existsSync).toHaveBeenCalledWith(path.join(testDir, Project.PROJECT_FILE));
       expect(fs.readFileSync).toHaveBeenCalledWith(path.join(testDir, Project.PROJECT_FILE));
     });
   });
