@@ -49,6 +49,7 @@
     "connect-livereload": "0.5.2",
     "cordova-lib": "6.1.0",
     "crc": "3.2.1",
+    "cross-spawn-async": "2.1.9",
     "event-stream": "3.0.20",
     "finalhandler": "0.2.0",
     "form-data": "0.1.4",
