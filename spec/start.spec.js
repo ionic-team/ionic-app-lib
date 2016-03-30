@@ -71,7 +71,7 @@ describe('Start', function() {
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup));
       spyOn(ioLib, 'warnMissingData');
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'runExecCommand', 'initCordova', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'runSpawnCommand', 'initCordova', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       });
