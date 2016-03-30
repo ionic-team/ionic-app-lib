@@ -1,5 +1,5 @@
 var Cordova = require('../lib/cordova'),
-    cordova = require('ionic-cordova-lib').cordova.raw,
+    cordova = require('cordova-lib').cordova.raw,
     Q = require('q'),
     helpers = require('./helpers'),
     state = require('../lib/state'),
@@ -19,7 +19,7 @@ describe('Cordova', function() {
   describe('#removePlatform', function() {
     it('should call cordova.platform when removePlatform is called', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.removePlatform(testDirectory, 'ios');
       })
@@ -35,7 +35,7 @@ describe('Cordova', function() {
     it('should call state.removePlatform when removePlatform is called to save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'removePlatform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.removePlatform(testDirectory, 'ios', true);
       })
@@ -51,7 +51,7 @@ describe('Cordova', function() {
     it('should not call state.savePlatform when removePlatform is called to save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'removePlatform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.removePlatform(testDirectory, 'ios');
       })
@@ -68,7 +68,7 @@ describe('Cordova', function() {
   describe('#addPlugin', function() {
     it('should call cordova.plugin when addPlugin is called', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlugin(testDirectory, testPluginId);
       })
@@ -85,7 +85,7 @@ describe('Cordova', function() {
     it('should not call state.savePlugin when addPlugin is not called to save plugin', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
       spyOn(state, 'savePlugin').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device');
       })
@@ -101,7 +101,7 @@ describe('Cordova', function() {
     it('should call state.savePlugin when addPlugin is called to save plugin', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
       spyOn(state, 'savePlugin').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device', null, true);
       })
@@ -118,7 +118,7 @@ describe('Cordova', function() {
   describe('#removePlugin', function() {
     it('should call cordova.plugin when removePlugin is called', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.removePlugin(testDirectory, testPluginId);
       })
@@ -137,7 +137,7 @@ describe('Cordova', function() {
   describe('#runPlatform', function() {
     it('should call cordova.run when runPlatform is called', function(done) {
       spyOn(cordova, 'run').andReturn(Q());
-      
+
       var options = {
         platforms: ['ios'],
         options: [],
@@ -147,7 +147,7 @@ describe('Cordova', function() {
         stdio: 'pipe'
       };
 
-      Q()    
+      Q()
       .then(function() {
         return Cordova.runPlatform(testDirectory, 'ios');
       })
@@ -165,7 +165,7 @@ describe('Cordova', function() {
   describe('#addPlatform', function() {
     it('should call cordova.platform when addPlatform is called', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlatform(testDirectory, 'ios');
       })
@@ -181,7 +181,7 @@ describe('Cordova', function() {
     it('should call state.savePlatform when addPlatform is called with save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'savePlatform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlatform(testDirectory, 'ios', true);
       })
@@ -197,7 +197,7 @@ describe('Cordova', function() {
     it('should not call state.savePlatform when addPlatform is called without save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'savePlatform').andReturn(Q());
-      Q()    
+      Q()
       .then(function() {
         return Cordova.addPlatform(testDirectory, 'ios');
       })
@@ -209,6 +209,6 @@ describe('Cordova', function() {
       })
       .fin(done);
     });
-  }); 
+  });
 
 });
