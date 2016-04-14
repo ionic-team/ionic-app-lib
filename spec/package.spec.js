@@ -49,7 +49,8 @@ describe('Package', function() {
         fakeAppDir = '/Users/Test/myApp',
         fakeJar = {
           map: createSpy('map').andReturn([])
-        };
+        },
+        options = {};
 
     var UploadSpy = {
       doUpload: createSpy('doUpload').andCallFake(function(appDirectory, jar, name) {
@@ -88,7 +89,7 @@ describe('Package', function() {
     spyOn(ConfigXml, 'loadToStream');
     spyOn(State, 'getPackageJsonReadStream');
 
-    Package.buildAndroidDebug(fakeAppId, fakeAppDir, fakeJar)
+    Package.buildAndroidDebug(fakeAppId, fakeAppDir, fakeJar, options)
       .then(function(buildId) {
         expect(buildId).toBe("123456");
       })
