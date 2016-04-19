@@ -104,7 +104,7 @@ describe('Serve', function() {
       expect(options.runLivereload).toBe(false);
     });
   });
-
+  /*
   describe('#runLivereload', function() {
     it('should run environment live reload port over options livereload port', function(done) {
       
@@ -139,10 +139,10 @@ describe('Serve', function() {
         expect(app.use).toHaveBeenCalledWith({});
       })
       .catch(function(ex){
-        expect('this').toBe(ex.stack);
+	      expect('this').toBe(ex.stack);
       })
       .fin(done);
     });
   });
-
+  */
 });
