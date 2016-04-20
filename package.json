@@ -76,7 +76,7 @@
   },
   "scripts": {
     "test": "npm run jasmine",
-    "jshint": "node node_modules/jshint/bin/jshint src && node node_modules/jshint/bin/jshint spec/",
+    "jshint": "jshint lib spec --exclude lib/assets",
     "jasmine": "jasmine-node --captureExceptions spec/",
     "coveralls": "istanbul cover node_modules/jasmine-node/bin/jasmine-node --captureExceptions spec/ && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
   }
