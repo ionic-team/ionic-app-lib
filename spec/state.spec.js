@@ -1,16 +1,15 @@
-var State = require('../lib/state'),
-    events = require('../lib/events'),
-    helpers = require('./helpers'),
-    path = require('path'),
-    Q = require('q'),
-    shelljs = require('shelljs'),
-    logging = require('../lib/logging');
+var State = require('../lib/state');
+var helpers = require('./helpers');
+var path = require('path');
+var Q = require('q');
+var shelljs = require('shelljs');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
-var tempDirectory = '/test/dev/ionic',
-    testPluginId = 'com.ionic.keyboard',
-    defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
+var tempDirectory = '/test/dev/ionic';
+var testPluginId = 'com.ionic.keyboard';
+var defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
 
 describe('State', function() {
 
@@ -42,7 +41,6 @@ describe('State', function() {
       spyOn(State, 'addOrUpdatePlatformToPackageJson');
       State.savePlatform(tempDirectory, 'ios');
       expect(State.getPackageJson).toHaveBeenCalledWith(tempDirectory);
-      // expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith()
     });
 
     it('should call addOrUpdatePlatformToPackageJson with directory and ios when ios is passed', function() {
@@ -52,22 +50,28 @@ describe('State', function() {
     });
 
     it('should call savePackageJson with app directory and packageJson data', function() {
-      spyOn(State, 'addOrUpdatePlatformToPackageJson').andCallFake(function(packageJson){
+      spyOn(State, 'addOrUpdatePlatformToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlatforms = ['ios'];
       });
 
       State.savePlatform(tempDirectory, 'ios');
       expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'ios');
-      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: ['ios'], cordovaPlugins: [] });
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {
+        cordovaPlatforms: ['ios'],
+        cordovaPlugins: []
+      });
     });
 
     it('should save ios and version with both are passed', function() {
-      var packageJson = 
       spyOn(State, 'addOrUpdatePlatformToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlatforms = [{ platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0' }];
       });
       State.savePlatform(tempDirectory, 'ios@3.8.0');
-      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'ios', {platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0'});
+      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'ios', {
+        platform: 'ios',
+        locator: 'ios@3.8.0',
+        version: '3.8.0'
+      });
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
     });
 
@@ -76,7 +80,10 @@ describe('State', function() {
         packageJson.cordovaPlatforms = [{ platform: 'android', locator: 'https://github.com/apache/cordova-android', version: '4.0.0' }];
       });
       State.savePlatform(tempDirectory, 'https://github.com/apache/cordova-android');
-      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'android', {platform: 'android', locator: 'https://github.com/apache/cordova-android'});
+      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'android', {
+        platform: 'android',
+        locator: 'https://github.com/apache/cordova-android'
+      });
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
     });
 
@@ -86,7 +93,10 @@ describe('State', function() {
         packageJson.cordovaPlatforms = [{ platform: 'android', locator: fileLocator }];
       });
       State.savePlatform(tempDirectory, fileLocator);
-      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'android', {platform: 'android', locator: fileLocator});
+      expect(State.addOrUpdatePlatformToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'android', {
+        platform: 'android',
+        locator: fileLocator
+      });
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
     });
   });
@@ -95,7 +105,12 @@ describe('State', function() {
     it('should overwrite default android when local android is added', function() {
       var fileLocator = './engine/cordova-android';
       defaultPackageJson = { cordovaPlatforms: ['android'], cordovaPlugins: [] };
-      var afterPackageJson = { cordovaPlatforms: [{platform: 'android', locator: fileLocator}], cordovaPlugins: [] };
+      var afterPackageJson = {
+        cordovaPlatforms: [
+          { platform: 'android', locator: fileLocator }
+        ],
+        cordovaPlugins: []
+      };
       var platformInfo = { platform: 'android', locator: fileLocator };
 
       State.addOrUpdatePlatformToPackageJson(defaultPackageJson, 'android', platformInfo);
@@ -103,9 +118,19 @@ describe('State', function() {
     });
 
     it('should overwrite ios version when ios and version are added', function() {
-      defaultPackageJson = { cordovaPlatforms: [{platform: 'ios', locator: 'ios@3.7.0', version: '3.7.0'}], cordovaPlugins: [] };
-      var afterPackageJson = { cordovaPlatforms: [{platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0'}], cordovaPlugins: [] };
-      var platformInfo = { platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0' };
+      defaultPackageJson = {
+        cordovaPlatforms: [{ platform: 'ios', locator: 'ios@3.7.0', version: '3.7.0' }],
+        cordovaPlugins: []
+      };
+      var afterPackageJson = {
+        cordovaPlatforms: [{ platform: 'ios', locator: 'ios@3.8.0', version: '3.8.0' }],
+        cordovaPlugins: []
+      };
+      var platformInfo = {
+        platform: 'ios',
+        locator: 'ios@3.8.0',
+        version: '3.8.0'
+      };
 
       State.addOrUpdatePlatformToPackageJson(defaultPackageJson, 'ios', platformInfo);
       expect(defaultPackageJson).toEqual(afterPackageJson);
@@ -114,7 +139,8 @@ describe('State', function() {
 
   describe('#removePlatform', function() {
     beforeEach(function() {
-      //Start with ios in package.json
+
+      // Start with ios in package.json
       spyOn(State, 'savePackageJson');
     });
 
@@ -130,30 +156,42 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       State.removePlatform(tempDirectory, 'ios');
-      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: []});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: [] });
     });
 
     it('should remove platform from packageJson when android with locator exists', function() {
-      defaultPackageJson = { cordovaPlatforms: [ { platform: 'android', locator: 'https://github.com/apache/cordova-android' } ] };
+      defaultPackageJson = {
+        cordovaPlatforms: [{ platform: 'android', locator: 'https://github.com/apache/cordova-android' }]
+      };
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       State.removePlatform(tempDirectory, 'android');
-      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: []});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {
+        cordovaPlatforms: []
+      });
     });
 
     it('should remove platform from packageJson when android with file locator exists', function() {
-      defaultPackageJson = { cordovaPlatforms: [ { platform: 'android', locator: './engine/cordova-android' } ] };
+      defaultPackageJson = {
+        cordovaPlatforms: [{ platform: 'android', locator: './engine/cordova-android' }]
+      };
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       State.removePlatform(tempDirectory, 'android');
-      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: []});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {
+        cordovaPlatforms: []
+      });
     });
 
     it('should remove only one platforms from packageJson when both exist', function() {
-      defaultPackageJson = { cordovaPlatforms: [ 'ios', { platform: 'android', locator: './engine/cordova-android' } ] };
+      defaultPackageJson = {
+        cordovaPlatforms: ['ios', { platform: 'android', locator: './engine/cordova-android' }]
+      };
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       State.removePlatform(tempDirectory, 'android');
-      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: ['ios']});
+      expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {
+        cordovaPlatforms: ['ios']
+      });
     });
   });
 
@@ -162,10 +200,11 @@ describe('State', function() {
       spyOn(State, 'savePackageJson');
       defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
     });
-    //Expects - either simple ID for plugin registry
-    //or a local path, with or without variables
-    //ionic plugin add org.apache.cordova.splashscreen
-    //ionic plugin add ../phonegap-facebook-plugin --variable APP_ID="123456789" --variable APP_NAME="myApplication"
+
+    // Expects - either simple ID for plugin registry
+    // or a local path, with or without variables
+    // ionic plugin add org.apache.cordova.splashscreen
+    // ionic plugin add ../phonegap-facebook-plugin --variable APP_ID="123456789" --variable APP_NAME="myApplication"
     it('should call getPackageJson with the correct directory', function() {
       spyOn(State, 'addOrUpdatePluginToPackageJson');
       defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [testPluginId] };
@@ -179,7 +218,7 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
         packageJson.cordovaPlugins = [testPluginId];
-      })
+      });
       State.savePlugin(tempDirectory, testPluginId);
       expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, testPluginId);
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
@@ -191,28 +230,44 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       spyOn(State, 'getPluginFromFetchJsonByLocator').andReturn('cordova-crosswalk-engine');
       spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
-        packageJson.cordovaPlugins = [{locator: testLocalPluginId, id: 'cordova-crosswalk-engine'}];
-      })
+        packageJson.cordovaPlugins = [{ locator: testLocalPluginId, id: 'cordova-crosswalk-engine' }];
+      });
       State.savePlugin(tempDirectory, testLocalPluginId);
-      expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-crosswalk-engine', {locator: testLocalPluginId, id: 'cordova-crosswalk-engine'});
+      expect(State.addOrUpdatePluginToPackageJson)
+        .toHaveBeenCalledWith(defaultPackageJson, 'cordova-crosswalk-engine', {
+          locator: testLocalPluginId,
+          id: 'cordova-crosswalk-engine'
+        });
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
     });
 
     it('should save the plugin ID to the packageJson for a local ID', function() {
       var testLocalPluginId = './engine/cordova-facebook-plugin';
-      var testVariables = [ 'APP_ID=123456789', 'APP_NAME=myApplication' ];
-      var variablesHash = {APP_ID: '123456789', APP_NAME: 'myApplication'};
+      var testVariables = ['APP_ID=123456789', 'APP_NAME=myApplication'];
+      var variablesHash = { APP_ID: '123456789', APP_NAME: 'myApplication' };
       defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [] };
-      var modifiedPackageJson = { cordovaPlatforms: [], cordovaPlugins: [{locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash}]};
+      var modifiedPackageJson = {
+        cordovaPlatforms: [],
+        cordovaPlugins: [{ locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash }]
+      };
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       spyOn(State, 'getPluginFromFetchJsonByLocator').andReturn('cordova-facebook-plugin');
       spyOn(State, 'addOrUpdatePluginToPackageJson').andCallFake(function(packageJson) {
-        packageJson.cordovaPlugins = [{locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash}];
+        packageJson.cordovaPlugins = [{
+          locator: testLocalPluginId,
+          id: 'cordova-facebook-plugin',
+          variables: variablesHash
+        }];
       });
 
       State.savePlugin(tempDirectory, testLocalPluginId, testVariables);
 
-      expect(State.addOrUpdatePluginToPackageJson).toHaveBeenCalledWith(defaultPackageJson, 'cordova-facebook-plugin', {locator: testLocalPluginId, id: 'cordova-facebook-plugin', variables: variablesHash});
+      expect(State.addOrUpdatePluginToPackageJson)
+        .toHaveBeenCalledWith(defaultPackageJson, 'cordova-facebook-plugin', {
+          locator: testLocalPluginId,
+          id: 'cordova-facebook-plugin',
+          variables: variablesHash
+        });
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, modifiedPackageJson);
     });
 
@@ -256,7 +311,10 @@ describe('State', function() {
     });
 
     it('should remove the pluginId from the packageJson when its an object', function() {
-      defaultPackageJson = { cordovaPlatforms: [], cordovaPlugins: [{ id: 'cordova-crosswalk-engine', locator: './engine/cordova-crosswalk-engine'}] };
+      defaultPackageJson = {
+        cordovaPlatforms: [],
+        cordovaPlugins: [{ id: 'cordova-crosswalk-engine', locator: './engine/cordova-crosswalk-engine' }]
+      };
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
       State.removePlugin(tempDirectory, 'cordova-crosswalk-engine');
       expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, { cordovaPlatforms: [], cordovaPlugins: [] });
@@ -266,33 +324,37 @@ describe('State', function() {
   describe('#addOrUpdatePluginToPackageJson', function() {
     it('should add the plugin ID with http url', function() {
       defaultPackageJson = {
-        "cordovaPlugins": [
-            "org.apache.cordova.device",
-            "org.apache.cordova.console",
-            "com.ionic.keyboard",
-            {
-              "locator": "engine/cordova-crosswalk-engine-c0.7.1",
-              "id": "cordova-plugin-crosswalk-webview"
-            },
-            "org.apache.cordova.splashscreen"
-          ],
-          "cordovaPlatforms": [
-            "ios",
-            {
-              "platform": "android",
-              "locator": "./engine/cordova-android-c0.6.1/"
-            }
-          ]
-        };
+        cordovaPlugins: [
+          'org.apache.cordova.device',
+          'org.apache.cordova.console',
+          'com.ionic.keyboard',
+          {
+            locator: 'engine/cordova-crosswalk-engine-c0.7.1',
+            id: 'cordova-plugin-crosswalk-webview'
+          },
+          'org.apache.cordova.splashscreen'
+        ],
+        cordovaPlatforms: [
+          'ios',
+          {
+            platform: 'android',
+            locator: './engine/cordova-android-c0.6.1/'
+          }
+        ]
+      };
 
       expect(defaultPackageJson.cordovaPlugins.length).toBe(5);
-      State.addOrUpdatePluginToPackageJson(defaultPackageJson, {id:'cordova-plugin-whitelist', locator: 'https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0'});
-      //we had 5 plugins, we should have 6 now.
+      State.addOrUpdatePluginToPackageJson(defaultPackageJson, {
+        id: 'cordova-plugin-whitelist',
+        locator: 'https://github.com/apache/cordova-plugin-whitelist.git#r1.0.0'
+      });
+
+      // we had 5 plugins, we should have 6 now.
       expect(defaultPackageJson.cordovaPlugins.length).toBe(6);
     });
   });
 
-  describe('#restoreState', function(){
+  describe('#restoreState', function() {
     it('should only restore plugins when plugin option passed', function(done) {
       var options = { plugins: true, platforms: false };
       spyOn(State, 'restorePlatforms');
@@ -302,14 +364,14 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       Q()
-      .then(function(){
+      .then(function() {
         return State.restoreState(tempDirectory, options);
       })
-      .then(function(){
+      .then(function() {
         expect(State.restorePlugins).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
         expect(State.restorePlatforms).not.toHaveBeenCalledWith(tempDirectory);
       })
-      .catch(function(ex) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -324,16 +386,16 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       Q()
-      .then(function(){
+      .then(function() {
         return State.restoreState(tempDirectory, options);
       })
-      .then(function(){
+      .then(function() {
         expect(State.restorePlugins).not.toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
         expect(State.restorePlatforms).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
       })
       .catch(function(ex) {
         expect('this').toBe('not this');
-        console.log(ex.stack)
+        console.log(ex.stack);
       })
       .fin(done);
     });
@@ -347,16 +409,16 @@ describe('State', function() {
       spyOn(State, 'getPackageJson').andReturn(defaultPackageJson);
 
       Q()
-      .then(function(){
+      .then(function() {
         return State.restoreState(tempDirectory, options);
       })
-      .then(function(){
+      .then(function() {
         expect(State.restorePlugins).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
         expect(State.restorePlatforms).toHaveBeenCalledWith(tempDirectory, defaultPackageJson);
       })
       .catch(function(ex) {
         expect('this').toBe('not this');
-        console.log(ex.stack)
+        console.log(ex.stack);
       })
       .fin(done);
     });
@@ -379,18 +441,18 @@ describe('State', function() {
     });
   });
 
-  describe('#restorePlugins', function(){
-    it('should call processPlugin with the correct app directory, index, and a promise', function(done){
+  describe('#restorePlugins', function() {
+    it('should call processPlugin with the correct app directory, index, and a promise', function(done) {
       var promise = Q.defer();
       spyOn(Q, 'defer').andReturn(promise);
       spyOn(State, 'processPlugin');
       Q()
-      .then(function(){
+      .then(function() {
         promise.resolve();
         return State.restorePlugins(tempDirectory, defaultPackageJson);
       })
       .then(function() {
-        expect(State.processPlugin).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+        expect(State.processPlugin).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);
       })
       .catch(function(ex) {
         console.log(ex.stack);
@@ -400,18 +462,18 @@ describe('State', function() {
     });
   });
 
-  describe('#restorePlatforms', function(){
-    it('should call processPlatform with the correct app directory, index, and a promise', function(done){
+  describe('#restorePlatforms', function() {
+    it('should call processPlatform with the correct app directory, index, and a promise', function(done) {
       var promise = Q.defer();
       spyOn(Q, 'defer').andReturn(promise);
       spyOn(State, 'processPlatform');
       Q()
-      .then(function(){
+      .then(function() {
         promise.resolve();
         return State.restorePlatforms(tempDirectory, defaultPackageJson);
       })
       .then(function() {
-        expect(State.processPlatform).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);      
+        expect(State.processPlatform).toHaveBeenCalledWith(tempDirectory, 0, defaultPackageJson, promise);
       })
       .catch(function(ex) {
         console.log(ex.stack);
@@ -421,37 +483,47 @@ describe('State', function() {
     });
   });
 
-  describe('#clearState', function (){
+  describe('#clearState', function() {
     it('should clear our the packageJson entries and remove platforms and plugins', function(done) {
-      spyOn(State, 'getPackageJson').andReturn({cordovaPlatforms: ['ios'], cordovaPlugins: ['org.apache.cordova.device']});
+      spyOn(State, 'getPackageJson').andReturn({
+        cordovaPlatforms: ['ios'],
+        cordovaPlugins: ['org.apache.cordova.device']
+      });
       spyOn(shelljs, 'rm');
       spyOn(State, 'savePackageJson');
       Q()
-      .then(function(){
+      .then(function() {
         return State.clearState(tempDirectory);
       })
       .then(function() {
-        expect(shelljs.rm).toHaveBeenCalledWith('-rf', [path.join(tempDirectory, 'platforms'), path.join(tempDirectory, 'plugins')]);
-        expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {cordovaPlatforms: [], cordovaPlugins: []});
+        expect(shelljs.rm).toHaveBeenCalledWith('-rf',
+                   [path.join(tempDirectory, 'platforms'), path.join(tempDirectory, 'plugins')]);
+        expect(State.savePackageJson).toHaveBeenCalledWith(tempDirectory, {
+          cordovaPlatforms: [],
+          cordovaPlugins: []
+        });
       })
       .catch(function(ex) {
         console.log(ex.stack);
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
   });
 
-  describe('#saveState', function (){
+  describe('#saveState', function() {
     it('should save the state of our application', function(done) {
-      var packageJson = {cordovaPlatforms: [], cordovaPlugins: []};
+      var packageJson = {
+        cordovaPlatforms: [],
+        cordovaPlugins: []
+      };
       spyOn(State, 'getPackageJson').andReturn(packageJson);
       spyOn(State, 'saveExistingPlatforms');
       spyOn(State, 'saveExistingPlugins');
       spyOn(State, 'savePackageJson');
 
       Q()
-      .then(function(){
+      .then(function() {
         return State.saveState(tempDirectory);
       })
       .then(function() {
@@ -464,13 +536,12 @@ describe('State', function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#getPluginFromFetchJsonByLocator', function() {
     it('should get the correct plugin by ID from fetch.json', function() {
       var plugin = State.getPluginFromFetchJsonByLocator(__dirname, 'cordova-plugin-googleplus');
-      // console.log('plugin yo', plugin);
       expect(plugin).toBe('cordova-plugin-googleplus');
     });
   });

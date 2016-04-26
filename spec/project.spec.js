@@ -1,18 +1,17 @@
-var events = require('../lib/events'),
-    fs = require('fs'),
-    helpers = require('./helpers'),
-    path = require('path'),
-    Project = require('../lib/project'),
-    logging = require('../lib/logging');
+var fs = require('fs');
+var helpers = require('./helpers');
+var path = require('path');
+var Project = require('../lib/project');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
 var testDir = '/ionic/project';
 
-var spyOnFileSystem = function(data) {
+function spyOnFileSystem(data) {
   data = data ? JSON.stringify(data) : JSON.stringify(Project.PROJECT_DEFAULT);
   spyOn(fs, 'readFileSync').andReturn(data);
-};
+}
 
 describe('Project', function() {
   var data = Project.PROJECT_DEFAULT;
@@ -29,7 +28,7 @@ describe('Project', function() {
     it('should create a default project file', function() {
       spyOn(Project, 'set').andCallThrough();
       spyOn(Project, 'wrap').andCallThrough();
-      var project = Project.create(testDir, 'test');
+      Project.create(testDir, 'test');
       expect(Project.set).toHaveBeenCalledWith(data, 'name', 'test');
       expect(Project.wrap).toHaveBeenCalledWith(testDir, data);
 
@@ -100,12 +99,12 @@ describe('Project', function() {
 
     it('should wrap the project object with app directory and data', function() {
       spyOn(Project, 'wrap').andCallThrough();
-      var project = Project.load(testDir);
+      Project.load(testDir);
       expect(Project.wrap).toHaveBeenCalledWith(testDir, data);
     });
 
     it('should load a base ionic.project file that exists', function() {
-      var project = Project.load(testDir);
+      Project.load(testDir);
       expect(fs.readFileSync).toHaveBeenCalledWith(path.join(testDir, Project.PROJECT_FILE));
     });
   });

@@ -1,14 +1,14 @@
-var Cordova = require('../lib/cordova'),
-    cordova = require('cordova-lib').cordova.raw,
-    Q = require('q'),
-    helpers = require('./helpers'),
-    state = require('../lib/state'),
-    logging = require('../lib/logging');
+var Cordova = require('../lib/cordova');
+var cordova = require('cordova-lib').cordova.raw;
+var Q = require('q');
+var helpers = require('./helpers');
+var state = require('../lib/state');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
-var testDirectory = '/test/directory',
-    testPluginId = 'org.apache.cordova.device';
+var testDirectory = '/test/directory';
+var testPluginId = 'org.apache.cordova.device';
 
 describe('Cordova', function() {
 
@@ -26,7 +26,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(cordova.platform).toHaveBeenCalledWith('remove', ['ios'], {});
       })
-      .catch(function(error) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -42,7 +42,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.removePlatform).toHaveBeenCalledWith(testDirectory, 'ios');
       })
-      .catch(function(error) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -58,7 +58,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.removePlatform).not.toHaveBeenCalled();
       })
-      .catch(function(error) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -73,7 +73,7 @@ describe('Cordova', function() {
         return Cordova.addPlugin(testDirectory, testPluginId);
       })
       .then(function() {
-        expect(cordova.plugin).toHaveBeenCalledWith('add', testPluginId, {stdio:'pipe'});
+        expect(cordova.plugin).toHaveBeenCalledWith('add', testPluginId, { stdio:'pipe' });
       })
       .catch(function(data) {
         console.log(data);
@@ -92,7 +92,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.savePlugin).not.toHaveBeenCalled();
       })
-      .catch(function(error) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -108,7 +108,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.savePlugin).toHaveBeenCalled();
       })
-      .catch(function(error) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -123,7 +123,7 @@ describe('Cordova', function() {
         return Cordova.removePlugin(testDirectory, testPluginId);
       })
       .then(function() {
-        expect(cordova.plugin).toHaveBeenCalledWith('remove', testPluginId, {stdio:'pipe'});
+        expect(cordova.plugin).toHaveBeenCalledWith('remove', testPluginId, { stdio:'pipe' });
       })
       .catch(function(data) {
         console.log(data);
@@ -170,9 +170,9 @@ describe('Cordova', function() {
         return Cordova.addPlatform(testDirectory, 'ios');
       })
       .then(function() {
-        expect(cordova.platform).toHaveBeenCalledWith('add', ['ios'], {stdio: 'pipe'});
+        expect(cordova.platform).toHaveBeenCalledWith('add', ['ios'], { stdio: 'pipe' });
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -188,7 +188,7 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.savePlatform).toHaveBeenCalledWith(testDirectory, 'ios');
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
@@ -204,11 +204,10 @@ describe('Cordova', function() {
       .then(function() {
         expect(state.savePlatform).not.toHaveBeenCalled();
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
     });
   });
-
 });

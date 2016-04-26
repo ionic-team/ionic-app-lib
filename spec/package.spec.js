@@ -1,11 +1,13 @@
-var fs = require('fs'),
-    path = require('path'),
-    Q = require('q'),
-    rewire = require('rewire'),
-    ConfigXml = require('../lib/config-xml'),
-    helpers = require('./helpers'),
-    logging = require('../lib/logging'),
-    State = require('../lib/state');
+/* eslint-disable camelcase */
+
+var fs = require('fs');
+var path = require('path');
+var Q = require('q');
+var rewire = require('rewire');
+var ConfigXml = require('../lib/config-xml');
+var helpers = require('./helpers');
+var logging = require('../lib/logging');
+var State = require('../lib/state');
 
 logging.logger = helpers.testingLogger;
 
@@ -45,15 +47,15 @@ describe('Package', function() {
     spyOn(fs, 'existsSync').andReturn(true);
     spyOn(fs, 'createReadStream');
 
-    var fakeAppId = 'abcdef',
-        fakeAppDir = '/Users/Test/myApp',
-        fakeJar = {
-          map: createSpy('map').andReturn([])
-        },
-        options = {};
+    var fakeAppId = 'abcdef';
+    var fakeAppDir = '/Users/Test/myApp';
+    var fakeJar = {
+      map: jasmine.createSpy('map').andReturn([])
+    };
+    var options = {};
 
     var UploadSpy = {
-      doUpload: createSpy('doUpload').andCallFake(function(appDirectory, jar, name) {
+      doUpload: jasmine.createSpy('doUpload').andCallFake(function() {
         var q = Q.defer();
         q.resolve({ url: 'http://test' });
         return q.promise;
@@ -61,22 +63,24 @@ describe('Package', function() {
     };
 
     var UtilsSpy = {
-      createArchive: createSpy('createArchive').andCallFake(function(appDirectory, documentRoot) {
+      createArchive: jasmine.createSpy('createArchive').andCallFake(function(appDirectory, documentRoot) {
         var q = Q.defer();
         q.resolve(path.join(appDirectory, documentRoot) + '.zip');
         return q.promise;
       }),
-      retrieveCsrfToken: createSpy('retrieveCsrfToken').andReturn('asdf')
+      retrieveCsrfToken: jasmine.createSpy('retrieveCsrfToken').andReturn('asdf')
     };
 
     var IonicProjectSpy = {
-      load: createSpy('load').andCallFake(function(appDirectory) {
-        return { app_id: 'abcdef' };
+      load: jasmine.createSpy('load').andCallFake(function() {
+        return {
+          app_id: 'abcdef'
+        };
       })
     };
 
     var requestSpy = {
-      post: createSpy('request').andCallFake(function(settings, callback) {
+      post: jasmine.createSpy('request').andCallFake(function(settings, callback) {
         callback(null, { statusCode: 202 }, '{"data":{"id":"123456"}}');
       })
     };
@@ -91,13 +95,11 @@ describe('Package', function() {
 
     Package.buildAndroidDebug(fakeAppId, fakeAppDir, fakeJar, options)
       .then(function(buildId) {
-        expect(buildId).toBe("123456");
+        expect(buildId).toBe('123456');
       })
       .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-
   });
-
 });

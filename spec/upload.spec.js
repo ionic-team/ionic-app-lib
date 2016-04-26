@@ -1,14 +1,12 @@
-var archiver = require('archiver'),
-    events = require('../lib/events'),
-    fs = require('fs'),
-    helpers = require('./helpers'),
-    IoLib = require('../lib/io-config'),
-    path = require('path'),
-    Project = require('../lib/project'),
-    Q = require('q'),
-    rewire = require('rewire'),
-    settings = require('../lib/settings'),
-    logging = require('../lib/logging');
+/* eslint-disable camelcase */
+var fs = require('fs');
+var helpers = require('./helpers');
+var IoLib = require('../lib/io-config');
+var path = require('path');
+var Project = require('../lib/project');
+var Q = require('q');
+var rewire = require('rewire');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
@@ -19,8 +17,9 @@ describe('Upload', function() {
   var Upload;
 
   beforeEach(function() {
-    //Need to reset the Upload instance everytime incase
-    //we dont want to rewire something for another test.
+
+    // Need to reset the Upload instance everytime incase
+    // we dont want to rewire something for another test.
     Upload = rewire('../lib/upload');
 
   });
@@ -38,7 +37,7 @@ describe('Upload', function() {
   });
 
   describe('#addCacheBusters', function() {
-    beforeEach(function(){
+    beforeEach(function() {
       spyOn(fs, 'writeFileSync');
     });
 
@@ -47,63 +46,64 @@ describe('Upload', function() {
       spyOn(Math, 'floor').andReturn(5555);
 
       Q()
-      .then(function(){
+      .then(function() {
         return Upload.addCacheBusters(indexPath);
       })
       .then(function() {
         var argsPassed = fs.writeFileSync.argsForCall[0];
-        // console.log('args:', argsPassed);
-        //Here we check if the html to be saved has the cachebuster flags.
+
+        // Here we check if the html to be saved has the cachebuster flags.
         var indexHtml = argsPassed[1];
         var indexOfCacheBusters = indexHtml.indexOf('?ionicCachebuster=5555');
         expect(indexOfCacheBusters).not.toBe(-1);
 
-        //Fix for https://github.com/driftyco/ionic-cli/issues/435
+        // Fix for https://github.com/driftyco/ionic-cli/issues/435
         var indexOfHashUrl = indexHtml.indexOf('asset.js?ionicCachebuster=5555#hash');
         expect(indexOfHashUrl).not.toBe(-1);
 
-        //Fix for https://github.com/driftyco/ionic-cli/issues/452
+        // Fix for https://github.com/driftyco/ionic-cli/issues/452
         var bomIndex = indexHtml.indexOf('&#xFEFF;');
         expect(bomIndex).toBe(-1);
 
-        //Fix for https://github.com/driftyco/ionic-cli/issues/452#issuecomment-117376542
+        // Fix for https://github.com/driftyco/ionic-cli/issues/452#issuecomment-117376542
         var aposIndex = indexHtml.indexOf("goToState('dash')");
         expect(aposIndex).not.toBe(-1);
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
     });
 
     it('should add ionic cache buster attributes with bom', function(done) {
-      //Fix for https://github.com/driftyco/ionic-cli/issues/452
+
+      // Fix for https://github.com/driftyco/ionic-cli/issues/452
       var indexPath = path.join(__dirname, 'bomindex.html');
       spyOn(Math, 'floor').andReturn(5555);
 
       Q()
-      .then(function(){
+      .then(function() {
         return Upload.addCacheBusters(indexPath);
       })
       .then(function() {
         var argsPassed = fs.writeFileSync.argsForCall[0];
-        // console.log('args:', argsPassed);
-        //Here we check if the html to be saved has the cachebuster flags.
+
+        // Here we check if the html to be saved has the cachebuster flags.
         var indexHtml = argsPassed[1];
 
-        //Fix for https://github.com/driftyco/ionic-cli/issues/452
+        // Fix for https://github.com/driftyco/ionic-cli/issues/452
         var bomIndex = indexHtml.indexOf('&#xFEFF;');
         expect(bomIndex).toBe(-1);
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#removeCacheBusters', function() {
-    beforeEach(function(){
+    beforeEach(function() {
       spyOn(fs, 'writeFileSync');
     });
 
@@ -111,7 +111,7 @@ describe('Upload', function() {
       var indexPath = path.join(__dirname, 'cachebustedindex.html');
 
       Q()
-      .then(function(){
+      .then(function() {
         return Upload.removeCacheBusters(indexPath);
       })
       .then(function() {
@@ -124,11 +124,11 @@ describe('Upload', function() {
         var indexOfHashUrl = indexHtml.indexOf('asset.js?ionicCachebuster=5555#hash');
         expect(indexOfHashUrl).toBe(-1);
 
-        //Fix for https://github.com/driftyco/ionic-cli/issues/504
+        // Fix for https://github.com/driftyco/ionic-cli/issues/504
         var queryStringIndex = indexHtml.indexOf('http://jsconsole.com/remote.js?some-id-here=');
         expect(queryStringIndex).toBe(-1);
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
@@ -138,22 +138,23 @@ describe('Upload', function() {
   describe('#getDirectUploadKey', function() {
     it('should do a PUT request to the server', function(done) {
       Q()
-      .then(function(){
-        Upload.getDirectUploadKey
+      .then(function() {
+        Upload.getDirectUploadKey;
       })
       .then(function() {
-        //do expectations
+
+        // do expectations
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-    })
+    });
   });
 
   describe('#doUpload', function() {
-    var project,
-        key;
+    var project;
+    var key;
     beforeEach(function() {
       project = Project.wrap(Project.PROJECT_DEFAULT);
       key = {
@@ -177,10 +178,10 @@ describe('Upload', function() {
       var note = 'Note';
 
       Q()
-      .then(function(){
+      .then(function() {
         return Upload.doUpload(testDir, jar, note);
       })
-      .then(function(){
+      .then(function() {
         var indexPath = path.join(testDir, 'www', 'index.html');
         expect(Upload.addCacheBusters).toHaveBeenCalledWith(indexPath);
         expect(Upload.zipContents).toHaveBeenCalledWith(testDir, 'www');
@@ -194,13 +195,12 @@ describe('Upload', function() {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
-
     });
   });
 
   describe('#uploadToS3', function() {
     it('should call request to signal upload to s3', function(done) {
-      var requestSpy = createSpy();
+      var requestSpy = jasmine.createSpy();
       var fs = require('fs');
       var q = require('q');
       var deferred = q.defer();
@@ -209,7 +209,7 @@ describe('Upload', function() {
       spyOn(fs, 'readFileSync');
       Upload.__set__('request', requestSpy);
       Q()
-      .then(function(){
+      .then(function() {
         Upload.uploadToS3(testDir, {});
         return deferred.resolve(true);
       })
@@ -217,12 +217,11 @@ describe('Upload', function() {
         expect(requestSpy).toHaveBeenCalled();
         expect(fs.readFileSync).toHaveBeenCalled();
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         console.log(ex);
         expect('this').toBe(ex.stack);
       })
       .fin(done);
     });
   });
-
 });

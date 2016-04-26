@@ -1,5 +1,4 @@
-var index = require('../index'),
-    logging = require('../lib/logging');
+var index = require('../index');
 
 describe('index', function() {
 
@@ -17,9 +16,11 @@ describe('index', function() {
               'ioConfig', 'login', 'logging', 'multibar', 'project',
               'share', 'semver', 'serve', 'settings', 'start', 'state',
               'stats', 'upload', 'utils'];
+
   // Doing it this way to give better failure messages.
   // Ensures all commands are available currently from
   objs.forEach(function(obj) {
+
     // expect(index[obj], obj).toBeDefined();
     testForProperty(obj);
   });
