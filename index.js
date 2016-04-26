@@ -1,21 +1,17 @@
-var fs = require('fs'),
-    IonicAppLib = module.exports,
-    path = require('path');
+var fs = require('fs');
+var IonicAppLib = module.exports;
+var path = require('path');
 
-var capitalize = function capitalize(str) {
-  return str && str[0].toUpperCase() + str.slice(1);
-};
-
-var camelCase = function camelCase(input) {
-    return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
-        return group1.toUpperCase();
-    });
-};
+function camelCase(input) {
+  return input.toLowerCase().replace(/-(.)/g, function(match, group1) {
+    return group1.toUpperCase();
+  });
+}
 
 //
 // Setup all modules as lazy-loaded getters.
 //
-fs.readdirSync(path.join(__dirname, 'lib')).forEach(function (file) {
+fs.readdirSync(path.join(__dirname, 'lib')).forEach(function(file) {
   file = file.replace('.js', '');
   var command;
 
@@ -25,11 +21,11 @@ fs.readdirSync(path.join(__dirname, 'lib')).forEach(function (file) {
     command = file;
   }
 
-  IonicAppLib.__defineGetter__(command, function () {
+  IonicAppLib.__defineGetter__(command, function() { // eslint-disable-line no-underscore-dangle
     return require('./lib/' + file);
   });
 });
 
-IonicAppLib.__defineGetter__('semver', function () {
+IonicAppLib.__defineGetter__('semver', function() { // eslint-disable-line no-underscore-dangle
   return require('semver');
 });
