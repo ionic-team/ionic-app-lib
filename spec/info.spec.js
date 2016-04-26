@@ -1,7 +1,4 @@
-var Info = require('../lib/info'),
-    Q = require('q'),
-    events = require('../lib/events'),
-    helpers = require('./helpers');
+var Info = require('../lib/info');
 
 describe('Info', function() {
 
@@ -22,9 +19,9 @@ describe('Info', function() {
     Info.gatherInfo();
 
     expect(Info.getIonicLibVersion).toHaveBeenCalled();
-    expect(Info.getNodeVersion).toHaveBeenCalled()
+    expect(Info.getNodeVersion).toHaveBeenCalled();
     expect(Info.getOsEnvironment).toHaveBeenCalled();
-    expect(Info.getCordovaInfo).toHaveBeenCalled();    
+    expect(Info.getCordovaInfo).toHaveBeenCalled();
   });
 
 });

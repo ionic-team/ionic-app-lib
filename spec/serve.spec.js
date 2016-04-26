@@ -1,9 +1,7 @@
-var Q = require('q'),
-    events = require('../lib/events'),
-    helpers = require('./helpers')
-    Project = require('../lib/project'),
-    rewire = require('rewire'),
-    logging = require('../lib/logging');
+var helpers = require('./helpers');
+var Project = require('../lib/project');
+var rewire = require('rewire');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
@@ -28,15 +26,16 @@ var defaultServeOptions = {
   proxies: [],
   runLivereload: true,
   useProxy: false,
-  watchPatterns: [ 'www/**/*', '!www/lib/**/*' ],
-  watchSass: false,
+  watchPatterns: ['www/**/*', '!www/lib/**/*'],
+  watchSass: false
 };
 
-var serveArgs = { _: [ 'serve' ], '$0': '/usr/local/bin/ionic' };
+var serveArgs = {
+  _: ['serve'],
+  $0: '/usr/local/bin/ionic'
+};
 
 function compareOptions(options) {
-  // console.log('CHECKING OPTIONS');
-  // console.log(options);
   expect(options.browser).toBe(defaultServeOptions.browser);
   expect(options.browserOption).toBe(defaultServeOptions.browserOption);
   expect(options.contentSrc).toBe(defaultServeOptions.contentSrc);
@@ -64,7 +63,10 @@ describe('Serve', function() {
 
   beforeEach(function() {
     Serve = rewire('../lib/serve');
-    serveArgs = { _: [ 'serve' ], '$0': '/usr/local/bin/ionic' };
+    serveArgs = {
+      _: ['serve'],
+      $0: '/usr/local/bin/ionic'
+    };
   });
 
   it('should have serve defined', function() {
@@ -78,12 +80,12 @@ describe('Serve', function() {
   });
 
   it('should call check for document root', function() {
-    var checkSpy = spyOn(Serve, 'checkForDocumentRoot');
+    spyOn(Serve, 'checkForDocumentRoot');
     Serve.start(defaultServeOptions);
     expect(Serve.checkForDocumentRoot).toHaveBeenCalledWith(defaultServeOptions);
   });
 
-  describe('#loadSettings', function (){
+  describe('#loadSettings', function() {
     var project;
     beforeEach(function() {
       project = Project.wrap('/ionic/project', Project.PROJECT_DEFAULT);
@@ -93,7 +95,7 @@ describe('Serve', function() {
       try {
         var options = Serve.loadSettings(serveArgs, project);
         compareOptions(options);
-      } catch(ex) {
+      } catch (ex) {
         console.log(ex);
       }
     });
@@ -104,10 +106,11 @@ describe('Serve', function() {
       expect(options.runLivereload).toBe(false);
     });
   });
+
   /*
   describe('#runLivereload', function() {
     it('should run environment live reload port over options livereload port', function(done) {
-      
+
       var vfsSpy = createSpyObj('vfs', ['watch']);
       Serve.__set__('vfs', vfsSpy);
 
@@ -117,7 +120,7 @@ describe('Serve', function() {
         cb();
       })
       var tinylrSpy = createSpy('tinylr').andReturn(lrServerSpy);
-      
+
       Serve.__set__('tinylr', tinylrSpy);
       var lrSpy = createSpy('lr').andReturn({});
       var th = Serve.__set__('lr', lrSpy);
@@ -139,7 +142,7 @@ describe('Serve', function() {
         expect(app.use).toHaveBeenCalledWith({});
       })
       .catch(function(ex){
-	      expect('this').toBe(ex.stack);
+        expect('this').toBe(ex.stack);
       })
       .fin(done);
     });

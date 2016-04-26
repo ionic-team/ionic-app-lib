@@ -1,8 +1,7 @@
-var events = require('../lib/events'),
-    helpers = require('./helpers'),
-    logging = require('../lib/logging'),
-    Q = require('q'),
-    rewire = require('rewire');
+var helpers = require('./helpers');
+var logging = require('../lib/logging');
+var Q = require('q');
+var rewire = require('rewire');
 
 logging.logger = helpers.testingLogger;
 
@@ -11,9 +10,10 @@ describe('Stats', function() {
 
   beforeEach(function() {
     Stats = rewire('../lib/stats');
-  })
+  });
 
   it('should have Stats defined', function() {
+
     // console.log(Stats);
     expect(Stats).toBeDefined();
     expect(Stats.client).toBeNull();
@@ -27,7 +27,7 @@ describe('Stats', function() {
 
   describe('#client', function() {
 
-    beforeEach(function(){
+    beforeEach(function() {
       Stats.client = null;
     });
 
@@ -52,7 +52,7 @@ describe('Stats', function() {
     });
 
     it('should not track events if stats opt out', function() {
-      var ionicConfigSpy = createSpyObj('ionicConfig', ['get', 'set']);
+      var ionicConfigSpy = jasmine.createSpyObj('ionicConfig', ['get', 'set']);
 
       // get call for stats opt out
       ionicConfigSpy.get.andReturn(true);
@@ -69,7 +69,7 @@ describe('Stats', function() {
     });
 
     it('should call stats client track when properly initialized', function(done) {
-      var ionicConfigSpy = createSpyObj('ionicConfig', ['get', 'set']);
+      var ionicConfigSpy = jasmine.createSpyObj('ionicConfig', ['get', 'set']);
 
       // get call for stats opt out
       ionicConfigSpy.get.andReturn(false);
@@ -79,12 +79,12 @@ describe('Stats', function() {
 
       Stats.initClient('token');
 
-      spyOn(Stats.client, 'track').andCallFake(function(err, data, cb) {
+      spyOn(Stats.client, 'track').andCallFake(function(command, data, cb) {
         cb(null, 'result-data');
       });
 
       Q()
-      .then(function(){
+      .then(function() {
         return Stats.trackAction('/some/path', 'docs', {});
       })
       .then(function() {
@@ -93,7 +93,7 @@ describe('Stats', function() {
         expect(Stats.client.track).toHaveBeenCalled();
         expect(Stats.client.track.calls[0].args[0]).toBe('docs');
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect('this').toBe(ex.stack);
       })
       .fin(done);
@@ -101,7 +101,7 @@ describe('Stats', function() {
     });
 
     it('should call reject promise if client fails to track', function(done) {
-      var ionicConfigSpy = createSpyObj('ionicConfig', ['get', 'set']);
+      var ionicConfigSpy = jasmine.createSpyObj('ionicConfig', ['get', 'set']);
 
       // get call for stats opt out
       ionicConfigSpy.get.andReturn(false);
@@ -111,15 +111,15 @@ describe('Stats', function() {
 
       Stats.initClient('token');
 
-      spyOn(Stats.client, 'track').andCallFake(function(err, data, cb) {
+      spyOn(Stats.client, 'track').andCallFake(function(command, data, cb) {
         cb('Error!', null);
       });
 
       Q()
-      .then(function(){
+      .then(function() {
         return Stats.trackAction('/some/path', 'docs', {});
       })
-      .catch(function(ex){
+      .catch(function(ex) {
         expect(ionicConfigSpy.get).toHaveBeenCalledWith('statsOptOut');
         expect(Stats.gatherAdditionalruntimeStats).toHaveBeenCalled();
         expect(Stats.client.track).toHaveBeenCalled();

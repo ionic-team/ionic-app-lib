@@ -1,26 +1,22 @@
-var cordova = require('../lib/cordova'),
-    hooks = require('../lib/hooks'),
-    ioLib = require('../lib/io-config'),
-    Project = require('../lib/project'),
-    start = require('../lib/start'),
-    Q = require('q'),
-    events = require('../lib/events'),
-    fs = require('fs'),
-    helpers = require('./helpers'),
-    logging = require('../lib/logging');
+var cordova = require('../lib/cordova');
+var hooks = require('../lib/hooks');
+var ioLib = require('../lib/io-config');
+var Project = require('../lib/project');
+var start = require('../lib/start');
+var Q = require('q');
+var helpers = require('./helpers');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
-
-var tmpDir = helpers.tmpDir('create_test');
 
 // Things to test
 // Does it allow invalid vars?
 // What if a path doesnt exist?
 // Invalid ID?
-var dummyPath = '/Users/Test/Development/Ionic',
-    dummyPackageName = 'com.ionic.app',
-    dummyAppName = 'Ionic App',
-    appSetup;
+var dummyPath = '/Users/Test/Development/Ionic';
+var dummyPackageName = 'com.ionic.app';
+var dummyAppName = 'Ionic App';
+var appSetup;
 
 var dummyOptions = {
   targetPath: dummyPath,
@@ -28,17 +24,17 @@ var dummyOptions = {
   packageName: dummyPackageName,
   appName: dummyAppName,
   isCordovaProject: true
-}
+};
 
 describe('Start', function() {
 
-  it('should have methods defined', function(){
+  it('should have methods defined', function() {
     var methods = ['startApp', 'fetchWrapper', 'fetchSeed', 'loadAppSetup', 'fetchCreatorApp',
       'fetchCodepen', 'convertTemplates', 'fetchLocalStarter', 'fetchIonicStarter',
       'fetchGithubStarter', 'initCordova', 'updateConfigXml', 'updateLibFiles', 'finalize'];
     methods.forEach(function(method) {
       expect(start[method]).toBeDefined();
-    })
+    });
   });
 
   it('should have fetchWrapper defined', function() {
@@ -49,7 +45,7 @@ describe('Start', function() {
     expect(start.startApp).toBeDefined();
   });
 
-  describe('#startApp', function(done) {
+  describe('#startApp', function() {
     beforeEach(function() {
       dummyOptions = {
         targetPath: dummyPath,
@@ -60,108 +56,104 @@ describe('Start', function() {
       };
 
       appSetup = {
-        "plugins": [
-          "org.apache.cordova.device",
-          "org.apache.cordova.console",
-          "ionic-plugin-keyboard"
+        plugins: [
+          'org.apache.cordova.device',
+          'org.apache.cordova.console',
+          'ionic-plugin-keyboard'
         ],
-        "sass": false
+        sass: false
       };
 
       spyOn(start, 'loadAppSetup').andReturn(Q(appSetup));
       spyOn(ioLib, 'warnMissingData');
 
-      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'runSpawnCommand', 'initCordova', 'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
+      var startAppFunctions = ['fetchWrapper', 'fetchSeed', 'runSpawnCommand', 'initCordova',
+        'updateConfigXml', 'addDefaultPlatforms', 'finalize'];
       startAppFunctions.forEach(function(func) {
         spyOn(start, func).andReturn(Q());
       });
-    })
+    });
 
     it('should fail if no options are passed', function() {
       expect(function() {
-        start.startApp()
-      }).toThrow('You cannot start an app without options')
-    })
+        start.startApp();
+      }).toThrow('You cannot start an app without options');
+    });
 
     it('should fail if an invalid path is passed', function() {
       expect(function() {
-        start.startApp({targetPath: '.'})
-      }).toThrow('Invalid target path, you may not specify \'.\' as an app name')
-    })
+        start.startApp({
+          targetPath: '.'
+        });
+      }).toThrow('Invalid target path, you may not specify \'.\' as an app name');
+    });
 
     it('should call fetchWrapper', function(done) {
-      start.startApp(dummyOptions)
+      start.startApp(dummyOptions);
       expect(start.fetchWrapper).toHaveBeenCalledWith(dummyOptions);
-      done()
-    })
+      done();
+    });
 
     it('should call fetchSeed', function(done) {
       Q()
-      .then(function(data) {
-        return start.startApp(dummyOptions)
+      .then(function() {
+        return start.startApp(dummyOptions);
       })
-      .then(function(data) {
+      .then(function() {
         expect(start.fetchSeed).toHaveBeenCalledWith(dummyOptions);
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call loadAppSetup', function(done) {
       Q()
-      .then(function(data) {
-        return start.startApp(dummyOptions)
+      .then(function() {
+        return start.startApp(dummyOptions);
       })
-      .then(function(data) {
+      .then(function() {
         expect(start.loadAppSetup).toHaveBeenCalledWith(dummyOptions);
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call initCordova', function(done) {
       Q()
       .then(function() {
         return start.startApp(dummyOptions);
       })
-      .then(function(data){
-        // dummyOptions.appSetup = data;
+      .then(function() {
         expect(start.initCordova).toHaveBeenCalledWith(dummyOptions, appSetup);
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
+    });
 
     it('should call finalize', function(done) {
       Q()
       .then(function() {
         return start.startApp(dummyOptions);
       })
-      .then(function(data){
-        // dummyOptions.appSetup = data;
+      .then(function() {
         expect(start.finalize).toHaveBeenCalledWith(dummyOptions);
       })
-      .catch(function(data) {
+      .catch(function() {
         expect('this').toBe('not this');
       })
       .fin(done);
-    })
-  })
-
-  describe('#fetchWrapper', function(done) {
-
+    });
   });
 
   describe('#finalize', function() {
     it('should save a project file', function() {
       var project = Project.wrap(Project.PROJECT_DEFAULT);
-      // spyOn(fs, 'writeFileSync');
       spyOn(Project, 'create').andReturn(project);
       spyOn(project, 'set');
       spyOn(project, 'save');
@@ -173,7 +165,7 @@ describe('Start', function() {
 
     it('should save app_id when passed in options', function() {
       var project = Project.wrap(Project.PROJECT_DEFAULT);
-      dummyOptions.ionicAppId = 'app-id'
+      dummyOptions.ionicAppId = 'app-id';
       spyOn(Project, 'create').andReturn(project);
       spyOn(project, 'set');
       spyOn(project, 'save');
@@ -191,7 +183,7 @@ describe('Start', function() {
 
       Q()
       .then(function() {
-        return start.fetchSeed(dummyOptions)
+        return start.fetchSeed(dummyOptions);
       })
       .then(function() {
         expect(start.fetchIonicStarter).toHaveBeenCalledWith(dummyOptions);
@@ -199,8 +191,8 @@ describe('Start', function() {
       .catch(function(data) {
         expect('this').toBe('not this' + data);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchCodepen when codepen URL is passed', function(done) {
       var codepenUrl = 'http://codepen.io/mhartington/pen/eomzw';
@@ -208,17 +200,17 @@ describe('Start', function() {
       dummyOptions.template = codepenUrl;
 
       Q()
-      .then(function(){
+      .then(function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchCodepen).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchCodepen).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
-        expect('this').toBe('not this'+ err);
+        expect('this').toBe('not this' + err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchCreatorApp when a creator url is passed', function(done) {
       var creatorUrl = 'http://app.ionic.io/creator:5010';
@@ -226,17 +218,17 @@ describe('Start', function() {
       dummyOptions.template = creatorUrl;
 
       Q()
-      .then(function(){
+      .then(function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchCreatorApp).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchCreatorApp).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
-        expect('this').toBe('not this'+ err);
+        expect('this').toBe('not this' + err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchGithubStarter when a github url is passed', function(done) {
       var githubUrl = 'http://github.com/driftyco/ionic-unit-test-starter';
@@ -244,17 +236,17 @@ describe('Start', function() {
       dummyOptions.template = githubUrl;
 
       Q()
-      .then(function(){
+      .then(function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchGithubStarter).toHaveBeenCalledWith(dummyOptions, githubUrl)
+        expect(start.fetchGithubStarter).toHaveBeenCalledWith(dummyOptions, githubUrl);
       })
       .catch(function(err) {
-        expect('this').toBe('not this'+ err);
+        expect('this').toBe('not this' + err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchLocalStarter when a local path is passed', function(done) {
       var localPath = '/Users/Testing/Dev/local-starter';
@@ -262,17 +254,17 @@ describe('Start', function() {
       dummyOptions.template = localPath;
 
       Q()
-      .then(function(){
+      .then(function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchLocalStarter).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchLocalStarter).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
-        expect('this').toBe('not this'+ err);
+        expect('this').toBe('not this' + err);
       })
-      .fin(done)
-    })
+      .fin(done);
+    });
 
     it('should call fetchPlnkr when a plnkr url is passed', function(done) {
       var plnkrUrl = 'http://embed.plnkr.co/dFvL8n/preview';
@@ -280,14 +272,14 @@ describe('Start', function() {
       dummyOptions.template = plnkrUrl;
 
       Q()
-      .then(function(){
+      .then(function() {
         return start.fetchSeed(dummyOptions);
       })
       .then(function() {
-        expect(start.fetchPlnkr).toHaveBeenCalledWith(dummyOptions)
+        expect(start.fetchPlnkr).toHaveBeenCalledWith(dummyOptions);
       })
       .catch(function(err) {
-        expect('this').toBe('not this'+ err);
+        expect('this').toBe('not this' + err);
       })
       .fin(done);
     });
@@ -300,8 +292,8 @@ describe('Start', function() {
       spyOn(cordova, 'addPlugin');
       spyOn(cordova, 'addPlatform');
       appSetup = {
-        "plugins": [
-          "ionic-plugin-keyboard"
+        plugins: [
+          'ionic-plugin-keyboard'
         ]
       };
     });
@@ -324,18 +316,5 @@ describe('Start', function() {
     //   start.initCordova(dummyOptions, appSetup);
     //   expect(cordova.addPlatform).toHaveBeenCalledWith(dummyOptions.targetPath, 'android', true);
     // });
-  })
-
-  describe('start end-to-end', function() {
-    beforeEach(function() {
-        shell.rm('-rf', project);
-        shell.mkdir('-p', tmpDir);
-    });
-    afterEach(function() {
-        process.chdir(path.join(__dirname, '..'));  // Needed to rm the dir on Windows.
-        shell.rm('-rf', tmpDir);
-    });
-
-  })
-
-})
+  });
+});

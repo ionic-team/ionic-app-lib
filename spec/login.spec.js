@@ -1,13 +1,13 @@
-var Q = require('q'),
-    rewire = require('rewire'),
-    settings = require('../lib/settings'),
-    helpers = require('./helpers'),
-    logging = require('../lib/logging');
+var Q = require('q');
+var rewire = require('rewire');
+var settings = require('../lib/settings');
+var helpers = require('./helpers');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
-var cookieJar = [ 
-  { 
+var cookieJar = [
+  {
     key: '__cfduid',
     value: 'cfduid',
     expires: '2016-05-28T16:24:12.000Z',
@@ -18,9 +18,9 @@ var cookieJar = [
     _creationRuntimeIdx: 1,
     _initialCreationTime: 1432916656691,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   },
-  { 
+  {
     key: 'csrftoken',
     value: 'csrftoken',
     domain: 'ionic.io',
@@ -31,9 +31,9 @@ var cookieJar = [
     _creationRuntimeIdx: 2,
     _initialCreationTime: 1432916656692,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   },
-  { 
+  {
     key: 'sessionid',
     value: 'sesshionid',
     domain: 'ionic.io',
@@ -45,7 +45,7 @@ var cookieJar = [
     _creationRuntimeIdx: 3,
     _initialCreationTime: 1432916656692,
     hostOnly: false,
-    lastAccessed: '2015-05-29T16:24:16.704Z' 
+    lastAccessed: '2015-05-29T16:24:16.704Z'
   }
 ];
 
@@ -61,58 +61,55 @@ describe('Login', function() {
   });
 
   it('should show invalid email or password message', function(done) {
-    var fakeJar = {};
-    var fakeRequestFunc = function(settings, callback){
+    function fakeRequestFunc(settings, callback) {
       var responseFake = {
         statusCode: '401'
       };
       callback(null, responseFake, null);
-    };
+    }
 
-    var requestSpy = createSpy('request').andCallFake(fakeRequestFunc);
+    var requestSpy = jasmine.createSpy('request').andCallFake(fakeRequestFunc);
 
-    var jarSpy = createSpy('jar').andReturn({getCookies: function() { return cookieJar; } });
+    var jarSpy = jasmine.createSpy('jar').andReturn({ getCookies: function() { return cookieJar; } });
     requestSpy.jar = jarSpy;
 
     Login.__set__('request', requestSpy);
 
     Q()
-    .then(function(){
+    .then(function() {
       return Login.requestLogIn('user@ionic.io', 'password', false);
     })
-    .then(function(jar) {
-      // console.log(jar);
+    .then(function() {
       expect('this').toBe('not this');
     })
-    .catch(function(ex){
-      expect(ex).toBe('Email or Password incorrect. Please visit '+ settings.IONIC_DASH.white +' for help.'.red);
+    .catch(function(ex) {
+      expect(ex).toBe('Email or Password incorrect. Please visit ' +
+                      settings.IONIC_DASH.white + ' for help.'.red);
     })
     .fin(done);
   });
 
   it('should return jar for cookies upon successful login', function(done) {
-    var fakeJar = {};
-    var fakeRequestFunc = function(settings, callback){
+    function fakeRequestFunc(settings, callback) {
       var responseFake = {
         statusCode: '200'
       };
       callback(null, responseFake, null);
-    };
+    }
 
-    var requestSpy = createSpy('request').andCallFake(fakeRequestFunc);
+    var requestSpy = jasmine.createSpy('request').andCallFake(fakeRequestFunc);
 
-    var jarSpy = createSpy('jar').andReturn({getCookies: function() { return cookieJar; } });
+    var jarSpy = jasmine.createSpy('jar').andReturn({ getCookies: function() { return cookieJar; } });
     requestSpy.jar = jarSpy;
 
     Login.__set__('request', requestSpy);
     spyOn(Login, 'saveCookies');
 
     Q()
-    .then(function(){
+    .then(function() {
       return Login.requestLogIn('test@drifty.com', 'testme', true);
     })
     .then(function() {
-      // console.log('jar', jar);
       var url = [settings.IONIC_DASH_API, 'user/login'].join('');
       var postParams = {
         method: 'POST',
@@ -131,35 +128,33 @@ describe('Login', function() {
       expect(postedParams.form.password).toBe(postParams.form.password);
       expect(Login.saveCookies).toHaveBeenCalled();
     })
-    .catch(function(ex){
+    .catch(function(ex) {
       expect('this').toBe(ex.stack);
     })
     .fin(done);
   });
 
   it('should not call saveCookies upon successful login', function(done) {
-    var fakeJar = {};
-    var fakeRequestFunc = function(settings, callback){
+    function fakeRequestFunc(settings, callback) {
       var responseFake = {
         statusCode: '200'
       };
       callback(null, responseFake, null);
-    };
+    }
 
-    var requestSpy = createSpy('request').andCallFake(fakeRequestFunc);
+    var requestSpy = jasmine.createSpy('request').andCallFake(fakeRequestFunc);
 
-    var jarSpy = createSpy('jar').andReturn({getCookies: function() { return cookieJar; } });
+    var jarSpy = jasmine.createSpy('jar').andReturn({ getCookies: function() { return cookieJar; } });
     requestSpy.jar = jarSpy;
 
     Login.__set__('request', requestSpy);
     spyOn(Login, 'saveCookies');
 
     Q()
-    .then(function(){
+    .then(function() {
       return Login.requestLogIn('test@drifty.com', 'testme', false);
     })
     .then(function() {
-      // console.log('jar', jar);
       var url = [settings.IONIC_DASH_API, 'user/login'].join('');
       var postParams = {
         method: 'POST',
@@ -178,10 +173,9 @@ describe('Login', function() {
       expect(postedParams.form.password).toBe(postParams.form.password);
       expect(Login.saveCookies).not.toHaveBeenCalled();
     })
-    .catch(function(ex){
+    .catch(function(ex) {
       expect('this').toBe(ex.stack);
     })
     .fin(done);
   });
-
 });

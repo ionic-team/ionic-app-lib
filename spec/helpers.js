@@ -17,19 +17,19 @@
     under the License.
 */
 
-var path = require('path'),
-    fs = require('fs'),
-    shell = require('shelljs'),
-    logging = require('../lib/logging'),
-    os = require('os');
+var path = require('path');
+var fs = require('fs');
+var shell = require('shelljs');
+var logging = require('../lib/logging');
+var os = require('os');
 
 module.exports.tmpDir = function(subdir) {
-    var dir = path.join(os.tmpdir(), 'e2e-test');
-    if (subdir) {
-        dir = path.join(dir, subdir);
-    }
-    shell.mkdir('-p', dir);
-    return dir;
+  var dir = path.join(os.tmpdir(), 'e2e-test');
+  if (subdir) {
+    dir = path.join(dir, subdir);
+  }
+  shell.mkdir('-p', dir);
+  return dir;
 };
 
 // Returns the platform that should be used for testing on this host platform.
@@ -49,23 +49,24 @@ module.exports.testPlatform = 'android';
 
 // Add the toExist matcher.
 beforeEach(function() {
-    this.addMatchers({
-        'toExist': function() {
-            var notText = this.isNot ? ' not' : '';
-            var self = this;
+  this.addMatchers({
+    toExist: function() {
+      var notText = this.isNot ? ' not' : '';
+      var self = this;
 
-            this.message = function() {
-                return 'Expected file ' + self.actual + notText + ' to exist.';
-            };
+      this.message = function() {
+        return 'Expected file ' + self.actual + notText + ' to exist.';
+      };
 
-            return fs.existsSync(this.actual);
-        }
-    });
+      return fs.existsSync(this.actual);
+    }
+  });
 });
 
 // By default we don't log anything during tests
 // Uncomment the logger with a console transport below to enable output
 module.exports.testingLogger = new logging.winston.Logger();
+
 // module.exports.testingLogger = new logging.winston.Logger({
 //   level: 'debug',
 //   transports: [

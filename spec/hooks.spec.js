@@ -1,7 +1,6 @@
-var Hooks = require('../lib/hooks'),
-    path = require('path'),
-    helpers = require('./helpers'),
-    logging = require('../lib/logging');
+var Hooks = require('../lib/hooks');
+var helpers = require('./helpers');
+var logging = require('../lib/logging');
 
 logging.logger = helpers.testingLogger;
 
@@ -26,6 +25,6 @@ describe('Hooks', function() {
 
   //   shelljs.rm('rf', appPath);
 
-  // });  
+  // });
 
 });
