@@ -1,3 +1,8 @@
+# 0.7.1
+
+* Update starter help text
+* Add icon for iPad Pro, removes unused icon-60
+
 # 0.7.0
 
 * Add --noresources flag to package builds to optionally do nothing with resources.
