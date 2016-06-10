@@ -14,16 +14,23 @@ describe('Cordova', function() {
 
   it('should have Cordova defined', function() {
     expect(Cordova).toBeDefined();
+    expect(Cordova.Lib).toBeDefined();
+    expect(Cordova.runCordova).toEqual(jasmine.any(Function));
+    expect(Cordova.setupLiveReload).toEqual(jasmine.any(Function));
+    expect(Cordova.addPlatform).toEqual(jasmine.any(Function));
+    expect(Cordova.removePlatform).toEqual(jasmine.any(Function));
+    expect(Cordova.runPlatform).toEqual(jasmine.any(Function));
+    expect(Cordova.addPlugin).toEqual(jasmine.any(Function));
+    expect(Cordova.removePlugin).toEqual(jasmine.any(Function));
+    expect(Cordova.buildPlatform).toEqual(jasmine.any(Function));
+    expect(Cordova.preparePlatform).toEqual(jasmine.any(Function));
   });
 
   describe('#removePlatform', function() {
     it('should call cordova.platform when removePlatform is called', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.removePlatform(testDirectory, 'ios');
-      })
-      .then(function() {
+
+      Cordova.removePlatform(testDirectory, 'ios').then(function() {
         expect(cordova.platform).toHaveBeenCalledWith('remove', ['ios'], {});
       })
       .catch(function() {
@@ -35,11 +42,8 @@ describe('Cordova', function() {
     it('should call state.removePlatform when removePlatform is called to save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'removePlatform').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.removePlatform(testDirectory, 'ios', true);
-      })
-      .then(function() {
+
+      Cordova.removePlatform(testDirectory, 'ios', true).then(function() {
         expect(state.removePlatform).toHaveBeenCalledWith(testDirectory, 'ios');
       })
       .catch(function() {
@@ -51,11 +55,8 @@ describe('Cordova', function() {
     it('should not call state.savePlatform when removePlatform is called to save platform', function(done) {
       spyOn(cordova, 'platform').andReturn(Q());
       spyOn(state, 'removePlatform').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.removePlatform(testDirectory, 'ios');
-      })
-      .then(function() {
+
+      Cordova.removePlatform(testDirectory, 'ios').then(function() {
         expect(state.removePlatform).not.toHaveBeenCalled();
       })
       .catch(function() {
@@ -68,11 +69,8 @@ describe('Cordova', function() {
   describe('#addPlugin', function() {
     it('should call cordova.plugin when addPlugin is called', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.addPlugin(testDirectory, testPluginId);
-      })
-      .then(function() {
+
+      Cordova.addPlugin(testDirectory, testPluginId).then(function() {
         expect(cordova.plugin).toHaveBeenCalledWith('add', testPluginId, { stdio:'pipe' });
       })
       .catch(function(data) {
@@ -85,11 +83,7 @@ describe('Cordova', function() {
     it('should not call state.savePlugin when addPlugin is not called to save plugin', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
       spyOn(state, 'savePlugin').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device');
-      })
-      .then(function() {
+      Cordova.addPlugin(testDirectory, 'org.apache.cordova.device').then(function() {
         expect(state.savePlugin).not.toHaveBeenCalled();
       })
       .catch(function() {
@@ -101,11 +95,8 @@ describe('Cordova', function() {
     it('should call state.savePlugin when addPlugin is called to save plugin', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
       spyOn(state, 'savePlugin').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.addPlugin(testDirectory, 'org.apache.cordova.device', null, true);
-      })
-      .then(function() {
+
+      Cordova.addPlugin(testDirectory, 'org.apache.cordova.device', null, true).then(function() {
         expect(state.savePlugin).toHaveBeenCalled();
       })
       .catch(function() {
@@ -118,11 +109,8 @@ describe('Cordova', function() {
   describe('#removePlugin', function() {
     it('should call cordova.plugin when removePlugin is called', function(done) {
       spyOn(cordova, 'plugin').andReturn(Q());
-      Q()
-      .then(function() {
-        return Cordova.removePlugin(testDirectory, testPluginId);
-      })
-      .then(function() {
+
+      Cordova.removePlugin(testDirectory, testPluginId).then(function() {
         expect(cordova.plugin).toHaveBeenCalledWith('remove', testPluginId, { stdio:'pipe' });
       })
       .catch(function(data) {

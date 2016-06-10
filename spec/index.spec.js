@@ -15,7 +15,7 @@ describe('index', function() {
   var objs = ['configXml', 'cordova', 'events', 'hooks', 'info',
               'ioConfig', 'login', 'logging', 'multibar', 'project',
               'share', 'semver', 'serve', 'settings', 'start', 'state',
-              'stats', 'upload', 'utils'];
+              'upload', 'utils'];
 
   // Doing it this way to give better failure messages.
   // Ensures all commands are available currently from
