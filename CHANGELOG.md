@@ -1,3 +1,11 @@
+# 0.7.3
+
+* Fix [#60](https://github.com/driftyco/ionic-app-lib/pull/60), thanks [jarodms6](https://github.com/jarodms6)!
+
+# 0.7.2
+
+* Remove "beta" from platform message
+
 # 0.7.1
 
 * Update starter help text
