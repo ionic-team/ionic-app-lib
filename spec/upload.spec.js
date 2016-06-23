@@ -42,7 +42,7 @@ describe('Upload', function() {
     });
 
     it('should add ionic cache buster attributes', function(done) {
-      var indexPath = path.join(__dirname, 'index.html');
+      var indexPath = path.join(__dirname, 'artifacts/index.html');
       spyOn(Math, 'floor').andReturn(5555);
 
       Q()
@@ -78,7 +78,7 @@ describe('Upload', function() {
     it('should add ionic cache buster attributes with bom', function(done) {
 
       // Fix for https://github.com/driftyco/ionic-cli/issues/452
-      var indexPath = path.join(__dirname, 'bomindex.html');
+      var indexPath = path.join(__dirname, 'artifacts/bomindex.html');
       spyOn(Math, 'floor').andReturn(5555);
 
       Q()
@@ -108,7 +108,7 @@ describe('Upload', function() {
     });
 
     it('should remove ionic cache buster attributes', function(done) {
-      var indexPath = path.join(__dirname, 'cachebustedindex.html');
+      var indexPath = path.join(__dirname, 'artifacts/cachebustedindex.html');
 
       Q()
       .then(function() {

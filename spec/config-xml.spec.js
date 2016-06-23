@@ -2,6 +2,7 @@ var ConfigXml = require('../lib/config-xml');
 var fs = require('fs');
 var helpers = require('./helpers');
 var options = {};
+var path = require('path');
 var Q = require('q');
 var logging = require('../lib/logging');
 
@@ -16,7 +17,7 @@ describe('ConfigXml', function() {
   describe('#setConfigXml', function() {
 
     var writeFile;
-    var xmlPath = __dirname;
+    var xmlPath = path.join(__dirname, 'artifacts');
 
     beforeEach(function() {
       writeFile = spyOn(fs, 'writeFileSync');
