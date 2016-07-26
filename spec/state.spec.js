@@ -21,7 +21,7 @@ describe('State', function() {
   it('should get the package json by app directory', function() {
     spyOn(State, 'readInPackageJson').andReturn({});
     var packageJson = State.getPackageJson(tempDirectory);
-    expect(State.readInPackageJson).toHaveBeenCalledWith('/test/dev/ionic/package.json');
+    expect(State.readInPackageJson).toHaveBeenCalledWith(path.normalize('/test/dev/ionic/package.json'));
     expect(packageJson.cordovaPlugins.length).toBe([].length);
     expect(packageJson.cordovaPlatforms.length).toBe([].length);
   });
