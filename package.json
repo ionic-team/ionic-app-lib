@@ -67,7 +67,7 @@
     "unzip2": "0.2.5",
     "vinyl-fs": "1.0.0",
     "winston": "^1.0.1",
-    "xml2js": "0.4.4"
+    "xml2js": "0.4.9"
   },
   "devDependencies": {
     "jasmine-node": "^1.14.5",
