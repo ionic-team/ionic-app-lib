@@ -1,3 +1,7 @@
+# 2.0.0
+
+* 
+
 # 0.7.3
 
 * Fix [#60](https://github.com/driftyco/ionic-app-lib/pull/60), thanks [jarodms6](https://github.com/jarodms6)!
