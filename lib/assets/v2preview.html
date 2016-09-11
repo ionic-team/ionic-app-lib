@@ -68,7 +68,7 @@
       }
       .phone {
         float: left;
-        margin: 40px 20px 0 20px;
+        margin: 0 20px 0 20px;
       }
       .frame {
         border: none;
@@ -114,6 +114,17 @@
       #logo img {
         max-width: 100%;
       }
+      #controls {
+        display: block;
+        max-width: 1245px;
+        margin: 80px auto 0 20px;
+      }
+      #controls h2, #controls label {
+        display: inline;
+        font-size: 18px;
+        color: #6F7582;
+      }
+      
     </style>
 
     <!-- quick and dirty templating, don't touch this -->
@@ -158,7 +169,29 @@
       <a target="_blank" href="https://github.com/driftyco/ionic">GitHub</a>
     </header>
     -->
+    
     <preview>
+      <div id="controls">
+      <h2>Platforms:</h2>
+      <label><input type="checkbox" id="iosPreview" onclick="togglePreview(this)" checked='checked'>iOS</label>
+      <label><input type="checkbox" id="androidPreview" onclick="togglePreview(this)" checked='checked'>Android</label>
+      <label><input type="checkbox" id="windowsPreview" onclick="togglePreview(this)" checked='checked'>Windows</label>
+      <script>
+        function togglePreview(cb) {
+          var previewFrame;
+          
+          if (cb.id === 'iosPreview' ) {
+            previewFrame = document.getElementById('iphone');
+          } else  if (cb.id === 'androidPreview' ) { 
+            previewFrame = document.getElementById('android');
+          } else  if (cb.id === 'windowsPreview' ) { 
+            previewFrame = document.getElementById('windows');
+          }
+          
+          cb.checked ?  previewFrame.style.display = 'inline' :  previewFrame.style.display = 'none' 
+        }
+      </script>
+    </div>
       <!--
       <div id="choice">
         <select ng-model="screenSize" ng-options="s.label for s in screenSizes"></select>
