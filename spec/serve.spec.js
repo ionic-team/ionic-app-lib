@@ -26,7 +26,7 @@ var defaultServeOptions = {
   proxies: [],
   runLivereload: true,
   useProxy: false,
-  watchPatterns: ['www/**/*', '!www/lib/**/*'],
+  watchPatterns: ['www/**/*', '!www/lib/**/*', '!www/**/*.map'],
   watchSass: false
 };
 
