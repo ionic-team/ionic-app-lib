@@ -1,6 +1,12 @@
+# 2.1.0
+
+* **feat:** add wrapper and starter branch names as options for starting an app. ([f4bb581](https://github.com/driftyco/ionic-app-lib/commit/f4bb581233a4d67213cc27ed2e7b54cf7d114c8f))
+* **refactor:** update serve watch patterns to exclude map files. ([2315b9b](https://github.com/driftyco/ionic-app-lib/commit/2315b9bd55fe056126cfa8527536f85dfc68826f))
+* **refactor:** change package name for v2 projects. ([c492ec7](https://github.com/driftyco/ionic-app-lib/commit/c492ec76f9dda039b525960014875a5b418115e0))
+
 # 2.0.0
 
-* 
+*
 
 # 0.7.3
 
@@ -63,7 +69,7 @@
 * Stats command added to ionic-app-lib.
 * Added gulp dependent start up tasks to run before `ionic serve` - specify them in your `ionic.project` file as attribute `gulpStartupTasks`.
 * On starting apps - now calls `ionic add` instead of `bower install`.
-* State command now saves package.json with newline character at end of file. 
+* State command now saves package.json with newline character at end of file.
 * Resources have been extracted to the ionic-app-lib - now usable in the module.
 * Add release feature as alpha - will compress images and concat/minify CSS/JS via usemin specified in index.html.
 
@@ -143,7 +149,7 @@
 
 # 0.2.3
 
-* Add build platform to the cordova command. 
+* Add build platform to the cordova command.
 * Bump version of ionic-cordova-lib.
 
 # 0.2.2
