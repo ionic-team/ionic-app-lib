@@ -50,7 +50,7 @@
     "cross-spawn-async": "2.1.9",
     "finalhandler": "0.2.0",
     "form-data": "0.1.4",
-    "glob-watcher": "2.0.0",
+    "glob-watcher": "3.0.0",
     "open": "0.0.5",
     "optimist": "0.6.0",
     "progress": "1.1.7",
