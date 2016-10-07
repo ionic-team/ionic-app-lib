@@ -19,7 +19,7 @@ describe('Utils', function() {
 
   it('should have methods defined', function() {
     var methods = ['transformCookies', 'retrieveCsrfToken', 'createArchive', 'fetchArchive',
-      'preprocessOptions', 'getContentSrc', 'fail'];
+      'preprocessOptions', 'getContentSrc', 'fail', 'getProxy'];
     methods.forEach(function(method) {
       expect(Utils[method]).toBeDefined();
     });
@@ -30,6 +30,12 @@ describe('Utils', function() {
       expect(function() {
         Utils.transformCookies(null);
       }).toThrow('You parse out cookies if they are null');
+    });
+  });
+
+  describe('#getProxy', function() {
+    it('should return null proxy if nothing is there in the env variable', function() {
+      expect(Utils.getProxy()).toEqual(null);
     });
   });
 
