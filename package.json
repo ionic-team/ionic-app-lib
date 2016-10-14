@@ -1,6 +1,6 @@
 {
   "name": "ionic-app-lib",
-  "version": "2.1.0-beta.1",
+  "version": "2.1.1",
   "description": "A library for creating and developing Ionic Framework mobile apps.",
   "homepage": "http://ionicframework.com/",
   "main": "index.js",
@@ -79,5 +79,7 @@
     "jasmine": "jasmine-node --captureExceptions spec/",
     "lint": "eslint .",
     "coveralls": "istanbul cover node_modules/jasmine-node/bin/jasmine-node --captureExceptions spec/ && cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf coverage"
-  }
+  },
+  "cordovaPlugins": [],
+  "cordovaPlatforms": []
 }

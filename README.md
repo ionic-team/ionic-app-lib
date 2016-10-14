@@ -1,6 +1,5 @@
-[![Circle CI](https://circleci.com/gh/driftyco/ionic-app-lib.svg?style=svg)](https://circleci.com/gh/driftyco/ionic-app-lib)
-
-[![NPM](https://nodei.co/npm/ionic-app-lib.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ionic-app-lib/)
+[![Build Status][circle-badge]][circle-badge-url]
+[![npm][npm-badge]][npm-badge-url]
 
 ## Getting started
 
@@ -90,3 +89,8 @@ The specs will test passing the commands the correct parameters, instead of if t
 
 Need to think about how to start cutting over forward development and passing it off to this library instead of straight parsing arguments from CLI.
 
+
+[circle-badge]: https://circleci.com/gh/driftyco/ionic-app-lib.svg?style=shield
+[circle-badge-url]: https://circleci.com/gh/driftyco/ionic-app-lib
+[npm-badge]: https://img.shields.io/npm/v/ionic-app-lib.svg
+[npm-badge-url]: https://www.npmjs.com/package/ionic-app-lib
