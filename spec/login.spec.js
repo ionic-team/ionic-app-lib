@@ -1,4 +1,5 @@
 var Q = require('q');
+var chalk = require('chalk');
 var rewire = require('rewire');
 var settings = require('../lib/settings');
 var helpers = require('./helpers');
@@ -83,8 +84,8 @@ describe('Login', function() {
       expect('this').toBe('not this');
     })
     .catch(function(ex) {
-      expect(ex).toBe('Email or Password incorrect. Please visit ' +
-                      settings.IONIC_DASH.white + ' for help.'.red);
+      expect(ex).toBe(chalk.red('Email or Password incorrect. Please visit ') +
+                      chalk.white(settings.IONIC_DASH) + chalk.red(' for help.'));
     })
     .fin(done);
   });
