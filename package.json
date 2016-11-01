@@ -53,6 +53,7 @@
     "glob-watcher": "3.0.0",
     "open": "0.0.5",
     "optimist": "0.6.0",
+    "os-name": "^2.0.1",
     "progress": "1.1.7",
     "prompt": "0.2.12",
     "proxy-middleware": "0.7.0",
