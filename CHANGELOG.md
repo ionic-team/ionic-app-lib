@@ -1,4 +1,8 @@
-# 2.1.0
+# 2.1.3
+
+# 2.1.2
+
+# 2.1.1
 
 * **feat:** add wrapper and starter branch names as options for starting an app. ([f4bb581](https://github.com/driftyco/ionic-app-lib/commit/f4bb581233a4d67213cc27ed2e7b54cf7d114c8f))
 * **refactor:** update serve watch patterns to exclude map files. ([2315b9b](https://github.com/driftyco/ionic-app-lib/commit/2315b9bd55fe056126cfa8527536f85dfc68826f))
