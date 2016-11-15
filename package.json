@@ -1,6 +1,6 @@
 {
   "name": "ionic-app-lib",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "A library for creating and developing Ionic Framework mobile apps.",
   "homepage": "http://ionicframework.com/",
   "main": "index.js",
