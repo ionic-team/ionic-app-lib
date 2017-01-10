@@ -6,8 +6,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.6.1/angular-animate.min.js"></script>
     <script src="https://code.angularjs.org/1.6.1/angular-sanitize.min.js"></script>
+    <script src="ionicate/ionicate.js"></script>
     <script src="app.js"></script>
     <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="ionicate/ionicate.css" />
     <link rel="stylesheet" href="https://ionic-apps.s3.amazonaws.com/CACHE/css/7c2d5a6de02b.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     <link rel="stylesheet" href="app.css">
@@ -303,6 +305,8 @@
               <a href="#" ng-click="setStep(2)">&laquo; Create your free Ionic ID</a>
             </div>
           </div>
+          <ionicate questions="surveyQuestions" on-finish="finishedSurvey()">
+          </ionicate>
         </div>
       </div>
     </div>

@@ -1,0 +1,60 @@
+ionicate {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  width: 250px;
+  height: 350px;
+  background-color: white;
+  box-shadow: 0px 1px 6px rgba(0,0,0,0.2);
+}
+ionicate .ionicate-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+ionicate .ionicate-title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+ionicate .ionicate-content {
+  padding: 10px;
+  flex: 1;
+  overflow-y: auto;
+}
+ionicate .ionicate-button {
+  display: flex;
+}
+ionicate .ionicate-button a {
+  display: block;
+  padding: 10px;
+  background-color: #448BFA;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  flex: 1;
+  margin: 5px;
+}
+ionicate ul {
+  margin: 0;
+  padding: 0;
+}
+ionicate ul li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  padding: 10px;
+  box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  background-color: white;
+
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+ionicate ul li input[type="checkbox"] {
+  margin-right: 10px;
+}
