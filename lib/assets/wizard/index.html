@@ -305,7 +305,7 @@
               <a href="#" ng-click="setStep(2)">&laquo; Create your free Ionic ID</a>
             </div>
           </div>
-          <ionicate questions="surveyQuestions" on-finish="finishedSurvey(didFinish)">
+          <ionicate ng-show="showSurvey" questions="surveyQuestions" on-finish="finishedSurvey(didFinish)">
           </ionicate>
         </div>
       </div>
