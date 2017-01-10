@@ -3,12 +3,13 @@ ionicate {
   position: fixed;
   bottom: 0;
   right: 15px;
-  width: 250px;
-  height: 350px;
+  width: 300px;
+  height: 400px;
   background-color: white;
   box-shadow: 0px 1px 6px rgba(0,0,0,0.2);
 }
 ionicate .ionicate-wrap {
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -26,6 +27,7 @@ ionicate .ionicate-content {
 }
 ionicate .ionicate-button {
   display: flex;
+  padding-bottom: 15px;
 }
 ionicate .ionicate-button a {
   display: block;
@@ -36,6 +38,7 @@ ionicate .ionicate-button a {
   border-radius: 4px;
   flex: 1;
   margin: 5px;
+  text-decoration: none;
 }
 ionicate ul {
   margin: 0;
@@ -57,4 +60,10 @@ ionicate ul li {
 }
 ionicate ul li input[type="checkbox"] {
   margin-right: 10px;
+}
+ionicate .ionicate-close {
+  color: #eee;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
