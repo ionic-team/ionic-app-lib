@@ -1,0 +1,315 @@
+
+html, body {
+}
+body {
+}
+
+.btn {
+  text-transform: none;
+  font-weight: normal;
+}
+#login-page .btn-primary, #register-page .btn-primary, #reset-page .btn-primary {
+  font-weight: normal;
+  letter-spacing: normal;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+.sub-title {
+  text-align: center;
+  color: #878D97;
+}
+
+.errorlist {
+  color: #F73A3A;
+  margin: 0;
+  font-weight: 500;
+  text-align: left;
+}
+/* The starting CSS styles for the enter animation */
+.fade-anim.ng-enter {
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.fade-anim.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+/* now the element will fade out before it is removed from the DOM */
+.fade-anim.ng-leave {
+  transition:0.5s linear all;
+  opacity:1;
+}
+.fade-anim.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.step-box {
+  padding: 15px;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+#wrap {
+  flex: 1;
+  overflow: auto;
+}
+#wrap > * {
+  margin: 50px auto;
+  max-width: 650px;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 5px 0 20px 0;
+  text-align: center;
+  font-size: 11px
+}
+#footer a {
+  color: #aaa;
+  margin: 0px 10px;
+}
+#step-3 .btn {
+  font-size: 14px;
+  margin: 40px 0;
+  padding: 15px 40px;
+}
+.steps {
+  width: 100%;
+  border-bottom: 1px solid #F0F2F6;
+}
+.steps-wrap {
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  text-align: center;
+  padding: 20px;
+}
+.steps .step {
+  flex: 1;
+  padding: 15px;
+  color: #aaa;
+}
+.steps .step::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 5px;
+  margin-bottom: -2px;
+  background: url('wizard-steps-icons.png') no-repeat transparent;
+  background-size: 100%;
+}
+
+.steps .step.active {
+  color: #448BFA;
+}
+.steps .step.active::before {
+  background-position: 0px -14px;
+}
+.steps .step.done {
+  color: #448BFA;
+}
+.steps .step.done::before {
+  background-position: 0px -28px;
+}
+
+.help-block {
+  text-align: left;
+}
+
+#loading {
+  z-index: 100;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  transition: opacity 500ms ease-in-out;
+}
+#loading.ng-hide {
+  opacity: 0;
+}
+#loading {
+}
+
+#loading .loading-wrap {
+  background-color: black;
+  border-radius: 5px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+
+  color: white;
+  font-size: 16px;
+  padding: 15px;
+}
+
+#loading img {
+  float: left;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+#loading .msg {
+  display: block;
+  font-size: 16px;
+}
+#loading .info {
+  display: block;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background-color: #448BFA;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #296dd8;
+}
+
+
+.btn-loud {
+  border-color: #4f8ef7;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 2.6px;
+  margin-top: 11px;
+  outline: none;
+  padding: 19px 15px 17px;
+  transition: .2s background,.2s border-color;
+  width: 100%;
+}
+
+}
+
+#errors {
+  margin: 30px 0;
+  border: 1px solid #eee;
+}
+#errors .panel {
+  margin-bottom: 0;
+}
+#errors .panel-body {
+  padding: 15px;
+}
+
+.skinny-wrapper {
+  max-width: 500px;
+}
+#register-page .form-wrapper,
+#login-page .form-wrapper {
+  width: 500px;
+}
+
+#register-page .skip a {
+  color: #aaa;
+}
+
+#login-page .form-wrapper input:focus+label, #login-page .form-wrapper input:not(.optional):valid+label, #login-page .form-wrapper input.not-empty+label, #register-page .form-wrapper input:focus+label, #register-page .form-wrapper input:not(.optional):valid+label, #register-page .form-wrapper input.not-empty+label, #reset-page .form-wrapper input:focus+label, #reset-page .form-wrapper input:not(.optional):valid+label, #reset-page .form-wrapper input.not-empty+label {
+  top: 4px;
+  background-color: white;
+  padding: 0px 5px;
+  left: 12px;
+}
+#login-page .form-wrapper input:not(.optional):valid, #login-page .form-wrapper input.optional.not-empty, #register-page .form-wrapper input:not(.optional):valid, #register-page .form-wrapper input.optional.not-empty, #reset-page .form-wrapper input:not(.optional):valid, #reset-page .form-wrapper input.optional.not-empty {
+  border-color: #DEE1E9;
+}
+
+input.form-control {
+  box-shadow: none;
+}
+
+#login-page .form-wrapper input, #register-page .form-wrapper input, #reset-page .form-wrapper input {
+  padding-top: 6px;
+}
+#login-page .form-group, #register-page .form-group, #reset-page .form-group {
+  margin-bottom: 15px;
+}
+
+#services {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 20px 0;
+}
+#services a {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin: 0px 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  color: #272A2F;
+  font-size: 13px;
+}
+#services a .icon {
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  background: url('wizard-services-icons.png') no-repeat transparent;
+  background-size: 100%;
+}
+#services a.view .icon {
+  background-position: 0 0;
+}
+#services a.services .icon {
+  background-position: 0 -80px;
+}
+#services a.market .icon {
+  background-position: 0 -160px;
+}
+#services a.creator .icon {
+  background-position: 0 -240px;
+}
+#step-3 {
+}
+#step-3 .no-auth {
+  margin: 20px;
+  text-align: center;
+}
+#step-3 .no-auth a {
+  color: #aaa;
+}
+
+#step-3 .separator {
+  width: 34px;
+  height: 6px;
+  margin: 40px auto;
+  background: url('separator.png') no-repeat transparent;
+  background-size: 100%;
+}
+#step-3 #services-section .title {
+  font-size: 26px;
+}
+#step-3 #services-section .sub-title {
+  font-size: 14px;
+}
+#step-3 .running {
+  color: green;
+  text-align: center;
+  margin: 30px 0;
+  opacity: 0;
+}
+
+#step-3 .errorlist {
+  margin: 20px auto;
+  max-width: 450px;
+  text-align: center;
+}

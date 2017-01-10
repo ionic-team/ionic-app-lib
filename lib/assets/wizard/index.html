@@ -1,0 +1,337 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>Ionic Project Wizard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.1/angular-animate.min.js"></script>
+    <script src="https://code.angularjs.org/1.6.1/angular-sanitize.min.js"></script>
+    <script src="app.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://ionic-apps.s3.amazonaws.com/CACHE/css/7c2d5a6de02b.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="stylesheet" href="app.css">
+    <link rel="icon" type="image/png" href="http://ionicframework.com/img/meta/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="http://ionicframework.com/img/meta/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="http://ionicframework.com/img/meta/android-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="http://ionicframework.com/img/meta/favicon-16x16.png" sizes="16x16">
+  </head>
+  <body ng-controller="AppCtrl">
+    <div id="main">
+      <div id="steps" class="steps">
+        <div class="steps-wrap">
+          <div class="step" ng-class="{'active': step == 1, 'done': step > 1}">
+            Create
+          </div>
+          <div class="step" ng-class="{'active': step == 2, 'done': step > 2}">
+            Register
+          </div>
+          <div class="step" ng-class="{'active': step == 3, 'done': step > 3}">
+            Launch
+          </div>
+        </div>
+      </div>
+      <div id="wrap" ng-switch="step" class="step-box fade-anim">
+        <div id="step-1" ng-controller="CreateCtrl" ng-switch-when="1">
+          <h2 class="title">Create your app</h2>
+          <h4 class="sub-title">Get a new Ionic app up and running</h4>
+          <div id="register-page" class="skinny-wrapper">
+            <div class="text-center">
+              <div class="form-wrapper">
+                <div class="errorlist" ng-if="errors">{{errors}}</div>
+                <form id="create-form" class="form" role="form" ng-submit="onSubmit()">
+                  <div class="form-group relatively">
+                    <div class="input-group">
+                      <input type="text"
+                             class="form-control "
+                             name="name" id="id_name"
+                             required
+                             autofocus
+                             value=""
+                             ng-model="app.name"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                      <label for="id_name">App Name</label>
+                    </div>
+                  </div>
+                  <div class="form-group relatively">
+                    <div class="input-group">
+                      <input type="text"
+                             class="form-control "
+                             name="app_directory" id="id_app_directory"
+                             required
+                             value=""
+                             ng-model="app.directory"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                      <label for="id_app_directory">App directory name</label>
+                    </div>
+                  </div>
+                  <div class="form-group relatively">
+                    <div class="input-group">
+                      <input type="text"
+                             class="form-control "
+                             name="dirpath" id="id_dirpath"
+                             value=""
+                             ng-model="app.path"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                      <label for="id_dirpath">App directory path</label>
+                    </div>
+                    <p class="help-block">Leave empty to use current directory (<code><span ng-bind="env.cwd"></span></code>)</p>
+                  </div>
+                  <div class="form-group relatively">
+                    <div class="input-group">
+                      <input type="text"
+                             class="form-control "
+                             name="appid" id="id_appid"
+                             required
+                             value=""
+                             ng-model="app.id"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                      <label for="id_dirpath">App ID</label>
+                    </div>
+                  </div>
+                  <div class="form-group relatively">
+                    <div class="input-group">
+                      <select class="form-control" ng-model="app.template">
+                        <option value="">Template</option>
+                        <!--<option value="super">Super Starter</option>-->
+                        <option value="tabs">Tabs</option>
+                        <option value="sidemenu">Menu</option>
+                        <option value="blank">Blank</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-loud">Continue <i class="ion-chevron-right"></i></button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="step-2" ng-controller="CloudCtrl" ng-switch-when="2">
+          <h2 class="title" ng-if="!_showLogin">Create your Ionic account</h2>
+          <h4 class="sub-title" ng-if="!_showLogin">Create a free Ionic ID to connect your app with <a href="http://view.ionic.io/" target="_blank">Ionic View</a></h4>
+          <h2 class="title" ng-if="_showLogin">Log into your Ionic account</h2>
+          <h4 class="sub-title" ng-if="_showLogin">Connect your app with <a href="http://view.ionic.io/" target="_blank">Ionic View</a> for rapid device testing</h4>
+          <div id="register-page" class="skinny-wrapper" ng-if="!_showLogin">
+            <div class="text-center">
+              <div class="form-wrapper">
+                <div class="errorlist" ng-if="singleError">{{singleError}}</div>
+                <form id="signup-form" class="form" role="form" ng-submit="doSignup()">
+                  <fieldset>
+                    <div class="form-group relatively">
+                      <div class="errorlist" ng-if="errors.name">{{errors.name[0]}}</div>
+                      <div class="input-group">
+                        <input type="text"
+                               name="name" id="id_name"
+                               class="form-control "
+                               required
+                               autofocus
+                               value=""
+                               ng-model="data.name"
+                               onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                        <label for="id_name">Name</label>
+                      </div>
+                    </div>
+                    <div class="form-group relatively">
+                      <div class="errorlist" ng-if="errors.username">{{errors.username[0]}}</div>
+                      <div class="input-group">
+                        <input type="text"
+                               required
+                               name="username"
+                               id="id_username"
+                               class="form-control  "
+                               value=""
+                               ng-model="data.username"
+                               onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                        <label for="id_username">Username</label>
+                      </div>
+                    </div>
+                    <div class="form-group relatively">
+                      <div class="errorlist" ng-if="errors.company">{{errors.company[0]}}</div>
+                      <div class="input-group">
+                        <input type="text"
+                               name="company_name"
+                               id="company_name"
+                               class="optional form-control  "
+                               value=""
+                               ng-model="data.company"
+                               onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                        <label for="company_name">Company</label>
+                      </div>
+                    </div>
+                    <div class="form-group relatively">
+                      <div class="errorlist" ng-if="errors.email">{{errors.email[0]}}</div>
+                      <div class="input-group">
+                        <input type="email"
+                               name="email"
+                               required
+                               id="id_email"
+                               class="form-control  "
+                               value=""
+                               ng-model="data.email"
+                               onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                        <label for="id_email">Email</label>
+                      </div>
+                    </div>
+                    <div class="form-group relatively">
+                      <div class="errorlist" ng-if="errors.password">{{errors.password[0]}}</div>
+                      <div class="input-group">
+                        <input type="password"
+                               name="password"
+                               required
+                               id="id_password"
+                               class="form-control "
+                               value=""
+                               ng-model="data.password"
+                               onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}">
+                        <label for="id_password">Password</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group relatively">
+                      <button class="btn btn-primary btn-loud" type="submit"><span class="login-button-icon"></span>Create Ionic ID</button>
+                      <small class="legal-text">
+                        By signing up you agree to our <a href="http://ionic.io/tos" target="_blank">Terms of Service</a> and <a href="http://ionic.io/privacy" target="_blank">Privacy Policy</a>
+                      </small>
+                    </div>
+
+                    <div class="text-center help">
+                      Already have an account? <a href="#" ng-click="showLogin()">Log in</a>.
+                    </div>
+                    <div class="text-center help skip">
+                      <a ng-click="skip()" href="#">Skip this step &raquo;</a>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div id="login-page" class="skinny-wrapper" ng-if="_showLogin">
+            <div class="form-wrapper">
+              <form method="post" ng-submit="doLogin()">
+                <fieldset>
+                  <div class="form-group relatively">
+                    <div class="errorlist" ng-if="errors.email">{{errors.email[0]}}</div>
+                    <div class="input-group">
+                      <input type="email"
+                             name="username"
+                             id="id_username"
+                             tabindex="1"
+                             class="form-control "
+                             value=""
+                             ng-model="data.email"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.remove('not-empty')}"
+                             required>
+                      <label for="id_username">Email</label>
+                    </div>
+                  </div>
+                  <div class="form-group relatively">
+                    <div class="errorlist" ng-if="errors.password">{{errors.password[0]}}</div>
+
+                    <a class="btn-inset"
+                         href="https://apps.ionic.io/user/reset-password"
+                         title="Forgot your password?"
+                         tabindex="4" target="_blank">
+                      ?
+                    </a>
+                    <div class="input-group">
+                      <input type="password"
+                             name="password"
+                             id="id_password"
+                             tabindex="2"
+                             class="form-control "
+                             value=""
+                             ng-model="data.password"
+                             onblur="if(this.value.length){this.classList.add('not-empty')}else{this.classList.re move('not-empty')}"
+                             required>
+                      <label for="id_password">Password</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-loud" type="submit" tabindex="3">
+                      <span class="login-button-icon"></span>Log in
+                    </button>
+                  </div>
+                </fieldset>
+                <div class="text-center help">
+                  Don't have an account?
+                  <a href="#" ng-click="showSignup()" tabindex="4">Sign up.</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div id="step-3" ng-controller="LaunchCtrl" ng-switch-when="3">
+          <div ng-if="!launched">
+            <h2 class="title" ng-if="!_showLogin">Launch app</h2>
+            <h4 class="sub-title" ng-if="!_showLogin">You're ready to start building! Launch your app below.</h4>
+
+            <div class="text-center">
+              <button class="btn btn-primary" ng-click="runApp()">Launch My App!</button>
+            </div>
+            <div class="text-center help">
+              Or run <code>ionic lab</code> from the command line.<br>See our <a href="http://ionicframework.com/docs/v2/cli/" target="_blank">CLI Guide</a> for more commands.
+            </div>
+            <div ng-if="error" class="text-center help errorlist">
+              There was an error starting your app. Please see your terminal for more information
+              and try running <code>ionic lab</code> manually in the terminal.
+            </div>
+          </div>
+          <div ng-if="launched">
+            <h2 class="title" ng-if="!_showLogin"><img src="checkmark.png" style="width: 64px"> Your app is running</h2>
+            <div class="text-center">
+              <p>
+                See our <a href="http://ionicframework.com/docs/v2/cli/" target="_blank">CLI Guide</a> for the various CLI commands used to build and run your app.
+              </p>
+              <p>
+                This page can now be closed. Thanks for using Ionic!
+              </p>
+            </div>
+          </div>
+
+          <div class="separator"></div>
+
+          <div id="services-section">
+            <h2 class="title" ng-if="!_showLogin">World class services to power your apps</h2>
+            <h4 class="sub-title" ng-if="!_showLogin">A free Ionic ID gets you access to powerful tools and services for building and scaling apps.</h4>
+            <div id="services">
+              <a href="http://view.ionic.io/" target="_blank" class="view"><div class="icon"></div> View App</a>
+              <a href="http://ionic.io/" target="_blank" class="services"><div class="icon"></div> Ionic Services</a>
+              <a href="http://market.ionic.io/" target="_blank" class="market"><div class="icon"></div> Market</a>
+              <a href="http://usecreator.com/" target="_blank" class="creator"><div class="icon"></div> Creator</a>
+            </div>
+            <div ng-if="!isAuthenticated" class="no-auth">
+              <a href="#" ng-click="setStep(2)">&laquo; Create your free Ionic ID</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    <div id="footer">
+      <a href="http://ionicframework.com/docs" target="_blank">Documentation</a>
+      <a href="http://forum.ionicframework.com/" target="_blank">Forum</a>
+      <a href="http://twitter.com/ionicframework" target="_blank">Twitter</a>
+      <a href="http://view.ionic.io/" target="_blank">View App</a>
+    </div>
+  -->
+
+    <div id="loading" ng-show="loading">
+      <div class="loading-wrap">
+        <img src="loading.gif">
+        <span class="msg" ng-bind-html="loadingMessage"></span>
+        <span class="info" ng-bind-html="loadingMessageInfo"></span>
+      </div>
+    </div>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-44023830-26', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>
