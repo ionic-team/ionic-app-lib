@@ -51,6 +51,7 @@
     "finalhandler": "0.2.0",
     "form-data": "0.1.4",
     "glob-watcher": "3.0.0",
+    "hasbin": "^1.2.3",
     "open": "0.0.5",
     "optimist": "0.6.0",
     "os-name": "^2.0.1",
