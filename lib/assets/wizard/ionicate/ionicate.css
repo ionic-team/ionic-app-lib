@@ -25,11 +25,22 @@ ionicate .ionicate-content {
   flex: 1;
   overflow-y: auto;
 }
-ionicate .ionicate-button {
+ionicate .ionicate-contact {
   display: flex;
   padding-bottom: 15px;
 }
-ionicate .ionicate-button a {
+ionicate .ionicate-contact-buttons {
+  display: flex;
+  padding-bottom: 15px;
+}
+ionicate .ionicate-contact-buttons a {
+  flex: 1;
+}
+ionicate .ionicate-submit-button {
+  display: flex;
+  padding-bottom: 15px;
+}
+ionicate a.ionicate-button {
   display: block;
   padding: 10px;
   background-color: #448BFA;
