@@ -26,7 +26,6 @@ ionicate .ionicate-content {
   overflow-y: auto;
 }
 ionicate .ionicate-contact {
-  display: flex;
   padding-bottom: 15px;
 }
 ionicate .ionicate-contact-buttons {
