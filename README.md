@@ -90,7 +90,7 @@ The specs will test passing the commands the correct parameters, instead of if t
 Need to think about how to start cutting over forward development and passing it off to this library instead of straight parsing arguments from CLI.
 
 
-[circle-badge]: https://circleci.com/gh/driftyco/ionic-app-lib.svg?style=shield
-[circle-badge-url]: https://circleci.com/gh/driftyco/ionic-app-lib
+[circle-badge]: https://circleci.com/gh/ionic-team/ionic-app-lib.svg?style=shield
+[circle-badge-url]: https://circleci.com/gh/ionic-team/ionic-app-lib
 [npm-badge]: https://img.shields.io/npm/v/ionic-app-lib.svg
 [npm-badge-url]: https://www.npmjs.com/package/ionic-app-lib
