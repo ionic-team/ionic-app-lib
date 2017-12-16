@@ -68,34 +68,34 @@
       }
       .phone {
         float: left;
-        margin: 40px 20px 0 20px;
+        margin: 0 20px 0 20px;
       }
       .frame {
         border: none;
         border-radius: 3px;
         box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.3);
+        width: 375px;
+        height: 667px;
       }
       #iphone-frame {
         top: 109px;
         left: 25px;
-        width: 375px;
-        height: 667px;
       }
       #android-frame {
         top: 88px;
         left: 24px;
-        width: 375px;
-        height: 667px;
       }
       #windows-frame {
         top: 88px;
         left: 24px;
-        width: 375px;
-        height: 667px;
       }
       #iphone {
       }
       #android {
+      }
+      .landscape {
+        height: 375px !important;
+        width:  667px !important;
       }
       #logo {
         display: inline-block;
@@ -113,6 +113,28 @@
       }
       #logo img {
         max-width: 100%;
+      }
+      #controls {
+        display: block;
+        max-width: 1245px;
+        margin: 80px auto 0 20px;
+      }
+      #controls h2, #controls label {
+        display: inline;
+        font-size: 18px;
+        color: #6F7582;
+      }
+      
+      .orienationBtn {
+        width: 24px;
+        height: 24px; 
+      }
+
+      .hidden {
+        display:none;
+      }
+      .controlOffset {
+        padding-left: 5em;
       }
     </style>
 
@@ -158,7 +180,53 @@
       <a target="_blank" href="https://github.com/driftyco/ionic">GitHub</a>
     </header>
     -->
+    
     <preview>
+      <div id="controls">
+      <h2>Platforms:</h2>
+      <label><input type="checkbox" id="iosPreview" onclick="togglePreview(this)" checked='checked'>iOS</label>
+      <label><input type="checkbox" id="androidPreview" onclick="togglePreview(this)" checked='checked'>Android</label>
+      <label><input type="checkbox" id="windowsPreview" onclick="togglePreview(this)" checked='checked'>Windows</label>
+      <h2 class="controlOffset">Orientation:</h2>
+      <img id="portraitBtn" class="orienationBtn" onclick="updateOrientation(0)" alt="orientation button" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnIGlkPSJJY29uXzZfIj4KCTxnPgoJCTxwYXRoIGQ9Ik0zNTguOSw2MkgxNTMuMWMtMjIuNiwwLTQxLjEsMTguMy00MS4xLDQwLjd2MzY2LjVjMCwyMi40LDE4LjUsNDAuNyw0MS4xLDQwLjdoMjA1LjdjMjIuNiwwLDQxLjEtMTguMyw0MS4xLTQwLjdWMTAyLjcKCQkJQzQwMCw4MC4zLDM4MS41LDYyLDM1OC45LDYyeiBNMzY0LDQzMEgxNDhWMTQyaDIxNlY0MzB6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+Cg==" />
+      
+      <img id="landscapeBtn" class="orienationBtn hidden" onclick="updateOrientation(1)"" alt="orientation button" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIwLjEuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnIGlkPSJJY29uXzZfIj4KCTxnPgoJCTxwYXRoIGQ9Ik00ODAsNDY4LjlWMjYzLjFjMC0yMi42LTE4LjMtNDEuMS00MC43LTQxLjFINzIuN0M1MC4zLDIyMiwzMiwyNDAuNSwzMiwyNjMuMXYyMDUuN2MwLDIyLjYsMTguMyw0MS4xLDQwLjcsNDEuMWgzNjYuNQoJCQlDNDYxLjcsNTEwLDQ4MCw0OTEuNSw0ODAsNDY4Ljl6IE0xMTIsNDc0VjI1OGgyODh2MjE2SDExMnoiLz4KCTwvZz4KPC9nPgo8L3N2Zz4K" />
+     
+      <script>
+        function togglePreview(cb) {
+          var previewFrame;
+          
+          if (cb.id === 'iosPreview' ) {
+            previewFrame = document.getElementById('iphone');
+          } else  if (cb.id === 'androidPreview' ) { 
+            previewFrame = document.getElementById('android');
+          } else  if (cb.id === 'windowsPreview' ) { 
+            previewFrame = document.getElementById('windows');
+          }
+          
+          cb.checked ? previewFrame.style.display = 'inline' :  previewFrame.style.display = 'none' 
+        }
+       
+        function updateOrientation(theOrientation) {
+          if (theOrientation == 0) {
+            document.getElementById('iphone-frame').classList.add("landscape");
+            document.getElementById('android-frame').classList.add("landscape");
+            document.getElementById('windows-frame').classList.add("landscape");
+            
+            document.getElementById('portraitBtn').classList.add("hidden");
+            document.getElementById('landscapeBtn').classList.remove("hidden");  
+          } else {
+            document.getElementById('iphone-frame').classList.remove("landscape");
+            document.getElementById('android-frame').classList.remove("landscape");
+            document.getElementById('windows-frame').classList.remove("landscape");
+         
+            document.getElementById('portraitBtn').classList.remove("hidden");
+            document.getElementById('landscapeBtn').classList.add("hidden");  
+          }
+        }
+
+      </script>
+    </div>
       <!--
       <div id="choice">
         <select ng-model="screenSize" ng-options="s.label for s in screenSizes"></select>
